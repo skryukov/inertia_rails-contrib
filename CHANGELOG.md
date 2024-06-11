@@ -7,6 +7,8 @@ and this project adheres to [Semantic Versioning].
 
 ## [Unreleased]
 
+## [0.1.0] - 2024-06-11
+
 - Initial release ([@iurev], [@skryukov])
 
 [@iurev]: https://github.com/iurev

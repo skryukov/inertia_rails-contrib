@@ -2,6 +2,10 @@
 
 A collection of extensions, developer tools, and the [community documentation](https://inertia-rails.netlify.app) for [Inertia's Rails adapter](https://github.com/inertiajs/inertia-rails).
 
+<a href="https://evilmartians.com/?utm_source=inertia_rails-contrib&utm_campaign=project_page">
+<img src="https://evilmartians.com/badges/sponsored-by-evil-martians.svg" alt="Built by Evil Martians" width="236" height="54">
+</a>
+
 ## Installation
 
 Install the gem and add to the application's Gemfile by executing:
