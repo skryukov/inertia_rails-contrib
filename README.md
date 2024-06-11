@@ -126,6 +126,52 @@ foreman start -f Procfile.dev
 
 And navigate to `http://127.0.0.1:5100/inertia-example` to see the example Inertia page.
 
+### Scaffold generator
+
+`InertiaRailsContrib` also comes with a scaffold generator that generates a scaffold for a model with Inertia. To use it, execute the following command in the terminal:
+
+```bash
+bin/rails generate inertia:scaffold ModelName field1:type field2:type
+```
+
+Example output:
+
+```bash
+$ bin/rails generate inertia:scaffold Post title:string body:text
+      invoke  active_record
+      create    db/migrate/20240611123952_create_posts.rb
+      create    app/models/post.rb
+      invoke    test_unit
+      create      test/models/post_test.rb
+      create      test/fixtures/posts.yml
+      invoke  resource_route
+       route    resources :posts
+      invoke  scaffold_controller
+      create    app/controllers/posts_controller.rb
+      invoke    inertia_templates
+      create      app/frontend/pages/Post
+      create      app/frontend/pages/Post/Index.svelte
+      create      app/frontend/pages/Post/Edit.svelte
+      create      app/frontend/pages/Post/Show.svelte
+      create      app/frontend/pages/Post/New.svelte
+      create      app/frontend/pages/Post/Form.svelte
+      create      app/frontend/pages/Post/Post.svelte
+      invoke    resource_route
+      invoke    test_unit
+      create      test/controllers/posts_controller_test.rb
+      create      test/system/posts_test.rb
+      invoke    helper
+      create      app/helpers/posts_helper.rb
+      invoke      test_unit
+```
+
+#### Tailwind CSS integration
+
+`InertiaRailsContrib` tries to detect the presence of Tailwind CSS in the application and generate the templates accordingly. If you want to specify templates type, use the `--inertia-templates` option:
+
+- `inertia_templates` - default
+- `inertia_tw_templates` - Tailwind CSS
+
 ## Development
 
 After checking out the repo, run `bin/setup` to install dependencies. Then, run `rake spec` to run the tests. You can also run `bin/console` for an interactive prompt that will allow you to experiment.
