@@ -132,7 +132,7 @@ And navigate to `http://127.0.0.1:5100/inertia-example` to see the example Inert
 
 ### Scaffold generator
 
-`InertiaRailsContrib` also comes with a scaffold generator that generates a scaffold for a model with Inertia. To use it, execute the following command in the terminal:
+`InertiaRailsContrib` also comes with a scaffold generator that generates a new resource with Inertia responses. To use it, execute the following command in the terminal:
 
 ```bash
 bin/rails generate inertia:scaffold ModelName field1:type field2:type
