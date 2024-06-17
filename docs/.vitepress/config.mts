@@ -2,10 +2,15 @@ import {defineConfig} from 'vitepress'
 import {tabsMarkdownPlugin} from 'vitepress-plugin-tabs'
 
 
+const title = 'Inertia Rails'
+const description = 'Community documentation for Inertia.js Rails adapter'
+const site = 'https://inertia-rails.netlify.app'
+const image = `${site}/og_image.jpg`
+
 // https://vitepress.dev/reference/site-config
 export default defineConfig({
-  title: "Inertia Rails",
-  description: "Community documentation for Inertia.js Rails adapter",
+  title,
+  description,
 
   markdown: {
     config(md) {
@@ -16,6 +21,18 @@ export default defineConfig({
   head: [
     ['link', {rel: 'icon', href: '/favicon.ico', sizes: "32x32"}],
     ['link', {rel: 'icon', href: '/icon.svg', type: 'image/svg+xml'}],
+
+    ['meta', { name: 'twitter:card', content: 'summary_large_image' }],
+    ['meta', { name: 'twitter:site', content: site }],
+    ['meta', { name: 'twitter:description', value: description }],
+    ['meta', { name: 'twitter:image', content: image }],
+
+    ['meta', { property: 'og:type', content: 'website' }],
+    ['meta', { property: 'og:locale', content: 'en_US' }],
+    ['meta', { property: 'og:site', content: site }],
+    ['meta', { property: 'og:site_name', content: title }],
+    ['meta', { property: 'og:image', content: image }],
+    ['meta', { property: 'og:description', content: description }],
   ],
 
   themeConfig: {
