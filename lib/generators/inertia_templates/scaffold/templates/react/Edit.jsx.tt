@@ -16,11 +16,10 @@ export default function Edit({ <%= singular_table_name %> }) {
           form.post(`<%= js_resource_path %>`, {
             headers: { 'X-HTTP-METHOD-OVERRIDE': 'put' },
           })
-        }}
 <% else -%>
           form.patch(`<%= js_resource_path %>`)
-        }
 <% end -%>
+        }}
         submitText="Update <%= human_name.downcase %>"
       />
 
