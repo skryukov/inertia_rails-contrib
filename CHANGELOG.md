@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning].
 
 ## [Unreleased]
 
+### Fixed:
+
+- Add a missing bracket to the `React/Edit` template. ([@skryukov]) 
+
 ## [0.1.0] - 2024-06-11
 
 - Initial release ([@iurev], [@skryukov])
