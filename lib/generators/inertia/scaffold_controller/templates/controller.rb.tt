@@ -95,8 +95,7 @@ class <%= controller_class_name %>Controller < ApplicationController
             {filename: file.filename.to_s, url: url_for(file)}
           end
 <% end -%>
-      end
-<% end -%>
+      end<% end %>
     end
 end
 <% end -%>
