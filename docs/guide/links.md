@@ -44,7 +44,7 @@ import { inertia, Link } from '@inertiajs/svelte'
 > The `use:inertia` directive can be applied to any HTML element.
 > :::
 
-By default, Inertia renders links as anchor `<a>` elements. However, you can change the tag using the as attribute.
+By default, Inertia renders links as anchor `<a>` elements. However, you can change the tag using the `as` prop.
 
 :::tabs key:frameworks
 == Vue 2
@@ -100,7 +100,7 @@ import { inertia } from '@inertiajs/svelte'
 
 ## Method
 
-You can specify the HTTP request method for an Inertia link request using the `method` attribute. The default method used by links is `GET`, but you can use the `method` attribute to make `POST`, `PUT`, `PATCH`, and `DELETE` requests via links.
+You can specify the HTTP request method for an Inertia link request using the `method` prop. The default method used by links is `GET`, but you can use the `method` prop to make `POST`, `PUT`, `PATCH`, and `DELETE` requests via links.
 
 :::tabs key:frameworks
 == Vue 2
@@ -140,7 +140,7 @@ import { inertia, Link } from '@inertiajs/svelte'
 
 ## Data
 
-When making `POST` or `PUT` requests, you may wish to add additional data to the request. You can accomplish this using the `data` attribute. The provided data can be an `object` or `FormData` instance.
+When making `POST` or `PUT` requests, you may wish to add additional data to the request. You can accomplish this using the `data` prop. The provided data can be an `object` or `FormData` instance.
 
 :::tabs key:frameworks
 == Vue 2
@@ -192,7 +192,7 @@ import { inertia, Link } from '@inertiajs/svelte'
 
 ## Custom headers
 
-The `headers` attribute allows you to add custom headers to an Inertia link. However, the headers Inertia uses internally to communicate its state to the server take priority and therefore cannot be overwritten.
+The `headers` prop allows you to add custom headers to an Inertia link. However, the headers Inertia uses internally to communicate its state to the server take priority and therefore cannot be overwritten.
 
 :::tabs key:frameworks
 == Vue 2
@@ -234,7 +234,7 @@ import { inertia, Link } from '@inertiajs/svelte'
 
 ## Browser history
 
-The `replace` attribute allows you to specify the browser's history behaviour. By default, page visits push (new) state (`window.history.pushState`) into the history; however, it's also possible to replace state (`window.history.replaceState`) by setting the `replace` attribute to true. This will cause the visit to replace the current history state instead of adding a new history state to the stack.
+The `replace` prop allows you to specify the browser's history behaviour. By default, page visits push (new) state (`window.history.pushState`) into the history; however, it's also possible to replace state (`window.history.replaceState`) by setting the `replace` prop to true. This will cause the visit to replace the current history state instead of adding a new history state to the stack.
 
 :::tabs key:frameworks
 == Vue 2
@@ -276,7 +276,7 @@ import { inertia, Link } from '@inertiajs/svelte'
 
 ## State preservation
 
-You can preserve a page component's local state using the `preserve-state` attribute. This will prevent a page component from fully re-rendering. The `preserve-state` attribute is especially helpful on pages that contain forms, since you can avoid manually repopulating input fields and can also maintain a focused input.
+You can preserve a page component's local state using the `preserve-state` prop. This will prevent a page component from fully re-rendering. The `preserve-state` prop is especially helpful on pages that contain forms, since you can avoid manually repopulating input fields and can also maintain a focused input.
 
 :::tabs key:frameworks
 == Vue 2
@@ -325,7 +325,7 @@ import { inertia, Link } from '@inertiajs/svelte'
 
 ## Scroll preservation
 
-You can use the `preserve-scroll` attribute to prevent Inertia from automatically resetting the scroll position when making a page visit.
+You can use the `preserve-scroll` prop to prevent Inertia from automatically resetting the scroll position when making a page visit.
 
 :::tabs key:frameworks
 == Vue 2
@@ -369,7 +369,7 @@ For more information on managing scroll position, please consult the documentati
 
 ## Partial reloads
 
-The `only` attribute allows you to specify that only a subset of a page's props (data) should be retrieved from the server on subsequent visits to that page.
+The `only` prop allows you to specify that only a subset of a page's props (data) should be retrieved from the server on subsequent visits to that page.
 
 :::tabs key:frameworks
 == Vue 2

@@ -545,7 +545,7 @@ const { progress } = useForm({ ... })
 
 :::
 
-If there are form validation errors, they are available via the errors property. When building Rails powered Inertia applications, form errors will automatically be populated when your application throws instances of `ActiveRecord::RecordInvalid`, such as when using `#save!`.
+If there are form validation errors, they are available via the `errors` property. When building Rails powered Inertia applications, form errors will automatically be populated when your application throws instances of `ActiveRecord::RecordInvalid`, such as when using `#save!`.
 
 :::tabs key:frameworks
 == Vue 2
@@ -581,7 +581,7 @@ const { errors } = useForm({ ... })
 > [!NOTE]
 > For a more thorough discussion of form validation and errors, please consult the [validation documentation](/guide/validation.md).
 
-To determine if a form has any errors, you may use the hasErrors property. To clear form errors, use the `clearErrors()` method.
+To determine if a form has any errors, you may use the `hasErrors` property. To clear form errors, use the `clearErrors()` method.
 
 :::tabs key:frameworks
 == Vue 2
