@@ -110,7 +110,8 @@ import { Link } from '@inertiajs/vue3'
 
 ```jsx
 import { Link } from '@inertiajs/react'
-;<Link href="/users?active=true" only={['users']}>
+
+<Link href="/users?active=true" only={['users']}>
   Show active
 </Link>
 ```

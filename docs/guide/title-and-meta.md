@@ -39,7 +39,8 @@ import { Head } from '@inertiajs/vue3'
 
 ```jsx
 import { Head } from '@inertiajs/react'
-;<Head>
+
+<Head>
   <title>Your page title</title>
   <meta name="description" content="Your page description" />
 </Head>
@@ -56,7 +57,8 @@ import { Head } from '@inertiajs/react'
 
 > [!NOTE]
 > The `<svelte:head>` component is provided by Svelte.
-> :::
+
+:::
 
 Title shorthand
 
@@ -83,7 +85,8 @@ import { Head } from '@inertiajs/vue3'
 
 ```jsx
 import { Head } from '@inertiajs/react'
-;<Head title="Your page title" />
+
+<Head title="Your page title" />
 ```
 
 == Svelte
@@ -128,7 +131,8 @@ import { Head } from '@inertiajs/vue3'
 
 ```jsx
 import { Head } from '@inertiajs/react'
-;<Head title="Home" />
+
+<Head title="Home" />
 ```
 
 == Svelte
@@ -172,7 +176,8 @@ import { Head } from '@inertiajs/vue3'
 
 ```jsx
 import { Head } from '@inertiajs/react'
-;<Head>
+
+<Head>
   <title>Home</title>
 </Head>
 ```
@@ -234,7 +239,8 @@ It's possible to have multiple instances of the `<Head>` component throughout yo
 // Layout.jsx
 
 import { Head } from '@inertiajs/react'
-;<Head>
+
+<Head>
   <title>My app</title>
   <meta
     head-key="description"
@@ -247,7 +253,8 @@ import { Head } from '@inertiajs/react'
 // About.jsx
 
 import { Head } from '@inertiajs/react'
-;<Head>
+
+<Head>
   <title>About - My app</title>
   <meta
     head-key="description"
@@ -375,7 +382,8 @@ import AppHead from './AppHead'
 
 ```jsx
 import AppHead from './AppHead'
-;<AppHead title="About" />
+
+<AppHead title="About" />
 ```
 
 == Svelte

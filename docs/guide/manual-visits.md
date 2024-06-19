@@ -207,6 +207,9 @@ router.visit(url, { method: 'post' })
 
 :::
 
+> [!WARNING]
+> Uploading files via `put` or `patch` is not supported in Rails. Instead, make the request via `post`, including a `_method` attribute or a `X-HTTP-METHOD-OVERRIDE` header set to `put` or `patch`. For more info see [`Rack::MethodOverride`](https://github.com/rack/rack/blob/main/lib/rack/method_override.rb).
+
 # Data
 
 You may use the `data` option to add data to the request.
@@ -475,7 +478,10 @@ By default, page visits to the same page create a fresh page component instance.
 
 However, in some situations, it's necessary to preserve the page component state. For example, when submitting a form, you need to preserve your form data in the event that form validation fails on the server.
 
-You can instruct Inertia to preserve the component's state by setting the `preserveState` option to `true`.
+
+For this reason, the `post`, `put`, `patch`, `delete`, and `reload` methods all set the `preserveState` option to `true` by default.
+
+You can instruct Inertia to preserve the component's state when using the `get` method by setting the `preserveState` option to `true`.
 
 :::tabs key:frameworks
 == Vue 2
@@ -514,6 +520,45 @@ router.get('/users', { search: 'John' }, { preserveState: true })
 
 You can also lazily evaluate the `preserveState` option based on the response by providing a callback to the `preserveState` option.
 
+If you'd like to only preserve state if the response includes validation errors, set the `preserveState` option to `"errors"`.
+
+:::tabs key:frameworks
+== Vue 2
+
+```js
+import { router } from '@inertiajs/vue2'
+
+router.get('/users', { search: 'John' }, { preserveState: 'errors' })
+```
+
+== Vue 3
+
+```js
+import { router } from '@inertiajs/vue3'
+
+router.get('/users', { search: 'John' }, { preserveState: 'errors' })
+```
+
+== React
+
+```js
+import { router } from '@inertiajs/react'
+
+router.get('/users', { search: 'John' }, { preserveState: 'errors' })
+```
+
+== Svelte
+
+```js
+import { router } from '@inertiajs/svelte'
+
+router.get('/users', { search: 'John' }, { preserveState: 'errors' })
+```
+
+:::
+
+You can also lazily evaluate the `preserveState` option based on the response by providing a callback.
+
 :::tabs key:frameworks
 == Vue 2
 
@@ -521,7 +566,7 @@ You can also lazily evaluate the `preserveState` option based on the response by
 import { router } from '@inertiajs/vue2'
 
 router.post('/users', data, {
-  preserveState: (page) => Object.keys(page.props.errors).length,
+  preserveState: (page) => page.props.someProp === 'value',
 })
 ```
 
@@ -531,7 +576,7 @@ router.post('/users', data, {
 import { router } from '@inertiajs/vue3'
 
 router.post('/users', data, {
-  preserveState: (page) => Object.keys(page.props.errors).length,
+  preserveState: (page) => page.props.someProp === 'value',
 })
 ```
 
@@ -541,7 +586,7 @@ router.post('/users', data, {
 import { router } from '@inertiajs/react'
 
 router.post('/users', data, {
-  preserveState: (page) => Object.keys(page.props.errors).length,
+  preserveState: (page) => page.props.someProp === 'value',
 })
 ```
 
@@ -551,17 +596,17 @@ router.post('/users', data, {
 import { router } from '@inertiajs/svelte'
 
 router.post('/users', data, {
-  preserveState: (page) => Object.keys(page.props.errors).length,
+  preserveState: (page) => page.props.someProp === 'value',
 })
 ```
 
 :::
 
-For convenience, the `post`, `put`, `patch`, `delete`, and `reload` methods all set the `preserveState` option to `true` by default.
-
 ## Scroll preservation
 
-When navigating between pages, Inertia mimics default browser behavior by automatically resetting the scroll position of the document body (as well as any [scroll regions](/guide/scroll-management.md#scroll-regions) you've defined) back to the top of the page. However, you may use the `preserveScroll` option to disable this behavior.
+When navigating between pages, Inertia mimics default browser behavior by automatically resetting the scroll position of the document body (as well as any [scroll regions](/guide/scroll-management.md#scroll-regions) you've defined) back to the top of the page.
+
+You can disable this behaviour by setting the `preserveScroll` option to `false`.
 
 :::tabs key:frameworks
 == Vue 2
@@ -569,7 +614,7 @@ When navigating between pages, Inertia mimics default browser behavior by automa
 ```js
 import { router } from '@inertiajs/vue2'
 
-router.visit(url, { preserveScroll: true })
+router.visit(url, { preserveScroll: false })
 ```
 
 == Vue 3
@@ -577,7 +622,7 @@ router.visit(url, { preserveScroll: true })
 ```js
 import { router } from '@inertiajs/vue3'
 
-router.visit(url, { preserveScroll: true })
+router.visit(url, { preserveScroll: false })
 ```
 
 == React
@@ -585,7 +630,7 @@ router.visit(url, { preserveScroll: true })
 ```js
 import { router } from '@inertiajs/react'
 
-router.visit(url, { preserveScroll: true })
+router.visit(url, { preserveScroll: false })
 ```
 
 == Svelte
@@ -593,7 +638,44 @@ router.visit(url, { preserveScroll: true })
 ```js
 import { router } from '@inertiajs/svelte'
 
-router.visit(url, { preserveScroll: true })
+router.visit(url, { preserveScroll: false })
+```
+
+:::
+
+If you'd like to only preserve the scroll position if the response includes validation errors, set the `preserveScroll` option to `"errors"`.
+
+:::tabs key:frameworks
+== Vue 2
+
+```js
+import { router } from '@inertiajs/vue2'
+
+router.visit(url, { preserveScroll: 'errors' })
+```
+
+== Vue 3
+
+```js
+import { router } from '@inertiajs/vue3'
+
+router.visit(url, { preserveScroll: 'errors' })
+```
+
+== React
+
+```js
+import { router } from '@inertiajs/react'
+
+router.visit(url, { preserveScroll: 'errors' })
+```
+
+== Svelte
+
+```js
+import { router } from '@inertiajs/svelte'
+
+router.visit(url, { preserveScroll: 'errors' })
 ```
 
 :::
@@ -607,7 +689,7 @@ You can also lazily evaluate the `preserveScroll` option based on the response b
 import { router } from '@inertiajs/vue2'
 
 router.post('/users', data, {
-  preserveScroll: (page) => Object.keys(page.props.errors).length,
+  preserveScroll: (page) => page.props.someProp === 'value',
 })
 ```
 
@@ -617,7 +699,7 @@ router.post('/users', data, {
 import { router } from '@inertiajs/vue3'
 
 router.post('/users', data, {
-  preserveScroll: (page) => Object.keys(page.props.errors).length,
+  preserveScroll: (page) => page.props.someProp === 'value',
 })
 ```
 
@@ -627,7 +709,7 @@ router.post('/users', data, {
 import { router } from '@inertiajs/react'
 
 router.post('/users', data, {
-  preserveScroll: (page) => Object.keys(page.props.errors).length,
+  preserveScroll: (page) => page.props.someProp === 'value',
 })
 ```
 
@@ -637,7 +719,7 @@ router.post('/users', data, {
 import { router } from '@inertiajs/svelte'
 
 router.post('/users', data, {
-  preserveScroll: (page) => Object.keys(page.props.errors).length,
+  preserveScroll: (page) => page.props.someProp === 'value',
 })
 ```
 

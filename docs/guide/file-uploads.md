@@ -198,7 +198,7 @@ Uploading files using a `multipart/form-data` request is not natively supported 
 However, some frameworks, such as Laravel and Rails, support form method spoofing, which allows you to upload the files using `POST`, but have the framework handle the request as a `PUT` or `PATCH` request. This is done by including a `_method` attribute or a `X-HTTP-METHOD-OVERRIDE` header in the request.
 
 > [!NOTE]
-> For more info see [`Rack::MethodOverride`](https://github.com/rack/rack/blob/main/lib/rack/method_override.rb)
+> For more info see [`Rack::MethodOverride`](https://github.com/rack/rack/blob/main/lib/rack/method_override.rb).
 
 :::tabs key:frameworks
 == Vue 2
