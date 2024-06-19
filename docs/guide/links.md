@@ -374,7 +374,7 @@ import { inertia, Link } from '@inertiajs/svelte'
 
 :::
 
-For more information on managing scroll position, please consult the documentation on [scroll management](/guide/scroll-management.md).
+For more information on managing scroll position, please consult the documentation on [scroll management](/guide/scroll-management).
 
 ## Partial reloads
 

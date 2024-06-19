@@ -127,7 +127,7 @@ router.post('/users', data, {
 
 :::
 
-When using an [Inertia link](/guides/links), you can preserve the scroll position using the `preserveScroll` prop.
+When using an [Inertia link](/guide/links), you can preserve the scroll position using the `preserveScroll` prop.
 
 :::tabs key:frameworks
 == Vue 2
