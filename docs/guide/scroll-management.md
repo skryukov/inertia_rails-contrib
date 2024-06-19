@@ -2,11 +2,11 @@
 
 ## Scroll resetting
 
-When navigating between pages, Inertia mimics default browser behaviour by automatically resetting the scroll position of the document body (as well as any [scroll regions](#scroll-regions) you've defined) back to the top. In addition, Inertia keeps track of the scroll position of each page and automatically restores that scroll position as you navigate forward and back in history.
+When navigating between pages, Inertia mimics default browser behavior by automatically resetting the scroll position of the document body (as well as any [scroll regions](#scroll-regions) you've defined) back to the top. In addition, Inertia keeps track of the scroll position of each page and automatically restores that scroll position as you navigate forward and back in history.
 
 ## Scroll preservation
 
-Sometimes it's desirable to prevent the default scroll resetting behavior when making visits. You can disable this behaviour using the `preserveScroll` option when [manually making visits](/guide/manual-visits.md).
+Sometimes it's desirable to prevent the default scroll resetting behavior when making visits. You can disable this behavior using the `preserveScroll` option when [manually making visits](/guide/manual-visits.md).
 
 ```js
 router.visit(url, { preserveScroll: true })

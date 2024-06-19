@@ -561,7 +561,7 @@ For convenience, the `post`, `put`, `patch`, `delete`, and `reload` methods all 
 
 ## Scroll preservation
 
-When navigating between pages, Inertia mimics default browser behaviour by automatically resetting the scroll position of the document body (as well as any [scroll regions](/guide/scroll-management.md#scroll-regions) you've defined) back to the top of the page. However, you may use the `preserveScroll` option to disable this behaviour.
+When navigating between pages, Inertia mimics default browser behavior by automatically resetting the scroll position of the document body (as well as any [scroll regions](/guide/scroll-management.md#scroll-regions) you've defined) back to the top of the page. However, you may use the `preserveScroll` option to disable this behavior.
 
 :::tabs key:frameworks
 == Vue 2

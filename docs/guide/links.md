@@ -234,7 +234,7 @@ import { inertia, Link } from '@inertiajs/svelte'
 
 ## Browser history
 
-The `replace` prop allows you to specify the browser's history behaviour. By default, page visits push (new) state (`window.history.pushState`) into the history; however, it's also possible to replace state (`window.history.replaceState`) by setting the `replace` prop to true. This will cause the visit to replace the current history state instead of adding a new history state to the stack.
+The `replace` prop allows you to specify the browser's history behavior. By default, page visits push (new) state (`window.history.pushState`) into the history; however, it's also possible to replace state (`window.history.replaceState`) by setting the `replace` prop to true. This will cause the visit to replace the current history state instead of adding a new history state to the stack.
 
 :::tabs key:frameworks
 == Vue 2
