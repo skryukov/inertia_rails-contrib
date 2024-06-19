@@ -880,15 +880,19 @@ To instruct Inertia to store a form's data and errors in [history state](/guide/
 == Vue 2
 
 ```vue
-import { useForm } from '@inertiajs/vue2' form: useForm('CreateUser', data)
+import { useForm } from '@inertiajs/vue2'
+
+form: useForm('CreateUser', data)
 form: useForm(`EditUser:${this.user.id}`, data)
 ```
 
 == Vue 3
 
 ```vue
-import { useForm } from '@inertiajs/vue3' const form = useForm('CreateUser',
-data) const form = useForm(`EditUser:${user.id}`, data)
+import { useForm } from '@inertiajs/vue3'
+
+const form = useForm('CreateUser', data)
+const form = useForm(`EditUser:${user.id}`, data)
 ```
 
 == React
