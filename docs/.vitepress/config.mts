@@ -128,7 +128,9 @@ export default defineConfig({
     },
 
     socialLinks: [
-      {icon: 'github', link: 'https://github.com/inertiajs/inertia-rails'}
+      {icon: 'github', link: 'https://github.com/inertiajs/inertia-rails'},
+      {icon: 'x', link: 'https://x.com/inertiajs'},
+      {icon: 'discord', link: 'https://discord.gg/inertiajs'},
     ],
   }
 })
