@@ -12,11 +12,11 @@ module Inertia
           vite_plugin_import: "import react from '@vitejs/plugin-react'",
           vite_plugin_call: "react()",
           copy_files: {
-            "InertiaExample.jsx" => "app/frontend/pages/InertiaExample.jsx",
-            "InertiaExample.module.css" => "app/frontend/pages/InertiaExample.module.css",
-            "../assets/react.svg" => "app/frontend/assets/react.svg",
-            "../assets/inertia.svg" => "app/frontend/assets/inertia.svg",
-            "../assets/vite_ruby.svg" => "app/frontend/assets/vite_ruby.svg"
+            "InertiaExample.jsx" => "#{root_path}/pages/InertiaExample.jsx",
+            "InertiaExample.module.css" => "#{root_path}/pages/InertiaExample.module.css",
+            "../assets/react.svg" => "#{root_path}/assets/react.svg",
+            "../assets/inertia.svg" => "#{root_path}/assets/inertia.svg",
+            "../assets/vite_ruby.svg" => "#{root_path}/assets/vite_ruby.svg"
           }
         },
         "vue" => {
@@ -25,10 +25,10 @@ module Inertia
           vite_plugin_import: "import vue from '@vitejs/plugin-vue'",
           vite_plugin_call: "vue()",
           copy_files: {
-            "InertiaExample.vue" => "app/frontend/pages/InertiaExample.vue",
-            "../assets/vue.svg" => "app/frontend/assets/vue.svg",
-            "../assets/inertia.svg" => "app/frontend/assets/inertia.svg",
-            "../assets/vite_ruby.svg" => "app/frontend/assets/vite_ruby.svg"
+            "InertiaExample.vue" => "#{root_path}/pages/InertiaExample.vue",
+            "../assets/vue.svg" => "#{root_path}/assets/vue.svg",
+            "../assets/inertia.svg" => "#{root_path}/assets/inertia.svg",
+            "../assets/vite_ruby.svg" => "#{root_path}/assets/vite_ruby.svg"
           }
         },
         "svelte" => {
@@ -38,10 +38,10 @@ module Inertia
           vite_plugin_call: "svelte()",
           copy_files: {
             "svelte.config.js" => "svelte.config.js",
-            "InertiaExample.svelte" => "app/frontend/pages/InertiaExample.svelte",
-            "../assets/svelte.svg" => "app/frontend/assets/svelte.svg",
-            "../assets/inertia.svg" => "app/frontend/assets/inertia.svg",
-            "../assets/vite_ruby.svg" => "app/frontend/assets/vite_ruby.svg"
+            "InertiaExample.svelte" => "#{root_path}/pages/InertiaExample.svelte",
+            "../assets/svelte.svg" => "#{root_path}/assets/svelte.svg",
+            "../assets/inertia.svg" => "#{root_path}/assets/inertia.svg",
+            "../assets/vite_ruby.svg" => "#{root_path}/assets/vite_ruby.svg"
           }
         }
       }
@@ -86,7 +86,7 @@ module Inertia
         end
 
         say "Copying inertia.js into Vite entrypoints", :blue
-        template "#{framework}/inertia.js", Rails.root.join("app/frontend/entrypoints/inertia.js").to_s
+        template "#{framework}/inertia.js", Rails.root.join("#{root_path}/entrypoints/inertia.js").to_s
 
         say "Adding inertia.js script tag to the application layout"
         headers = <<-ERB
@@ -99,6 +99,7 @@ module Inertia
         if framework == "react" && !APPLICATION_LAYOUT.read.include?("vite_react_refresh_tag")
           say "Adding Vite React Refresh tag to the application layout"
           insert_into_file APPLICATION_LAYOUT.to_s, "<%= vite_react_refresh_tag %>\n    ", before: "<%= vite_client_tag %>"
+          gsub_file APPLICATION_LAYOUT.to_s, /<title>/, "<title inertia>"
         end
 
         say "Copying example Inertia controller"
@@ -144,7 +145,11 @@ module Inertia
       end
 
       def framework
-        @framework ||= ask("What framework do you want to use with Turbo Mount?", limited_to: FRAMEWORKS.keys, default: "react")
+        @framework ||= ask("What framework do you want to use with Inertia?", limited_to: FRAMEWORKS.keys, default: "react")
+      end
+
+      def root_path
+        (defined?(ViteRuby) ? ViteRuby.config.source_code_dir : "app/frontend")
       end
     end
   end

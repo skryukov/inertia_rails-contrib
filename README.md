@@ -73,7 +73,7 @@ Installing Inertia's Rails adapter
 Adding Inertia's Rails adapter initializer
       create  config/initializers/inertia_rails.rb
 Installing Inertia npm packages
-What framework do you want to use with Turbo Mount? [react, vue, svelte] (react)
+What framework do you want to use with Inertia? [react, vue, svelte] (react)
          run  npm add @inertiajs/inertia @inertiajs/react react react-dom from "."
 
 added 6 packages, removed 42 packages, and audited 69 packages in 8s

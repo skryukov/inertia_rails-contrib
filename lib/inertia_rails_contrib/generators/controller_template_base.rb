@@ -35,7 +35,11 @@ module InertiaRailsContrib
       end
 
       def pages_path
-        "app/frontend/pages"
+        "#{root_path}/pages"
+      end
+
+      def root_path
+        (defined?(ViteRuby) ? ViteRuby.config.source_code_dir : "app/frontend")
       end
 
       def extension
