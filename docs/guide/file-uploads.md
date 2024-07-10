@@ -146,7 +146,6 @@ return (
     />
     <input
       type="file"
-      value={data.avatar}
       onChange={(e) => setData('avatar', e.target.files[0])}
     />
     {progress && (
