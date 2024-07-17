@@ -175,7 +175,7 @@ With the server running, you should be able to access your app within the browse
 
 ## Client side hydration
 
-Since your website is now being server-side rendered, you can instruct Svelte to "hydrate" the static markup and make it interactive instead of re-rendering all the HTML that we just generated.
+Since your website is now being server-side rendered, you can instruct your client to "hydrate" the static markup and make it interactive instead of re-rendering all the HTML that we just generated.
 
 To enable client-side hydration, update your initialization file:
 
