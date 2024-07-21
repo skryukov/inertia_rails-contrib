@@ -428,12 +428,13 @@ If you're using persistent layouts, you may find it convenient to define the def
 == Vue 2
 
 ```js
+// frontend/entrypoints/inertia.js
 import Layout from './Layout'
 
 createInertiaApp({
   resolve: (name) => {
-    const pages = import.meta.glob('./pages/**/*.vue', { eager: true })
-    let page = pages[`./pages/${name}.vue`]
+    const pages = import.meta.glob('../pages/**/*.vue', { eager: true })
+    let page = pages[`../pages/${name}.vue`]
     page.default.layout = page.default.layout || Layout
     return page
   },
@@ -444,12 +445,13 @@ createInertiaApp({
 == Vue 3
 
 ```js
+// frontend/entrypoints/inertia.js
 import Layout from './Layout'
 
 createInertiaApp({
   resolve: (name) => {
-    const pages = import.meta.glob('./pages/**/*.vue', { eager: true })
-    let page = pages[`./pages/${name}.vue`]
+    const pages = import.meta.glob('../pages/**/*.vue', { eager: true })
+    let page = pages[`../pages/${name}.vue`]
     page.default.layout = page.default.layout || Layout
     return page
   },
@@ -499,12 +501,13 @@ You can even go a step further and conditionally set the default page layout bas
 == Vue 2
 
 ```js
+// frontend/entrypoints/inertia.js
 import Layout from './Layout'
 
 createInertiaApp({
   resolve: (name) => {
-    const pages = import.meta.glob('./pages/**/*.vue', { eager: true })
-    let page = pages[`./pages/${name}.vue`]
+    const pages = import.meta.glob('../pages/**/*.vue', { eager: true })
+    let page = pages[`../pages/${name}.vue`]
     page.default.layout = name.startsWith('Public/') ? undefined : Layout
     return page
   },
@@ -515,12 +518,13 @@ createInertiaApp({
 == Vue 3
 
 ```js
+// frontend/entrypoints/inertia.js
 import Layout from './Layout'
 
 createInertiaApp({
   resolve: (name) => {
-    const pages = import.meta.glob('./pages/**/*.vue', { eager: true })
-    let page = pages[`./pages/${name}.vue`]
+    const pages = import.meta.glob('../pages/**/*.vue', { eager: true })
+    let page = pages[`../pages/${name}.vue`]
     page.default.layout = name.startsWith('Public/') ? undefined : Layout
     return page
   },
