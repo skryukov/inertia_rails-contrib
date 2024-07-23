@@ -20,7 +20,7 @@ If bundler is not being used to manage dependencies, install the gem by executin
 
 ### Installation generator
 
-`InertiaRailsContrib` comes with a generator that installs and sets up Inertia in a Rails application. **It requires the [Vite Ruby](https://vite-ruby.netlify.app) gem to be installed and configured in the application.**
+`InertiaRailsContrib` comes with a generator that installs and sets up Inertia in a Rails application. **It requires the [Vite Rails](https://vite-ruby.netlify.app/guide/rails.html) gem to be installed and configured in the application.**
 
 <details>
 <summary>Creating a new Rails application and configuring Vite</summary>
@@ -30,7 +30,7 @@ This is actually a simple process. First, create a new Rails application:
 rails new myapp --skip-js
 ```
 
-Next, install the Vite Ruby gem:
+Next, install the Vite Rails gem:
 
 ```bash
 bundle add vite_rails
