@@ -15,7 +15,7 @@ bundle add inertia_rails
 
 ## Rails generator
 
-If you plan to use Vite as your frontend build tool, you can use the `inertia_rails-contrib` gem to install and set up Inertia in a Rails application. **It requires the [Vite Ruby](https://vite-ruby.netlify.app) gem to be installed and configured in the application.**
+If you plan to use Vite as your frontend build tool, you can use the `inertia_rails-contrib` gem to install and set up Inertia in a Rails application. **It requires the [Vite Rails](https://vite-ruby.netlify.app/guide/rails.html) gem to be installed and configured in the application.**
 
 To use the generator, execute the following command in the terminal:
 
