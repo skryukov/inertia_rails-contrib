@@ -13,13 +13,13 @@ First, install the Inertia client-side adapter corresponding to your framework o
 == Vue 2
 
 ```shell
-npm install @inertiajs/vue2
+npm install @inertiajs/vue2 vue@^2
 ```
 
 == Vue 3
 
 ```shell
-npm install @inertiajs/vue3
+npm install @inertiajs/vue3 vue
 ```
 
 == React
@@ -31,7 +31,7 @@ npm install @inertiajs/react react react-dom
 == Svelte
 
 ```shell
-npm install @inertiajs/svelte
+npm install @inertiajs/svelte svelte
 ```
 
 :::
