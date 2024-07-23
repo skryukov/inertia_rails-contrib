@@ -33,7 +33,7 @@ rails new myapp --skip-js
 Next, install the Vite Ruby gem:
 
 ```bash
-bundle add vite_ruby
+bundle add vite_rails
 bundle exec vite install
 ```
 
