@@ -25,7 +25,7 @@ npm install @inertiajs/vue3
 == React
 
 ```shell
-npm install @inertiajs/react
+npm install @inertiajs/react react react-dom
 ```
 
 == Svelte
