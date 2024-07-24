@@ -429,7 +429,7 @@ If you're using persistent layouts, you may find it convenient to define the def
 
 ```js
 // frontend/entrypoints/inertia.js
-import Layout from './Layout'
+import Layout from '../Layout'
 
 createInertiaApp({
   resolve: (name) => {
@@ -462,12 +462,13 @@ createInertiaApp({
 == React
 
 ```js
-import Layout from './Layout'
+// frontend/entrypoints/inertia.js
+import Layout from '../Layout'
 
 createInertiaApp({
   resolve: (name) => {
-    const pages = import.meta.glob('./pages/**/*.jsx', { eager: true })
-    let page = pages[`./pages/${name}.jsx`]
+    const pages = import.meta.glob('../pages/**/*.jsx', { eager: true })
+    let page = pages[`../pages/${name}.jsx`]
     page.default.layout =
       page.default.layout || ((page) => <Layout children={page} />)
     return page
@@ -479,12 +480,13 @@ createInertiaApp({
 == Svelte
 
 ```js
-import Layout from './Layout'
+// frontend/entrypoints/inertia.js
+import Layout from '../Layout'
 
 createInertiaApp({
   resolve: (name) => {
-    const pages = import.meta.glob('./pages/**/*.svelte', { eager: true })
-    let page = pages[`./pages/${name}.svelte`]
+    const pages = import.meta.glob('../pages/**/*.svelte', { eager: true })
+    let page = pages[`../pages/${name}.svelte`]
     return { default: page.default, layout: page.layout || Layout }
   },
   // ...
@@ -502,7 +504,7 @@ You can even go a step further and conditionally set the default page layout bas
 
 ```js
 // frontend/entrypoints/inertia.js
-import Layout from './Layout'
+import Layout from '../Layout'
 
 createInertiaApp({
   resolve: (name) => {
@@ -519,7 +521,7 @@ createInertiaApp({
 
 ```js
 // frontend/entrypoints/inertia.js
-import Layout from './Layout'
+import Layout from '../Layout'
 
 createInertiaApp({
   resolve: (name) => {
@@ -535,12 +537,13 @@ createInertiaApp({
 == React
 
 ```js
-import Layout from './Layout'
+// frontend/entrypoints/inertia.js
+import Layout from '../Layout'
 
 createInertiaApp({
   resolve: (name) => {
     const pages = import.meta.glob('./pages/**/*.jsx', { eager: true })
-    let page = pages[`./pages/${name}.jsx`]
+    let page = pages[`../pages/${name}.jsx`]
     page.default.layout = name.startsWith('Public/')
       ? undefined
       : (page) => <Layout children={page} />
@@ -553,12 +556,13 @@ createInertiaApp({
 == Svelte
 
 ```js
-import Layout from './Layout'
+// frontend/entrypoints/inertia.js
+import Layout from '../Layout'
 
 createInertiaApp({
   resolve: (name) => {
-    const pages = import.meta.glob('./pages/**/*.svelte', { eager: true })
-    let page = pages[`./pages/${name}.svelte`]
+    const pages = import.meta.glob('../pages/**/*.svelte', { eager: true })
+    let page = pages[`../pages/${name}.svelte`]
     return {
       default: page.default,
       layout: name.startsWith('Public/') ? undefined : Layout,
