@@ -10,7 +10,7 @@ Inertia solves this issue by showing all non-Inertia responses in a modal. This 
 
 In production you will want to return a proper Inertia error response instead of relying on the modal-driven error reporting that is present during development. To accomplish this, you'll need to update your framework's default exception handler to return a custom error page.
 
-When building Laravel applications, you can accomplish this by using the `rescue_from` method in your `ApplicationController`.
+When building Rails applications, you can accomplish this by using the `rescue_from` method in your `ApplicationController`.
 
 ```ruby
 class ApplicationController < ActionController::Base
