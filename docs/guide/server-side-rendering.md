@@ -56,8 +56,8 @@ createServer((page) =>
     page,
     render: createRenderer().renderToString,
     resolve: (name) => {
-      const pages = import.meta.glob('./Pages/**/*.vue', { eager: true })
-      return pages[`./Pages/${name}.vue`]
+      const pages = import.meta.glob('../pages/**/*.vue', { eager: true })
+      return pages[`../pages/${name}.vue`]
     },
     setup({ App, props, plugin }) {
       Vue.use(plugin)
@@ -82,8 +82,8 @@ createServer((page) =>
     page,
     render: renderToString,
     resolve: (name) => {
-      const pages = import.meta.glob('./Pages/**/*.vue', { eager: true })
-      return pages[`./Pages/${name}.vue`]
+      const pages = import.meta.glob('../pages/**/*.vue', { eager: true })
+      return pages[`../pages/${name}.vue`]
     },
     setup({ App, props, plugin }) {
       return createSSRApp({
@@ -106,8 +106,8 @@ createServer((page) =>
     page,
     render: ReactDOMServer.renderToString,
     resolve: (name) => {
-      const pages = import.meta.glob('./Pages/**/*.jsx', { eager: true })
-      return pages[`./Pages/${name}.jsx`]
+      const pages = import.meta.glob('../pages/**/*.jsx', { eager: true })
+      return pages[`../pages/${name}.jsx`]
     },
     setup: ({ App, props }) => <App {...props} />,
   }),
@@ -120,13 +120,13 @@ createServer((page) =>
 import { createInertiaApp } from '@inertiajs/svelte'
 import createServer from '@inertiajs/svelte/server'
 
-const pages = import.meta.glob('./Pages/**/*.svelte', { eager: true })
+const pages = import.meta.glob('../pages/**/*.svelte', { eager: true })
 
 createServer((page) =>
   createInertiaApp({
     page,
     resolve: (name) => {
-      return pages[`./Pages/${name}.svelte`]
+      return pages[`../pages/${name}.svelte`]
     },
   }),
 )
@@ -189,14 +189,15 @@ To enable client-side hydration, update your initialization file:
 == Vue 3
 
 ```js
+// frontend/entrypoints/inertia.js
 import { createApp, h } from 'vue' // [!code --]
 import { createSSRApp, h } from 'vue' // [!code ++]
 import { createInertiaApp } from '@inertiajs/vue3'
 
 createInertiaApp({
   resolve: (name) => {
-    const pages = import.meta.glob('./Pages/**/*.vue', { eager: true })
-    return pages[`./Pages/${name}.vue`]
+    const pages = import.meta.glob('../pages/**/*.vue', { eager: true })
+    return pages[`../pages/${name}.vue`]
   },
   setup({ el, App, props, plugin }) {
     createApp({ render: () => h(App, props) }) // [!code --]
@@ -210,14 +211,15 @@ createInertiaApp({
 == React
 
 ```js
+// frontend/entrypoints/inertia.js
 import { createInertiaApp } from '@inertiajs/react'
 import { createRoot } from 'react-dom/client' // [!code --]
 import { hydrateRoot } from 'react-dom/client' // [!code ++]
 
 createInertiaApp({
   resolve: (name) => {
-    const pages = import.meta.glob('./Pages/**/*.jsx', { eager: true })
-    return pages[`./Pages/${name}.jsx`]
+    const pages = import.meta.glob('../pages/**/*.jsx', { eager: true })
+    return pages[`../pages/${name}.jsx`]
   },
   setup({ el, App, props }) {
     createRoot(el).render(<App {...props} />) // [!code --]
@@ -255,12 +257,13 @@ export default defineConfig({
 You'll also need to enable hydration in your initialization file:
 
 ```js
+// frontend/entrypoints/inertia.js
 import { createInertiaApp } from '@inertiajs/svelte'
 
 createInertiaApp({
   resolve: (name) => {
-    const pages = import.meta.glob('./Pages/**/*.svelte', { eager: true })
-    return pages[`./Pages/.svelte`]
+    const pages = import.meta.glob('../pages/**/*.svelte', { eager: true })
+    return pages[`../pages/${name}.svelte`]
   },
   setup({ el, App, props }) {
     // [!code --]

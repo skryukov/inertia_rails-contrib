@@ -14,45 +14,61 @@ Vite enables code splitting (or lazy-loading as they call it) by default when us
 == Vue 2
 
 ```js
-resolve: name => {
-  const pages = import.meta.glob('./Pages/**/*.vue', { eager: true }) // [!code --]
-  return pages[`./Pages/${name}.vue`] // [!code --]
-  const pages = import.meta.glob('./Pages/**/*.vue') // [!code ++]
-  return pages[`./Pages/${name}.vue`]() // [!code ++]
-},
+// frontend/entrypoints/inertia.js
+createInertiaApp({
+  resolve: name => {
+    const pages = import.meta.glob('../pages/**/*.vue', {eager: true}) // [!code --]
+    return pages[`../pages/${name}.vue`] // [!code --]
+    const pages = import.meta.glob('../pages/**/*.vue') // [!code ++]
+    return pages[`../pages/${name}.vue`]() // [!code ++]
+  },
+  //...
+})
 ```
 
 == Vue 3
 
 ```js
-resolve: name => {
-  const pages = import.meta.glob('./Pages/**/*.vue', { eager: true }) // [!code --]
-  return pages[`./Pages/${name}.vue`] // [!code --]
-  const pages = import.meta.glob('./Pages/**/*.vue') // [!code ++]
-  return pages[`./Pages/${name}.vue`]() // [!code ++]
-},
+// frontend/entrypoints/inertia.js
+createInertiaApp({
+  resolve: name => {
+    const pages = import.meta.glob('../pages/**/*.vue', { eager: true }) // [!code --]
+    return pages[`../pages/${name}.vue`] // [!code --]
+    const pages = import.meta.glob('../pages/**/*.vue') // [!code ++]
+    return pages[`../pages/${name}.vue`]() // [!code ++]
+  },
+  //...
+})
 ```
 
 == React
 
 ```js
-resolve: name => {
-  const pages = import.meta.glob('./Pages/**/*.jsx', { eager: true }) // [!code --]
-  return pages[`./Pages/${name}.jsx`] // [!code --]
-  const pages = import.meta.glob('./Pages/**/*.jsx') // [!code ++]
-  return pages[`./Pages/${name}.jsx`]() // [!code ++]
-},
+// frontend/entrypoints/inertia.js
+createInertiaApp({
+  resolve: name => {
+    const pages = import.meta.glob('../pages/**/*.jsx', { eager: true }) // [!code --]
+    return pages[`../pages/${name}.jsx`] // [!code --]
+    const pages = import.meta.glob('../pages/**/*.jsx') // [!code ++]
+    return pages[`../pages/${name}.jsx`]() // [!code ++]
+  },
+  //...
+})
 ```
 
 == Svelte
 
 ```js
-resolve: name => {
-  const pages = import.meta.glob('./Pages/**/*.svelte', { eager: true }) // [!code --]
-  return pages[`./Pages/${name}.svelte`] // [!code --]
-  const pages = import.meta.glob('./Pages/**/*.svelte') // [!code ++]
-  return pages[`./Pages/${name}.svelte`]() // [!code ++]
-},
+// frontend/entrypoints/inertia.js
+createInertiaApp({
+  resolve: name => {
+    const pages = import.meta.glob('../pages/**/*.svelte', { eager: true }) // [!code --]
+    return pages[`../pages/${name}.svelte`] // [!code --]
+    const pages = import.meta.glob('../pages/**/*.svelte') // [!code ++]
+    return pages[`../pages/${name}.svelte`]() // [!code ++]
+  },
+  //...
+})
 ```
 
 :::
@@ -81,30 +97,46 @@ Finally, update the `resolve` callback in your app's initialization code to use 
 :::tabs key:frameworks
 == Vue 2
 
-```
-resolve: name => require(`./Pages/${name}`), // [!code ii]
-resolve: name => import(`./Pages/${name}`), // [!code ++]
+```js
+// javascript/packs/inertia.js
+createInertiaApp({
+  resolve: name => require(`../pages/${name}`), // [!code ii]
+  resolve: name => import(`../pages/${name}`), // [!code ++]
+  //...
+})
 ```
 
 == Vue 3
 
 ```js
-resolve: name => require(`./Pages/${name}`), // [!code ii]
-resolve: name => import(`./Pages/${name}`), // [!code ++]
+// javascript/packs/inertia.js
+createInertiaApp({
+  resolve: name => require(`../pages/${name}`), // [!code ii]
+  resolve: name => import(`../pages/${name}`), // [!code ++]
+  //...
+})
 ```
 
 == React
 
 ```js
-resolve: name => require(`./Pages/${name}`), // [!code ii]
-resolve: name => import(`./Pages/${name}`), // [!code ++]
+// javascript/packs/inertia.js
+createInertiaApp({
+  resolve: name => require(`../pages/${name}`), // [!code ii]
+  resolve: name => import(`../pages/${name}`), // [!code ++]
+  //...
+})
 ```
 
 == Svelte
 
 ```js
-resolve: name => require(`./Pages/${name}.svelte`), // [!code ii]
-resolve: name => import(`./Pages/${name}.svelte`), // [!code ++]
+// javascript/packs/inertia.js
+createInertiaApp({
+  resolve: name => require(`../pages/${name}.svelte`), // [!code ii]
+  resolve: name => import(`../pages/${name}.svelte`), // [!code ++]
+  //...
+})
 ```
 
 :::
@@ -112,7 +144,12 @@ resolve: name => import(`./Pages/${name}.svelte`), // [!code ++]
 You should also consider using cache busting to force browsers to load the latest version of your assets. To accomplish this, add the following configuration to your webpack configuration file.
 
 ```js
-output: {
-  chunkFilename: 'js/[name].js?id=[chunkhash]',
+// webpack.config.js
+module.exports = {
+  //...
+  output: {
+    //...
+    chunkFilename: 'js/[name].js?id=[chunkhash]',
+  },
 }
 ```
