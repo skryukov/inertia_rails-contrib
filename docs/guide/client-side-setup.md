@@ -44,13 +44,14 @@ Next, update your main JavaScript file to boot your Inertia app. To accomplish t
 == Vue 2
 
 ```js
+// frontend/entrypoints/inertia.js
 import Vue from 'vue'
 import { createInertiaApp } from '@inertiajs/vue2'
 
 createInertiaApp({
   resolve: (name) => {
-    const pages = import.meta.glob('./pages/**/*.vue', { eager: true })
-    return pages[`./pages/${name}.vue`]
+    const pages = import.meta.glob('../pages/**/*.vue', { eager: true })
+    return pages[`../pages/${name}.vue`]
   },
   setup({ el, App, props, plugin }) {
     Vue.use(plugin)
@@ -65,13 +66,14 @@ createInertiaApp({
 == Vue 3
 
 ```js
+// frontend/entrypoints/inertia.js
 import { createApp, h } from 'vue'
 import { createInertiaApp } from '@inertiajs/vue3'
 
 createInertiaApp({
   resolve: (name) => {
-    const pages = import.meta.glob('./pages/**/*.vue', { eager: true })
-    return pages[`./pages/${name}.vue`]
+    const pages = import.meta.glob('../pages/**/*.vue', { eager: true })
+    return pages[`../pages/${name}.vue`]
   },
   setup({ el, App, props, plugin }) {
     createApp({ render: () => h(App, props) })
@@ -84,14 +86,15 @@ createInertiaApp({
 == React
 
 ```js
+// frontend/entrypoints/inertia.js
 import { createInertiaApp } from '@inertiajs/react'
 import { createElement } from 'react'
 import { createRoot } from 'react-dom/client'
 
 createInertiaApp({
   resolve: (name) => {
-    const pages = import.meta.glob('./pages/**/*.jsx', { eager: true })
-    return pages[`./pages/${name}.jsx`]
+    const pages = import.meta.glob('../pages/**/*.jsx', { eager: true })
+    return pages[`../pages/${name}.jsx`]
   },
   setup({ el, App, props }) {
     const root = createRoot(el)
@@ -103,12 +106,13 @@ createInertiaApp({
 == Svelte
 
 ```js
+// frontend/entrypoints/inertia.js
 import { createInertiaApp } from '@inertiajs/svelte'
 
 createInertiaApp({
   resolve: (name) => {
-    const pages = import.meta.glob('./pages/**/*.svelte', { eager: true })
-    return pages[`./pages/${name}.svelte`]
+    const pages = import.meta.glob('../pages/**/*.svelte', { eager: true })
+    return pages[`../pages/${name}.svelte`]
   },
   setup({ el, App, props }) {
     new App({ target: el, props })
@@ -129,52 +133,84 @@ The `resolve` callback tells Inertia how to load a page component. It receives a
 
 ```js
 // Vite
-resolve: name => {
-  const pages = import.meta.glob('./pages/**/*.vue', { eager: true })
-  return pages[`./pages/${name}.vue`]
-},
+// frontend/entrypoints/inertia.js
+createInertiaApp({
+  resolve: name => {
+    const pages = import.meta.glob('../pages/**/*.vue', {eager: true})
+    return pages[`../pages/${name}.vue`]
+  },
+  // ...
+})
 
 // Webpacker/Shakapacker
-resolve: name => require(`./pages/${name}`),
+// javascript/packs/inertia.js
+createInertiaApp({
+  resolve: name => require(`../pages/${name}`),
+  // ...
+})
 ```
 
 == Vue 3
 
 ```js
 // Vite
-resolve: name => {
-  const pages = import.meta.glob('./pages/**/*.vue', { eager: true })
-  return pages[`./pages/${name}.vue`]
-},
+// frontend/entrypoints/inertia.js
+createInertiaApp({
+  resolve: name => {
+    const pages = import.meta.glob('../pages/**/*.vue', { eager: true })
+    return pages[`../pages/${name}.vue`]
+  },
+  // ...
+})
 
 // Webpacker/Shakapacker
-resolve: name => require(`./pages/${name}`),
+// javascript/packs/inertia.js
+createInertiaApp({
+  resolve: name => require(`../pages/${name}`),
+  // ...
+})
 ```
 
 == React
 
 ```js
 // Vite
-resolve: name => {
-  const pages = import.meta.glob('./pages/**/*.jsx', { eager: true })
-  return pages[`./pages/${name}.jsx`]
-},
+// frontend/entrypoints/inertia.js
+createInertiaApp({
+  resolve: name => {
+    const pages = import.meta.glob('../pages/**/*.jsx', {eager: true})
+    return pages[`../pages/${name}.jsx`]
+  },
+  //...
+})
 
 // Webpacker/Shakapacker
-resolve: name => require(`./pages/${name}`),
+// javascript/packs/inertia.js
+createInertiaApp({
+  resolve: name => require(`../pages/${name}`),
+  //...
+})
 ```
 
 == Svelte
 
 ```js
 // Vite
-resolve: name => {
-  const pages = import.meta.glob('./pages/**/*.svelte', { eager: true })
-  return pages[`./pages/${name}.svelte`]
-},
+// frontend/entrypoints/inertia.js
+createInertiaApp({
+  resolve: name => {
+    const pages = import.meta.glob('../pages/**/*.svelte', {eager: true})
+    return pages[`../pages/${name}.svelte`]
+  },
+  //...
+})
 
 // Webpacker/Shakapacker
-resolve: name => require(`./pages/${name}.svelte`),
+// javascript/packs/inertia.js
+createInertiaApp({
+  resolve: name => require(`../pages/${name}.svelte`),
+  //...
+})
 ```
 
 :::

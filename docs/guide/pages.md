@@ -21,7 +21,7 @@ Inertia pages are simply JavaScript components. If you have ever written a Vue, 
 </template>
 
 <script>
-import Layout from './Layout'
+import Layout from '../Layout'
 import { Head } from '@inertiajs/vue2'
 
 export default {
@@ -40,7 +40,7 @@ export default {
 
 ```vue
 <script setup>
-import Layout from './Layout'
+import Layout from '../Layout'
 import { Head } from '@inertiajs/vue3'
 
 defineProps({ user: Object })
@@ -58,7 +58,7 @@ defineProps({ user: Object })
 == React
 
 ```jsx
-import Layout from './Layout'
+import Layout from '../Layout'
 import { Head } from '@inertiajs/react'
 
 export default function Welcome({ user }) {
@@ -76,7 +76,7 @@ export default function Welcome({ user }) {
 
 ```svelte
 <script>
-  import Layout from './Layout.svelte'
+  import Layout from '../Layout'
 
   export let user
 </script>
@@ -219,7 +219,7 @@ For example, maybe you have an audio player on a podcast website that you want t
 </template>
 
 <script>
-import Layout from './Layout'
+import Layout from '../Layout'
 
 export default {
   // Using a render function...
@@ -239,7 +239,7 @@ export default {
 
 ```vue
 <script>
-import Layout from './Layout'
+import Layout from '../Layout'
 
 export default {
   // Using a render function...
@@ -263,7 +263,7 @@ defineProps({ user: Object })
 == React
 
 ```jsx
-import Layout from './Layout'
+import Layout from '../Layout'
 
 const Home = ({ user }) => {
   return (
@@ -333,7 +333,7 @@ If you're using Vue 2.7 or Vue 3, you can alternatively use the [defineOptions p
 
 ```vue
 <script setup>
-import Layout from './Layout'
+import Layout from '../Layout'
 
 defineOptions({ layout: Layout })
 </script>
@@ -371,7 +371,7 @@ If you're using Vue 2.7 or Vue 3, you can alternatively use the [defineOptions p
 
 ```vue
 <script setup>
-import Layout from './Layout'
+import Layout from '../Layout'
 
 defineOptions({ layout: Layout })
 </script>
@@ -446,7 +446,7 @@ createInertiaApp({
 
 ```js
 // frontend/entrypoints/inertia.js
-import Layout from './Layout'
+import Layout from '../Layout'
 
 createInertiaApp({
   resolve: (name) => {
@@ -542,7 +542,7 @@ import Layout from '../Layout'
 
 createInertiaApp({
   resolve: (name) => {
-    const pages = import.meta.glob('./pages/**/*.jsx', { eager: true })
+    const pages = import.meta.glob('../pages/**/*.jsx', { eager: true })
     let page = pages[`../pages/${name}.jsx`]
     page.default.layout = name.startsWith('Public/')
       ? undefined
