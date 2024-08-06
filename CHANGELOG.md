@@ -7,6 +7,16 @@ and this project adheres to [Semantic Versioning].
 
 ## [Unreleased]
 
+Added:
+
+- Improve installation generator ([@skryukov])
+  - option to install Vite Rails gem (`--install-vite`)
+  - option to install Tailwind CSS (`--install-tailwind`)
+  - option to install without interactivity (`--no-interaction` & `--framework=react|vue|svelte`)
+  - option to skip example page generation (`--no-example-page`)
+  - option to choose package manager (`--package-manager=yarn|npm|bun`)
+  - generate `bin/dev`
+
 ## [0.1.1] - 2024-06-17
 
 ### Fixed:

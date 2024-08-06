@@ -15,83 +15,79 @@ bundle add inertia_rails
 
 ## Rails generator
 
-If you plan to use Vite as your frontend build tool, you can use the `inertia_rails-contrib` gem to install and set up Inertia in a Rails application. **It requires the [Vite Rails](https://vite-ruby.netlify.app/guide/rails.html) gem to be installed and configured in the application.**
+If you plan to use Vite as your frontend build tool, you can use the `inertia_rails-contrib` gem to install and set up Inertia in a Rails application. It automatically detects if the [Vite Rails](https://vite-ruby.netlify.app/guide/rails.html) gem is installed and will attempt to install it if not present.
 
-To use the generator, execute the following command in the terminal:
+To install and setup Inertia in a Rails application, execute the following command in the terminal:
 
 ```bash
 bundle add inertia_rails-contrib
-
 bin/rails generate inertia:install
 ```
 
-This command will ask you for the frontend framework you are using (React, Vue, or Svelte) and will install the necessary dependencies and set up the application to work with Inertia.
+This command will:
+- Check for Vite Rails and install it if not present
+- Ask you to choose your preferred frontend framework (React, Vue, or Svelte)
+- Ask if you want to install Tailwind CSS
+- Install necessary dependencies
+- Set up the application to work with Inertia
+- Copy example Inertia controller and views (can be skipped with the `--skip-example` option)
 
 Example output:
 
 ```bash
 $ bin/rails generate inertia:install
-
 Installing Inertia's Rails adapter
+Could not find a package.json file to install Inertia to.
+Would you like to install Vite Ruby? (y/n) y
+         run  bundle add vite_rails from "."
+Vite Rails gem successfully installed
+         run  bundle exec vite install from "."
+Vite Rails successfully installed
+Would you like to install Tailwind CSS? (y/n) y
+Installing Tailwind CSS
+         run  npm add tailwindcss postcss autoprefixer @tailwindcss/forms @tailwindcss/typography @tailwindcss/container-queries --silent from "."
+      create  tailwind.config.js
+      create  postcss.config.js
+      create  app/frontend/entrypoints/application.css
+Adding Tailwind CSS to the application layout
+      insert  app/views/layouts/application.html.erb
 Adding Inertia's Rails adapter initializer
       create  config/initializers/inertia_rails.rb
 Installing Inertia npm packages
 What framework do you want to use with Inertia? [react, vue, svelte] (react)
-         run  npm add @inertiajs/inertia @inertiajs/react react react-dom from "."
-
-added 6 packages, removed 42 packages, and audited 69 packages in 8s
-
-18 packages are looking for funding
-  run `npm fund` for details
-
-2 moderate severity vulnerabilities
-
-Some issues need review, and may require choosing
-a different dependency.
-
-Run `npm audit` for details.
-         run  npm add --save-dev @vitejs/plugin-react from "."
-
-added 58 packages, and audited 127 packages in 6s
-
-22 packages are looking for funding
-  run `npm fund` for details
-
-2 moderate severity vulnerabilities
-
-Some issues need review, and may require choosing
-a different dependency.
-
-Run `npm audit` for details.
+         run  npm add @inertiajs/react react react-dom @vitejs/plugin-react --silent from "."
 Adding Vite plugin for react
       insert  vite.config.ts
      prepend  vite.config.ts
-Add "type": "module", to the package.json file
-        gsub  package.json
-Copying inertia.js into Vite entrypoints
+Copying inertia.js entrypoint
       create  app/frontend/entrypoints/inertia.js
 Adding inertia.js script tag to the application layout
       insert  app/views/layouts/application.html.erb
 Adding Vite React Refresh tag to the application layout
       insert  app/views/layouts/application.html.erb
+        gsub  app/views/layouts/application.html.erb
 Copying example Inertia controller
       create  app/controllers/inertia_example_controller.rb
 Adding a route for the example Inertia controller
        route  get 'inertia-example', to: 'inertia_example#index'
-Copying framework related files
+Copying page assets
       create  app/frontend/pages/InertiaExample.jsx
+      create  app/frontend/pages/InertiaExample.module.css
+      create  app/frontend/assets/react.svg
+      create  app/frontend/assets/inertia.svg
+      create  app/frontend/assets/vite_ruby.svg
+Copying bin/dev
+      create  bin/dev
 Inertia's Rails adapter successfully installed
 ```
 
 With that done, you can now start the Rails server and the Vite development server (we recommend using [Overmind](https://github.com/DarthSim/overmind)):
 
 ```bash
-overmind start -f Procfile.dev
-# or
-foreman start -f Procfile.dev
+bin/dev
 ```
 
-And navigate to `http://127.0.0.1:5100/inertia-example` to see the example Inertia page.
+And navigate to `http://localhost:3100/inertia-example` to see the example Inertia page.
 
 That's it! You're all set up to start using Inertia in your Rails application. Check the guide on [creating pages](/guide/pages) to know more.
 

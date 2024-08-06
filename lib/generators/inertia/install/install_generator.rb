@@ -1,65 +1,52 @@
+require "yaml"
+require "rails/generators"
+require "rails/generators/base"
+
+require_relative "helpers"
+
 module Inertia
   module Generators
     class InstallGenerator < Rails::Generators::Base
+      include Helpers
+
+      FRAMEWORKS = YAML.load_file(File.expand_path("./frameworks.yml", __dir__))
+
       source_root File.expand_path("./templates", __dir__)
 
-      APPLICATION_LAYOUT = Rails.root.join("app/views/layouts/application.html.erb")
+      class_option :framework, type: :string,
+        desc: "The framework you want to use with Inertia",
+        enum: FRAMEWORKS.keys,
+        default: nil
 
-      FRAMEWORKS = {
-        "react" => {
-          packages: %w[@inertiajs/react react react-dom],
-          dev_packages: %w[@vitejs/plugin-react],
-          vite_plugin_import: "import react from '@vitejs/plugin-react'",
-          vite_plugin_call: "react()",
-          copy_files: {
-            "InertiaExample.jsx" => "#{root_path}/pages/InertiaExample.jsx",
-            "InertiaExample.module.css" => "#{root_path}/pages/InertiaExample.module.css",
-            "../assets/react.svg" => "#{root_path}/assets/react.svg",
-            "../assets/inertia.svg" => "#{root_path}/assets/inertia.svg",
-            "../assets/vite_ruby.svg" => "#{root_path}/assets/vite_ruby.svg"
-          }
-        },
-        "vue" => {
-          packages: %w[@inertiajs/vue3 vue],
-          dev_packages: %w[@vitejs/plugin-vue],
-          vite_plugin_import: "import vue from '@vitejs/plugin-vue'",
-          vite_plugin_call: "vue()",
-          copy_files: {
-            "InertiaExample.vue" => "#{root_path}/pages/InertiaExample.vue",
-            "../assets/vue.svg" => "#{root_path}/assets/vue.svg",
-            "../assets/inertia.svg" => "#{root_path}/assets/inertia.svg",
-            "../assets/vite_ruby.svg" => "#{root_path}/assets/vite_ruby.svg"
-          }
-        },
-        "svelte" => {
-          packages: %w[@inertiajs/svelte svelte @sveltejs/vite-plugin-svelte],
-          dev_packages: %w[@vitejs/plugin-vue],
-          vite_plugin_import: "import { svelte } from '@sveltejs/vite-plugin-svelte'",
-          vite_plugin_call: "svelte()",
-          copy_files: {
-            "svelte.config.js" => "svelte.config.js",
-            "InertiaExample.svelte" => "#{root_path}/pages/InertiaExample.svelte",
-            "../assets/svelte.svg" => "#{root_path}/assets/svelte.svg",
-            "../assets/inertia.svg" => "#{root_path}/assets/inertia.svg",
-            "../assets/vite_ruby.svg" => "#{root_path}/assets/vite_ruby.svg"
-          }
-        }
-      }
+      class_option :package_manager, type: :string, default: nil, enum: %w[npm yarn bun],
+        desc: "The package manager you want to use to install Inertia's npm packages"
+
+      class_option :interactive, type: :boolean, default: true,
+        desc: "Whether to prompt for optional installations"
+
+      class_option :install_tailwind, type: :boolean, default: false,
+        desc: "Whether to install Tailwind CSS"
+      class_option :install_vite, type: :boolean, default: false,
+        desc: "Whether to install Vite Ruby"
+      class_option :example_page, type: :boolean, default: true,
+        desc: "Whether to add an example Inertia page"
+
+      remove_class_option :skip_namespace, :skip_collision_check
 
       def install
         say "Installing Inertia's Rails adapter"
 
-        if package_manager.nil?
-          say "Could not find a package.json file to install Inertia to.", :red
-          exit!
-        end
+        install_vite unless ruby_vite_installed?
 
-        unless ruby_vite?
-          say "Could not find a Vite configuration file `config/vite.json`. This generator only supports Ruby on Rails with Vite.", :red
-          exit!
-        end
+        install_tailwind if install_tailwind?
 
         install_inertia
+
+        install_example_page if options[:example_page]
+
+        say "Copying bin/dev"
+        copy_file "#{__dir__}/templates/dev", "bin/dev"
+        chmod "bin/dev", 0o755, verbose: false
 
         say "Inertia's Rails adapter successfully installed", :green
       end
@@ -68,72 +55,136 @@ module Inertia
 
       def install_inertia
         say "Adding Inertia's Rails adapter initializer"
-        template "initializer.rb", Rails.root.join("config/initializers/inertia_rails.rb").to_s
+        template "initializer.rb", file_path("config/initializers/inertia_rails.rb")
 
         say "Installing Inertia npm packages"
-        add_packages(*FRAMEWORKS[framework][:packages])
-        add_packages("--save-dev", *FRAMEWORKS[framework][:dev_packages])
+        add_packages(*FRAMEWORKS[framework]["packages"])
 
-        unless File.read(vite_config_path).include?(FRAMEWORKS[framework][:vite_plugin_import])
+        unless File.read(vite_config_path).include?(FRAMEWORKS[framework]["vite_plugin_import"])
           say "Adding Vite plugin for #{framework}"
-          insert_into_file vite_config_path, "\n    #{FRAMEWORKS[framework][:vite_plugin_call]},", after: "plugins: ["
-          prepend_file vite_config_path, "#{FRAMEWORKS[framework][:vite_plugin_import]}\n"
+          insert_into_file vite_config_path, "\n    #{FRAMEWORKS[framework]["vite_plugin_call"]},", after: "plugins: ["
+          prepend_file vite_config_path, "#{FRAMEWORKS[framework]["vite_plugin_import"]}\n"
         end
 
-        unless Rails.root.join("package.json").read.include?('"type": "module"')
-          say 'Add "type": "module", to the package.json file'
-          gsub_file Rails.root.join("package.json").to_s, /\A\s*\{/, "{\n  \"type\": \"module\","
-        end
+        say "Copying inertia.js entrypoint"
+        template "#{framework}/inertia.js", js_file_path("entrypoints/inertia.js")
 
-        say "Copying inertia.js into Vite entrypoints", :blue
-        template "#{framework}/inertia.js", Rails.root.join("#{root_path}/entrypoints/inertia.js").to_s
-
-        say "Adding inertia.js script tag to the application layout"
-        headers = <<-ERB
-    <%= vite_javascript_tag 'inertia' %>
-
+        if application_layout.exist?
+          say "Adding inertia.js script tag to the application layout"
+          headers = <<-ERB
+    <%= vite_javascript_tag "inertia" %>
     <%= inertia_headers %>
-        ERB
-        insert_into_file APPLICATION_LAYOUT.to_s, headers, after: "<%= vite_client_tag %>\n"
+          ERB
+          headers += "\n      <%= vite_stylesheet_tag \"application\" %>" if install_tailwind?
 
-        if framework == "react" && !APPLICATION_LAYOUT.read.include?("vite_react_refresh_tag")
-          say "Adding Vite React Refresh tag to the application layout"
-          insert_into_file APPLICATION_LAYOUT.to_s, "<%= vite_react_refresh_tag %>\n    ", before: "<%= vite_client_tag %>"
-          gsub_file APPLICATION_LAYOUT.to_s, /<title>/, "<title inertia>"
+          insert_into_file application_layout.to_s, headers, after: "<%= vite_client_tag %>\n"
+
+          if framework == "react" && !application_layout.read.include?("vite_react_refresh_tag")
+            say "Adding Vite React Refresh tag to the application layout"
+            insert_into_file application_layout.to_s, "<%= vite_react_refresh_tag %>\n    ", before: "<%= vite_client_tag %>"
+            gsub_file application_layout.to_s, /<title>/, "<title inertia>"
+          end
+        else
+          say_error "Could not find the application layout file. Please add the following tags manually:", :red
+          say_error "-  <title>...</title>"
+          say_error "+  <title inertia>...</title>"
+          say_error "+  <%= inertia_headers %>"
+          say_error "+  <%= vite_react_refresh_tag %>" if framework == "react"
+          say_error "+  <%= vite_javascript_tag \"inertia\" %>"
         end
+      end
 
+      def install_example_page
         say "Copying example Inertia controller"
-        template "controller.rb", Rails.root.join("app/controllers/inertia_example_controller.rb").to_s
+        template "controller.rb", file_path("app/controllers/inertia_example_controller.rb")
 
         say "Adding a route for the example Inertia controller"
         route "get 'inertia-example', to: 'inertia_example#index'"
 
-        say "Copying framework related files"
-        FRAMEWORKS[framework][:copy_files].each do |source, destination|
-          template "#{framework}/#{source}", Rails.root.join(destination).to_s
+        say "Copying page assets"
+        FRAMEWORKS[framework]["copy_files"].each do |source, destination|
+          template "#{framework}/#{source}", file_path(destination % {js_destination_path: js_destination_path})
         end
       end
 
+      def install_tailwind
+        say "Installing Tailwind CSS"
+        add_packages(%w[tailwindcss postcss autoprefixer @tailwindcss/forms @tailwindcss/typography @tailwindcss/container-queries])
+
+        template "tailwind/tailwind.config.js", file_path("tailwind.config.js")
+        copy_file "tailwind/postcss.config.js", file_path("postcss.config.js")
+        copy_file "tailwind/application.css", js_file_path("entrypoints/application.css")
+
+        if application_layout.exist?
+          say "Adding Tailwind CSS to the application layout"
+          insert_into_file application_layout.to_s, "<%= vite_stylesheet_tag \"application\" %>\n    ", before: "<%= vite_client_tag %>"
+        else
+          say_error "Could not find the application layout file. Please add the following tags manually:", :red
+          say_error "+  <%= vite_stylesheet_tag \"application\" %>" if install_tailwind?
+        end
+      end
+
+      def install_vite
+        unless install_vite?
+          say_error "This generator only supports Ruby on Rails with Vite.", :red
+          exit(false)
+        end
+
+        in_root do
+          Bundler.with_original_env do
+            if (capture = run("bundle add vite_rails", capture: true))
+              say "Vite Rails gem successfully installed", :green
+            else
+              say capture
+              say_error "Failed to install Vite Rails gem", :red
+              exit(false)
+            end
+            if (capture = run("bundle exec vite install", capture: true))
+              say "Vite Rails successfully installed", :green
+            else
+              say capture
+              say_error "Failed to install Vite Rails", :red
+              exit(false)
+            end
+          end
+        end
+      end
+
+      def ruby_vite_installed?
+        return true if package_manager && ruby_vite?
+
+        if package_manager.nil?
+          say_status "Could not find a package.json file to install Inertia to.", nil
+        else
+          say_status "Could not find a Vite configuration files (`config/vite.json` & `vite.config.{ts,js,mjs,cjs}`).", nil
+        end
+        false
+      end
+
+      def application_layout
+        @application_layout ||= Pathname.new(file_path("app/views/layouts/application.html.erb"))
+      end
+
       def ruby_vite?
-        Rails.root.join("config/vite.json").exist? && vite_config_path
+        file?("config/vite.json") && vite_config_path
       end
 
       def package_manager
-        return @package_manager if defined?(@package_manager)
-
-        @package_manager = detect_package_manager
+        options[:package_manager] || detect_package_manager
       end
 
       def add_packages(*packages)
-        run "#{package_manager} add #{packages.join(" ")}"
+        in_root do
+          run "#{package_manager} add #{packages.join(" ")} --silent"
+        end
       end
 
       def detect_package_manager
-        return nil unless Rails.root.join("package.json").exist?
+        return nil unless file?("package.json")
 
-        if Rails.root.join("package-lock.json").exist?
+        if file?("package-lock.json")
           "npm"
-        elsif Rails.root.join("bun.config.js").exist?
+        elsif file?("bun.config.js") || file?("bun.lockb")
           "bun"
         else
           "yarn"
@@ -141,15 +192,23 @@ module Inertia
       end
 
       def vite_config_path
-        @vite_config_path ||= Dir.glob(Rails.root.join("vite.config.{ts,js,mjs,cjs}")).first
+        @vite_config_path ||= Dir.glob(file_path("vite.config.{ts,js,mjs,cjs}")).first
+      end
+
+      def install_vite?
+        return @install_vite if defined?(@install_vite)
+
+        @install_vite = options[:install_vite] || yes?("Would you like to install Vite Ruby? (y/n)", :green)
+      end
+
+      def install_tailwind?
+        return @install_tailwind if defined?(@install_tailwind)
+
+        @install_tailwind = options[:install_tailwind] || yes?("Would you like to install Tailwind CSS? (y/n)", :green)
       end
 
       def framework
-        @framework ||= ask("What framework do you want to use with Inertia?", limited_to: FRAMEWORKS.keys, default: "react")
-      end
-
-      def root_path
-        (defined?(ViteRuby) ? ViteRuby.config.source_code_dir : "app/frontend")
+        @framework ||= options[:framework] || ask("What framework do you want to use with Inertia?", :green, limited_to: FRAMEWORKS.keys, default: "react")
       end
     end
   end
