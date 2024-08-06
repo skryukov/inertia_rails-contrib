@@ -9,7 +9,7 @@ module InertiaRailsContrib
       when /@inertiajs\/vue3/
         "vue"
       else
-        puts "Could not determine the Inertia.js framework you are using."
+        say_error "Could not determine the Inertia.js framework you are using."
       end
     end
 
