@@ -7,6 +7,22 @@ and this project adheres to [Semantic Versioning].
 
 ## [Unreleased]
 
+Added:
+
+- TypeScript support for the installation generator ([@skryukov])
+  Note that it doesn't include scaffold templates yet.
+
+- New `--inertia-version` option for the installation generator ([@skryukov])
+  This allows you to specify the Inertia.js version to install.
+
+- Support `tailwind.config.ts` for Tailwind CSS template guessing ([@Shaglock])
+
+Fixed:
+
+- Correct examples for default layouts in inertia entrypoints ([@skryukov])
+- Inertia attribute added to the head tag in the layout for vue ([@skryukov])
+- Remove duplicate `vite_stylesheet_tag` when Tailwind CSS is installed ([@skryukov])
+
 ## [0.2.1] - 2024-08-11
 
 Added:
@@ -41,6 +57,7 @@ Added:
 - Initial release ([@iurev], [@skryukov])
 
 [@iurev]: https://github.com/iurev
+[@Shaglock]: https://github.com/Shaglock
 [@skryukov]: https://github.com/skryukov
 
 [Unreleased]: https://github.com/skryukov/inertia_rails-contrib/compare/v0.2.1...HEAD

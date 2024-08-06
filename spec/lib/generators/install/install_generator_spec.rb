@@ -6,8 +6,32 @@ RSpec.describe Inertia::Generators::InstallGenerator, type: :generator do
 
   let(:args) { %W[--framework=#{framework} --no-interactive -q] }
   let(:framework) { :react }
+  let(:ext) { "js" }
 
   subject(:generator) { run_generator(args) }
+
+  shared_context "assert framework structure" do
+    before { prepare_application }
+
+    it "installs the Inertia adapter" do
+      expect { generator }.not_to raise_error
+
+      expect_example_page_for(framework, ext: ext)
+      expect_inertia_prepared_for(framework, ext: ext)
+      expect_packages_for(framework, ext: ext)
+    end
+  end
+
+  shared_context "assert framework js and ts structures" do
+    include_context "assert framework structure"
+
+    context "with --typescript" do
+      let(:args) { super() + %w[--typescript] }
+      let(:ext) { "ts" }
+
+      include_context "assert framework structure"
+    end
+  end
 
   context "without vite" do
     before do
@@ -49,44 +73,34 @@ RSpec.describe Inertia::Generators::InstallGenerator, type: :generator do
 
   context "with --framework=svelte" do
     let(:framework) { :svelte }
+    include_context "assert framework structure"
 
-    before { prepare_application }
+    context "with --typescript" do
+      let(:inertia_version) { "1.3.0-beta.1" }
+      let(:args) { super() + %W[--typescript --inertia-version=#{inertia_version}] }
+      let(:ext) { "ts" }
 
-    it "installs the Inertia adapter" do
-      expect { generator }.not_to raise_error
+      include_context "assert framework structure"
 
-      expect_example_page_for(framework)
-      expect_inertia_prepared_for(framework)
-      expect_packages_for(framework)
+      context "with old Inertia version" do
+        let(:inertia_version) { "1.2.0" }
+        let(:ext) { "js" }
+
+        include_context "assert framework structure"
+      end
     end
   end
 
   context "with --framework=vue" do
     let(:framework) { :vue }
 
-    before { prepare_application }
-
-    it "installs the Inertia adapter" do
-      expect { generator }.not_to raise_error
-
-      expect_example_page_for(framework)
-      expect_inertia_prepared_for(framework)
-      expect_packages_for(framework)
-    end
+    include_context "assert framework js and ts structures"
   end
 
   context "with --framework=react" do
     let(:framework) { :react }
 
-    before { prepare_application }
-
-    it "installs the Inertia adapter" do
-      expect { generator }.not_to raise_error
-
-      expect_example_page_for(framework)
-      expect_inertia_prepared_for(framework)
-      expect_packages_for(framework)
-    end
+    include_context "assert framework js and ts structures"
   end
 
   context "with yarn" do
@@ -176,7 +190,7 @@ RSpec.describe Inertia::Generators::InstallGenerator, type: :generator do
     end)
   end
 
-  def expect_packages_for(framework)
+  def expect_packages_for(framework, ext: "js")
     expect(destination_root).to(have_structure do
       file("package.json") do
         case framework
@@ -185,34 +199,49 @@ RSpec.describe Inertia::Generators::InstallGenerator, type: :generator do
           contains('"react":')
           contains('"react-dom":')
           contains('"@vitejs/plugin-react":')
+          if ext == "ts"
+            contains('"@types/react":')
+            contains('"@types/react-dom":')
+            contains('"typescript":')
+          end
         when :vue
           contains('"@inertiajs/vue3":')
           contains('"vue":')
           contains('"@vitejs/plugin-vue":')
+          if ext == "ts"
+            contains('"typescript":')
+            contains('"vue-tsc":')
+          end
         when :svelte
           contains('"@inertiajs/svelte":')
           contains('"svelte":')
           contains('"@sveltejs/vite-plugin-svelte":')
+          if ext == "ts"
+            contains('"@tsconfig/svelte":')
+            contains('"svelte-check":')
+            contains('"typescript":')
+            contains('"tslib":')
+          end
         end
       end
     end)
   end
 
-  def expect_inertia_prepared_for(framework)
+  def expect_inertia_prepared_for(framework, ext: "js")
     expect(destination_root).to(have_structure do
       case framework
       when :react
         file("vite.config.ts") do
           contains("react()")
         end
-        file("app/frontend/entrypoints/inertia.js") do
+        file("app/frontend/entrypoints/inertia.#{ext}") do
           contains("import { createInertiaApp } from '@inertiajs/react'")
         end
       when :vue
         file("vite.config.ts") do
           contains("vue()")
         end
-        file("app/frontend/entrypoints/inertia.js") do
+        file("app/frontend/entrypoints/inertia.#{ext}") do
           contains("import { createInertiaApp } from '@inertiajs/vue3'")
         end
       when :svelte
@@ -222,12 +251,16 @@ RSpec.describe Inertia::Generators::InstallGenerator, type: :generator do
         file("vite.config.ts") do
           contains("svelte()")
         end
-        file("app/frontend/entrypoints/inertia.js") do
+        file("app/frontend/entrypoints/inertia.#{ext}") do
           contains("import { createInertiaApp } from '@inertiajs/svelte'")
         end
       end
       file("app/views/layouts/application.html.erb") do
-        contains('<%= vite_javascript_tag "inertia" %>')
+        if ext == "ts"
+          contains('<%= vite_typescript_tag "inertia" %>')
+        else
+          contains('<%= vite_javascript_tag "inertia" %>')
+        end
         if framework == :react
           contains("<%= vite_react_refresh_tag %>")
         else
@@ -241,15 +274,44 @@ RSpec.describe Inertia::Generators::InstallGenerator, type: :generator do
       file("bin/dev") do
         contains("overmind start -f Procfile.dev")
       end
+
+      if ext == "ts"
+        file("app/frontend/vite-env.d.ts") do
+          contains('/// <reference types="vite/client" />')
+        end
+        file("tsconfig.node.json") do
+          contains('"include": ["vite.config.ts"]')
+        end
+        case framework
+        when :react
+          file("tsconfig.json") do
+            contains('"path": "./tsconfig.app.json"')
+          end
+          file("tsconfig.app.json") do
+            contains('"include": ["app/frontend"]')
+          end
+        when :vue
+          file("tsconfig.json") do
+            contains('"path": "./tsconfig.app.json"')
+          end
+          file("tsconfig.app.json") do
+            contains('"include": ["app/frontend/**/*.ts", "app/frontend/**/*.tsx", "app/frontend/**/*.vue"]')
+          end
+        when :svelte
+          file("tsconfig.json") do
+            contains('"include": ["app/frontend/**/*.ts", "app/frontend/**/*.js", "app/frontend/**/*.svelte"]')
+          end
+        end
+      end
     end)
   end
 
-  def expect_example_page_for(framework)
+  def expect_example_page_for(framework, ext: "js")
     expect(destination_root).to(have_structure do
       directory("app/frontend") do
         case framework
         when :react
-          file("pages/InertiaExample.jsx")
+          file("pages/InertiaExample.#{(ext == "js") ? "jsx" : "tsx"}")
           file("pages/InertiaExample.module.css")
           file("assets/react.svg")
         when :vue

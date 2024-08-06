@@ -18,6 +18,12 @@ module Inertia
         enum: FRAMEWORKS.keys,
         default: nil
 
+      class_option :inertia_version, type: :string, default: "latest",
+        desc: "The version of Inertia.js to install"
+
+      class_option :typescript, type: :boolean, default: false,
+        desc: "Whether to use TypeScript"
+
       class_option :package_manager, type: :string, default: nil, enum: %w[npm yarn bun pnpm],
         desc: "The package manager you want to use to install Inertia's npm packages"
 
@@ -39,7 +45,14 @@ module Inertia
       def install
         say "Installing Inertia's Rails adapter"
 
+        if inertia_resolved_version.version == "0"
+          say_error "Could not find the Inertia.js package version #{options[:inertia_version]}.", :red
+          exit(false)
+        end
+
         install_vite unless ruby_vite_installed?
+
+        install_typescript if typescript?
 
         install_tailwind if install_tailwind?
 
@@ -62,6 +75,7 @@ module Inertia
 
         say "Installing Inertia npm packages"
         add_packages(*FRAMEWORKS[framework]["packages"])
+        add_packages(inertia_package)
 
         unless File.read(vite_config_path).include?(FRAMEWORKS[framework]["vite_plugin_import"])
           say "Adding Vite plugin for #{framework}"
@@ -69,32 +83,43 @@ module Inertia
           prepend_file vite_config_path, "#{FRAMEWORKS[framework]["vite_plugin_import"]}\n"
         end
 
-        say "Copying inertia.js entrypoint"
-        template "#{framework}/inertia.js", js_file_path("entrypoints/inertia.js")
+        say "Copying #{inertia_entrypoint} entrypoint"
+        template "#{framework}/#{inertia_entrypoint}", js_file_path("entrypoints/#{inertia_entrypoint}")
 
         if application_layout.exist?
-          say "Adding inertia.js script tag to the application layout"
+          say "Adding #{inertia_entrypoint} script tag to the application layout"
           headers = <<-ERB
-    <%= vite_javascript_tag "inertia" %>
+    <%= #{vite_tag} "inertia" %>
     <%= inertia_headers %>
           ERB
-          headers += "\n      <%= vite_stylesheet_tag \"application\" %>" if install_tailwind?
-
           insert_into_file application_layout.to_s, headers, after: "<%= vite_client_tag %>\n"
 
           if framework == "react" && !application_layout.read.include?("vite_react_refresh_tag")
             say "Adding Vite React Refresh tag to the application layout"
             insert_into_file application_layout.to_s, "<%= vite_react_refresh_tag %>\n    ", before: "<%= vite_client_tag %>"
-            gsub_file application_layout.to_s, /<title>/, "<title inertia>"
           end
+
+          gsub_file application_layout.to_s, /<title>/, "<title inertia>" if framework != "svelte"
         else
           say_error "Could not find the application layout file. Please add the following tags manually:", :red
           say_error "-  <title>...</title>"
           say_error "+  <title inertia>...</title>"
           say_error "+  <%= inertia_headers %>"
           say_error "+  <%= vite_react_refresh_tag %>" if framework == "react"
-          say_error "+  <%= vite_javascript_tag \"inertia\" %>"
+          say_error "+  <%= #{vite_tag} \"inertia\" %>"
         end
+      end
+
+      def install_typescript
+        say "Adding TypeScript support"
+        if framework == "svelte" && inertia_resolved_version.release < Gem::Version.new("1.3.0")
+          say "WARNING: @inertiajs/svelte < 1.3.0 does not support TypeScript (resolved version: #{inertia_resolved_version}).", :yellow
+          say "Skipping TypeScript support for @inertiajs/svelte", :yellow
+          @typescript = false
+          return
+        end
+
+        add_packages(*FRAMEWORKS[framework]["packages_ts"])
       end
 
       def install_example_page
@@ -105,7 +130,8 @@ module Inertia
         route "get 'inertia-example', to: 'inertia_example#index'"
 
         say "Copying page assets"
-        FRAMEWORKS[framework]["copy_files"].each do |source, destination|
+        copy_files = FRAMEWORKS[framework]["copy_files"].merge(FRAMEWORKS[framework]["copy_files_#{typescript? ? "ts" : "js"}"])
+        copy_files.each do |source, destination|
           template "#{framework}/#{source}", file_path(destination % {js_destination_path: js_destination_path})
         end
       end
@@ -222,8 +248,30 @@ module Inertia
         @install_tailwind = options[:install_tailwind] || yes?("Would you like to install Tailwind CSS? (y/n)", :green)
       end
 
+      def typescript?
+        return @typescript if defined?(@typescript)
+
+        @typescript = options[:typescript] || yes?("Would you like to use TypeScript? (y/n)", :green)
+      end
+
+      def inertia_entrypoint
+        "inertia.#{typescript? ? "ts" : "js"}"
+      end
+
+      def vite_tag
+        typescript? ? "vite_typescript_tag" : "vite_javascript_tag"
+      end
+
+      def inertia_resolved_version
+        @inertia_resolved_version ||= Gem::Version.new(`npm show @inertiajs/core@#{options[:inertia_version]} version`.strip)
+      end
+
       def verbose?
         options[:verbose]
+      end
+
+      def inertia_package
+        "#{FRAMEWORKS[framework]["inertia_package"]}@#{options[:inertia_version]}"
       end
 
       def framework
