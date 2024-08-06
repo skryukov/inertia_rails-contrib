@@ -48,6 +48,10 @@ Would you like to install Vite Ruby? (y/n) y
 Vite Rails gem successfully installed
          run  bundle exec vite install from "."
 Vite Rails successfully installed
+Would you like to use TypeScript? (y/n) y
+Adding TypeScript support
+What framework do you want to use with Inertia? [react, vue, svelte] (react)
+         run  npm add @types/react @types/react-dom typescript --silent from "."
 Would you like to install Tailwind CSS? (y/n) y
 Installing Tailwind CSS
          run  npm add tailwindcss postcss autoprefixer @tailwindcss/forms @tailwindcss/typography @tailwindcss/container-queries --silent from "."
@@ -59,14 +63,14 @@ Adding Tailwind CSS to the application layout
 Adding Inertia's Rails adapter initializer
       create  config/initializers/inertia_rails.rb
 Installing Inertia npm packages
-What framework do you want to use with Inertia? [react, vue, svelte] (react)
-         run  npm add @inertiajs/react react react-dom @vitejs/plugin-react --silent from "."
+         run  npm add @vitejs/plugin-react react react-dom --silent from "."
+         run  npm add @inertiajs/react@latest --silent from "."
 Adding Vite plugin for react
       insert  vite.config.ts
      prepend  vite.config.ts
-Copying inertia.js entrypoint
-      create  app/frontend/entrypoints/inertia.js
-Adding inertia.js script tag to the application layout
+Copying inertia.ts entrypoint
+      create  app/frontend/entrypoints/inertia.ts
+Adding inertia.ts script tag to the application layout
       insert  app/views/layouts/application.html.erb
 Adding Vite React Refresh tag to the application layout
       insert  app/views/layouts/application.html.erb
@@ -76,11 +80,15 @@ Copying example Inertia controller
 Adding a route for the example Inertia controller
        route  get 'inertia-example', to: 'inertia_example#index'
 Copying page assets
-      create  app/frontend/pages/InertiaExample.jsx
       create  app/frontend/pages/InertiaExample.module.css
       create  app/frontend/assets/react.svg
       create  app/frontend/assets/inertia.svg
       create  app/frontend/assets/vite_ruby.svg
+      create  app/frontend/pages/InertiaExample.tsx
+      create  tsconfig.json
+      create  tsconfig.app.json
+      create  tsconfig.node.json
+      create  app/frontend/vite-env.d.ts
 Copying bin/dev
       create  bin/dev
 Inertia's Rails adapter successfully installed

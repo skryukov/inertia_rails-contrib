@@ -1,4 +1,5 @@
-import { createInertiaApp } from '@inertiajs/svelte'
+import { createInertiaApp } from '@inertiajs/vue3'
+import {createApp, DefineComponent, h} from 'vue'
 
 createInertiaApp({
   // Set default page title
@@ -12,18 +13,21 @@ createInertiaApp({
   // progress: false,
 
   resolve: (name) => {
-    const pages = import.meta.glob('../pages/**/*.svelte', { eager: true })
-    return pages[`../pages/${name}.svelte`]
+    const pages = import.meta.glob('../pages/**/*.vue', { eager: true })
+    return pages[`../pages/${name}.vue`] as DefineComponent
 
     // To use a default layout, import the Layout component
     // and use the following lines.
     // see https://inertia-rails.netlify.app/guide/pages#default-layouts
     //
-    // const page = pages[`../pages/${name}.svelte`]
-    // return { default: page.default, layout: page.layout || Layout }
+    // const page = pages[`../pages/${name}.vue`] as DefineComponent
+    // page.default.layout = page.default.layout || Layout
+    // return page
   },
 
-  setup({ el, App }) {
-    new App({ target: el })
+  setup({ el, App, props, plugin }) {
+    createApp({ render: () => h(App, props) })
+      .use(plugin)
+      .mount(el)
   },
 })
