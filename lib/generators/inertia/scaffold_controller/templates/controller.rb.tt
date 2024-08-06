@@ -84,17 +84,16 @@ class <%= controller_class_name %>Controller < ApplicationController
     def <%= "serialize_#{singular_table_name}" %>(<%= singular_table_name %>)
       <%= singular_table_name %>.as_json(only: [
         <%= attributes_to_serialize.map { |attribute| ":#{attribute}" }.join(", ") %>
-      ])<% if attributes.any?(&:attachment?) -%>.tap do |hash|
-<% attributes.filter(&:attachment?).map do |attribute| -%>
+      ])<%- if attributes.any?(&:attachment?) || attributes.any?(&:attachments?) -%>.tap do |hash|
+          <%- attributes.filter(&:attachment?).map do |attribute| -%>
         hash["<%= attribute.column_name %>"] = {filename: <%= singular_table_name %>.<%= attribute.column_name %>.filename, url: url_for(<%= singular_table_name %>.<%= attribute.column_name %>)} if <%= singular_table_name %>.<%= attribute.column_name %>.attached?
-<% end -%>
-      end<% end -%><% if attributes.any?(&:attachments?) -%>.tap do |hash|
-<% attributes.filter(&:attachments?).map do |attribute| -%>
+          <%- end -%>
+          <%- attributes.filter(&:attachments?).map do |attribute| -%>
         hash["<%= attribute.column_name %>"] =
           <%= singular_table_name %>.<%= attribute.column_name %>.flat_map do |file|
             {filename: file.filename.to_s, url: url_for(file)}
           end
-<% end -%>
+          <%- end -%>
       end<% end %>
     end
 end
