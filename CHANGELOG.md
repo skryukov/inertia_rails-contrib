@@ -7,6 +7,15 @@ and this project adheres to [Semantic Versioning].
 
 ## [Unreleased]
 
+Added:
+
+- Support `pnpm` package manager ([@skryukov])
+- New `--verbose` option for the installation generator ([@skryukov])
+
+Fixed:
+
+- Support installation alongside Webpacker ([@skryukov])
+
 ## [0.2.0] - 2024-08-10
 
 Added:
