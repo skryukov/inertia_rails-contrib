@@ -31,6 +31,9 @@ module Inertia
       class_option :example_page, type: :boolean, default: true,
         desc: "Whether to add an example Inertia page"
 
+      class_option :verbose, type: :boolean, default: false,
+        desc: "Run the generator in verbose mode"
+
       remove_class_option :skip_namespace, :skip_collision_check
 
       def install
@@ -46,7 +49,7 @@ module Inertia
 
         say "Copying bin/dev"
         copy_file "#{__dir__}/templates/dev", "bin/dev"
-        chmod "bin/dev", 0o755, verbose: false
+        chmod "bin/dev", 0o755, verbose: verbose?
 
         say "Inertia's Rails adapter successfully installed", :green
       end
@@ -132,14 +135,14 @@ module Inertia
 
         in_root do
           Bundler.with_original_env do
-            if (capture = run("bundle add vite_rails", capture: true))
+            if (capture = run("bundle add vite_rails", capture: !verbose?))
               say "Vite Rails gem successfully installed", :green
             else
               say capture
               say_error "Failed to install Vite Rails gem", :red
               exit(false)
             end
-            if (capture = run("bundle exec vite install", capture: true))
+            if (capture = run("bundle exec vite install", capture: !verbose?))
               say "Vite Rails successfully installed", :green
             else
               say capture
@@ -175,7 +178,7 @@ module Inertia
 
       def add_packages(*packages)
         in_root do
-          run "#{package_manager} add #{packages.join(" ")} --silent"
+          run "#{package_manager} add #{packages.join(" ")} #{verbose? ? "" : "--silent"}"
         end
       end
 
@@ -207,6 +210,10 @@ module Inertia
         return @install_tailwind if defined?(@install_tailwind)
 
         @install_tailwind = options[:install_tailwind] || yes?("Would you like to install Tailwind CSS? (y/n)", :green)
+      end
+
+      def verbose?
+        options[:verbose]
       end
 
       def framework
