@@ -158,10 +158,20 @@ module Inertia
 
         if package_manager.nil?
           say_status "Could not find a package.json file to install Inertia to.", nil
+        elsif gem_installed?("webpacker") || gem_installed?("shakapacker")
+          say "Webpacker or Shakapacker is installed.", :yellow
+          say "Vite Ruby can work alongside Webpacker or Shakapacker, but it might cause issues.", :yellow
+          say "Please see the Vite Ruby documentation for the migration guide:", :yellow
+          say "https://vite-ruby.netlify.app/guide/migration.html#webpacker-%F0%9F%93%A6", :yellow
         else
-          say_status "Could not find a Vite configuration files (`config/vite.json` & `vite.config.{ts,js,mjs,cjs}`).", nil
+          say_status "Could not find a Vite configuration files (`config/vite.json` & `vite.config.{ts,js,mjs,cjs,mts,cts}`).", nil
         end
         false
+      end
+
+      def gem_installed?(name)
+        regex = /^[^#]*gem\s+['"]#{name}['"]/
+        File.read(file_path("Gemfile")).match?(regex)
       end
 
       def application_layout
@@ -197,7 +207,7 @@ module Inertia
       end
 
       def vite_config_path
-        @vite_config_path ||= Dir.glob(file_path("vite.config.{ts,js,mjs,cjs}")).first
+        @vite_config_path ||= Dir.glob(file_path("vite.config.{ts,js,mjs,cjs,mts,cts}")).first
       end
 
       def install_vite?

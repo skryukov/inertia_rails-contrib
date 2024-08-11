@@ -3,7 +3,13 @@ module Inertia
     module Helpers
       ### FS Helpers
       def js_destination_path
-        defined?(ViteRuby) ? ViteRuby.config.source_code_dir : "app/frontend"
+        return ViteRuby.config.source_code_dir if defined?(ViteRuby)
+        if file?("config/vite.json")
+          source_code_dir = JSON.parse(File.read(file_path("config/vite.json"))).dig("all", "sourceCodeDir")
+          return source_code_dir if source_code_dir
+        end
+
+        "app/frontend"
       end
 
       def js_destination_root
