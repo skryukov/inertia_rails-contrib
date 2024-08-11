@@ -18,7 +18,7 @@ module Inertia
         enum: FRAMEWORKS.keys,
         default: nil
 
-      class_option :package_manager, type: :string, default: nil, enum: %w[npm yarn bun],
+      class_option :package_manager, type: :string, default: nil, enum: %w[npm yarn bun pnpm],
         desc: "The package manager you want to use to install Inertia's npm packages"
 
       class_option :interactive, type: :boolean, default: true,
@@ -184,8 +184,10 @@ module Inertia
 
         if file?("package-lock.json")
           "npm"
-        elsif file?("bun.config.js") || file?("bun.lockb")
+        elsif file?("bun.lockb")
           "bun"
+        elsif file?("pnpm-lock.yaml")
+          "pnpm"
         else
           "yarn"
         end
