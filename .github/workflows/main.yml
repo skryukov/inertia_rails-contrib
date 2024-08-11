@@ -56,5 +56,7 @@ jobs:
           node-version: 20.x
       - name: Install yarn
         run: npm install -g yarn
+      - name: Install pnpm
+        run: npm install -g pnpm
       - name: Run tests
         run: bundle exec rspec

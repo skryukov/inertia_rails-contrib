@@ -97,6 +97,9 @@ RSpec.describe Inertia::Generators::InstallGenerator, type: :generator do
 
       expect_example_page_for(:react)
       expect_packages_for(:react)
+      expect(destination_root).to(have_structure do
+        file("yarn.lock")
+      end)
     end
   end
 
@@ -110,6 +113,25 @@ RSpec.describe Inertia::Generators::InstallGenerator, type: :generator do
 
       expect_example_page_for(:react)
       expect_packages_for(:react)
+      expect(destination_root).to(have_structure do
+        file("package-lock.json")
+      end)
+    end
+  end
+
+  context "with pnpm" do
+    let(:args) { super() + %w[--package-manager=pnpm] }
+
+    before { prepare_application }
+
+    it "installs the Inertia adapter" do
+      expect { generator }.not_to raise_error
+
+      expect_example_page_for(:react)
+      expect_packages_for(:react)
+      expect(destination_root).to(have_structure do
+        file("pnpm-lock.yaml")
+      end)
     end
   end
 
@@ -123,6 +145,9 @@ RSpec.describe Inertia::Generators::InstallGenerator, type: :generator do
 
       expect_example_page_for(:react)
       expect_packages_for(:react)
+      expect(destination_root).to(have_structure do
+        file("bun.lockb")
+      end)
     end
   end
 
