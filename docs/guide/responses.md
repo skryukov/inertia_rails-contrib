@@ -18,7 +18,7 @@ class EventsController < ApplicationController
 end
 ```
 
-Within Rails applications, the `Event/Show` page would typically correspond to the file located at `app/frontend/pages/User/Show.(jsx|vue|svelte)`.
+Within Rails applications, the `Event/Show` page would typically correspond to the file located at `app/frontend/pages/Event/Show.(jsx|vue|svelte)`.
 
 > [!WARNING]
 > To ensure that pages load quickly, only return the minimum data required for the page. Also, be aware that **all data returned from the controllers will be visible client-side**, so be sure to omit sensitive information.
