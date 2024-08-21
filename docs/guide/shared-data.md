@@ -42,9 +42,9 @@ Once you have shared the data server-side, you will be able to access it within 
 <template>
   <main>
     <header>You are logged in as: {{ user.name }}</header>
-    <content>
+    <article>
       <slot />
-    </content>
+    </article>
   </main>
 </template>
 
@@ -74,9 +74,9 @@ const user = computed(() => page.props.auth.user)
 <template>
   <main>
     <header>You are logged in as: {{ user.name }}</header>
-    <content>
+    <article>
       <slot />
-    </content>
+    </article>
   </main>
 </template>
 ```
@@ -92,7 +92,7 @@ export default function Layout({ children }) {
   return (
     <main>
       <header>You are logged in as: {auth.user.name}</header>
-      <content>{children}</content>
+      <article>{children}</article>
     </main>
   )
 }
@@ -109,9 +109,9 @@ export default function Layout({ children }) {
   <header>
     You are logged in as: {$page.props.auth.user.name}
   </header>
-  <content>
+  <article>
     <slot />
-  </content>
+  </article>
 </main>
 ```
 
@@ -138,7 +138,7 @@ Next, display the flash message in a frontend component, such as the site layout
 <template>
   <main>
     <header></header>
-    <content>
+    <article>
       <div v-if="$page.props.flash.alert" class="alert">
         {{ $page.props.flash.alert }}
       </div>
@@ -146,7 +146,7 @@ Next, display the flash message in a frontend component, such as the site layout
         {{ $page.props.flash.notice }}
       </div>
       <slot />
-    </content>
+    </article>
     <footer></footer>
   </main>
 </template>
@@ -158,7 +158,7 @@ Next, display the flash message in a frontend component, such as the site layout
 <template>
   <main>
     <header></header>
-    <content>
+    <article>
       <div v-if="$page.props.flash.alert" class="alert">
         {{ $page.props.flash.alert }}
       </div>
@@ -166,7 +166,7 @@ Next, display the flash message in a frontend component, such as the site layout
         {{ $page.props.flash.notice }}
       </div>
       <slot />
-    </content>
+    </article>
     <footer></footer>
   </main>
 </template>
@@ -183,11 +183,11 @@ export default function Layout({ children }) {
   return (
     <main>
       <header></header>
-      <content>
+      <article>
         {flash.alert && <div className="alert">{flash.alert}</div>}
         {flash.notice && <div className="notice">{flash.notice}</div>}
         {children}
-      </content>
+      </article>
       <footer></footer>
     </main>
   )
@@ -203,7 +203,7 @@ export default function Layout({ children }) {
 
 <main>
   <header></header>
-  <content>
+  <article>
     {#if $page.props.flash.alert}
       <div class="alert">{$page.props.flash.alert}</div>
     {/if}
@@ -211,7 +211,7 @@ export default function Layout({ children }) {
       <div class="notice">{$page.props.flash.notice}</div>
     {/if}
     <slot />
-  </content>
+  </article>
   <footer></footer>
 </main>
 ```
