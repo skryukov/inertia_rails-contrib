@@ -1,3 +1,4 @@
+import React from 'react'
 import { useForm } from '@inertiajs/react'
 
 export default function Form({ <%= singular_table_name %>, onSubmit, submitText }) {
