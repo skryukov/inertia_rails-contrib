@@ -14,7 +14,7 @@ module InertiaRailsContrib
     end
 
     def self.guess_inertia_template
-      if Rails.root.join("tailwind.config.js").exist?
+      if Rails.root.join("tailwind.config.js").exist? || Rails.root.join("tailwind.config.ts").exist?
         "inertia_tw_templates"
       else
         "inertia_templates"
