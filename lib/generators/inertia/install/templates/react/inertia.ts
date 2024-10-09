@@ -2,7 +2,7 @@ import { createInertiaApp } from '@inertiajs/react'
 import { createElement, ReactNode } from 'react'
 import { createRoot } from 'react-dom/client'
 
-type Component = { default: ReactNode & { layout?: (page: ReactNode) => ReactNode } }
+type ResolvedComponent = { default: ReactNode, layout?: (page: ReactNode) => ReactNode }
 
 createInertiaApp({
   // Set default page title
@@ -17,13 +17,13 @@ createInertiaApp({
 
   resolve: (name) => {
     const pages = import.meta.glob('../pages/**/*.tsx', { eager: true })
-    return pages[`../pages/${name}.tsx`] as Component
+    return pages[`../pages/${name}.tsx`] as ResolvedComponent
 
     // To use a default layout, import the Layout component
     // and use the following lines.
     // see https://inertia-rails.netlify.app/guide/pages#default-layouts
     //
-    // const page = pages[`../pages/${name}.tsx`] as Component
+    // const page = pages[`../pages/${name}.tsx`] as ResolvedComponent
     // page.default.layout ||= (page) => createElement(Layout, null, page)
     // return page
   },
