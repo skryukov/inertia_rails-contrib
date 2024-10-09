@@ -31,6 +31,7 @@ bin/rails generate inertia:install
 
 This command will:
 - Check for Vite Rails and install it if not present
+- Ask if you want to use TypeScript
 - Ask you to choose your preferred frontend framework (React, Vue, or Svelte)
 - Ask if you want to install Tailwind CSS
 - Install necessary dependencies
