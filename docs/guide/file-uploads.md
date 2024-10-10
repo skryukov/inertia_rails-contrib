@@ -7,17 +7,7 @@ When making Inertia requests that include files (even nested files), Inertia wil
 If you would like the request to always use a `FormData` object regardless of whether a file is present in the data, you may provide the `forceFormData` option when making the request.
 
 :::tabs key:frameworks
-== Vue 2
-
-```js
-import { router } from '@inertiajs/vue2'
-
-router.post('/users', data, {
-  forceFormData: true,
-})
-```
-
-== Vue 3
+== Vue
 
 ```js
 import { router } from '@inertiajs/vue3'
@@ -59,42 +49,7 @@ You can learn more about the `FormData` interface via its [MDN documentation](ht
 Let's examine a complete file upload example using Inertia. This example includes both a `name` text input and an `avatar` file input.
 
 :::tabs key:frameworks
-== Vue 2
-
-```vue
-<template>
-  <form @submit.prevent="submit">
-    <input type="text" v-model="form.name" />
-    <input type="file" @input="form.avatar = $event.target.files[0]" />
-    <progress v-if="form.progress" :value="form.progress.percentage" max="100">
-      {{ form.progress.percentage }}%
-    </progress>
-    <button type="submit">Submit</button>
-  </form>
-</template>
-
-<script>
-import { useForm } from '@inertiajs/vue2'
-
-export default {
-  data() {
-    return {
-      form: useForm({
-        name: null,
-        avatar: null,
-      }),
-    }
-  },
-  methods: {
-    submit() {
-      this.form.post('/users')
-    },
-  },
-}
-</script>
-```
-
-== Vue 3
+== Vue
 
 ```vue
 <script setup>
@@ -200,24 +155,7 @@ However, some frameworks, such as Laravel and Rails, support form method spoofin
 > For more info see [`Rack::MethodOverride`](https://github.com/rack/rack/blob/main/lib/rack/method_override.rb).
 
 :::tabs key:frameworks
-== Vue 2
-
-```js
-import { router } from '@inertiajs/vue2'
-
-router.post(`/users/${user.id}`, {
-  _method: 'put',
-  avatar: form.avatar,
-})
-
-// or
-
-form.post(`/users/${user.id}`, {
-  headers: { 'X-HTTP-METHOD-OVERRIDE': 'put' },
-})
-```
-
-== Vue 3
+== Vue
 
 ```js
 import { router } from '@inertiajs/vue3'

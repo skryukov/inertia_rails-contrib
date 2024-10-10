@@ -12,17 +12,7 @@ As an example, consider a "user index" page that includes a list of users, as we
 To perform a partial reload, use the `only` visit option to specify which data the server should return. This option should be an array of keys which correspond to the keys of the props.
 
 :::tabs key:frameworks
-== Vue 2
-
-```js
-import { router } from '@inertiajs/vue2'
-
-router.visit(url, {
-  only: ['users'],
-})
-```
-
-== Vue 3
+== Vue
 
 ```js
 import { router } from '@inertiajs/vue3'
@@ -57,17 +47,7 @@ router.visit(url, {
 ## Except certain props
 
 :::tabs key:frameworks
-== Vue 2
-
-```js
-import { router } from '@inertiajs/vue2'
-
-router.visit(url, {
-  except: ['users'],
-})
-```
-
-== Vue 3
+== Vue
 
 ```js
 import { router } from '@inertiajs/vue3'
@@ -106,15 +86,7 @@ In addition to the only visit option you can also use the except option to speci
 Since partial reloads can only be made to the same page component the user is already on, it almost always makes sense to just use the `router.reload()` method, which automatically uses the current URL.
 
 :::tabs key:frameworks
-== Vue 2
-
-```vue
-import { router } from '@inertiajs/vue2'
-
-router.reload({ only: ['users'] })
-```
-
-== Vue 3
+== Vue
 
 ```vue
 import { router } from '@inertiajs/vue3'
@@ -145,15 +117,7 @@ router.reload({ only: ['users'] })
 It's also possible to perform partial reloads with Inertia links using the `only` property.
 
 :::tabs key:frameworks
-== Vue 2
-
-```vue
-import { Link } from '@inertiajs/vue2'
-
-<Link href="/users?active=true" :only="['users']">Show active</Link>
-```
-
-== Vue 3
+== Vue
 
 ```vue
 import { Link } from '@inertiajs/vue3'

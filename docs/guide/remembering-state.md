@@ -11,15 +11,7 @@ To mitigate this issue, you can tell Inertia which local component state to save
 To save local component state to the history state, use the `remember` feature to tell Inertia which data it should remember.
 
 :::tabs key:frameworks
-== Vue 2
-
-```vue
-{ // Option 1: Object... remember: { data: ['form'], }, // Option 2: Array...
-remember: ['form'], // Option 3: String... remember: 'form', data() { return {
-form: { first_name: null, last_name: null, // ... }, } }, }
-```
-
-== Vue 3
+== Vue
 
 ```vue
 import { useRemember } from '@inertiajs/vue3' const form = useRemember({
@@ -64,26 +56,7 @@ Now, whenever your local `form` state changes, Inertia will automatically save t
 If your page contains multiple components that use the remember functionality provided by Inertia, you need to provide a unique key for each component so that Inertia knows which data to restore to each component.
 
 :::tabs key:frameworks
-== Vue 2
-
-```js
-{
-  remember: {
-    data: ['form'],
-    key: 'Users/Create',
-  },
-  data() {
-    return {
-      form: {
-        first_name: null,
-        last_name: null,
-      },
-    }
-  },
-}
-```
-
-== Vue 3
+== Vue
 
 ```js
 import { useRemember } from '@inertiajs/vue3'
@@ -132,26 +105,7 @@ let form = remember(
 If you have multiple instances of the same component on the page using the remember functionality, be sure to also include a unique key for each component instance, such as a model identifier.
 
 :::tabs key:frameworks
-== Vue 2
-
-```js
-{
-  remember: {
-    data: ['form'],
-    key: 'Users/Create',
-  },
-  data() {
-    return {
-      form: {
-        first_name: null,
-        last_name: null,
-      },
-    }
-  },
-}
-```
-
-== Vue 3
+== Vue
 
 ```js
 import { useRemember } from '@inertiajs/vue3'
@@ -204,28 +158,7 @@ let form = remember(
 If you're using the Inertia [form helper](/guide/forms.md#form-helper), you can pass a unique form key as the first argument when instantiating your form. This will cause the form data and errors to automatically be remembered.
 
 :::tabs key:frameworks
-== Vue 2
-
-```js
-{
-  remember: {
-    data: ['form'],
-      key() {
-      return `Users/Edit:${this.user.id}`
-    }
-  },
-  data() {
-    return {
-      form: {
-        first_name: this.user.first_name,
-        last_name: this.user.last_name,
-      },
-    }
-  },
-}
-```
-
-== Vue 3
+== Vue
 
 ```js
 import { useForm } from '@inertiajs/vue3'
@@ -256,24 +189,12 @@ const form = useForm(`EditUser:${user.id}`, data)
 
 ## Manually saving state
 
-The `remember` property in Vue 2, and the `useRemember` hook in Vue 3, React, and Svelte all watch for data changes and automatically save those changes to the history state. Then, Inertia will restore the data on page load.
+The `useRemember` hook watches for data changes and automatically saves those changes to the history state. Then, Inertia restores the data on page load.
 
 However, it's also possible to manage this manually using the underlying `remember()` and `restore()` methods in Inertia.
 
 :::tabs key:frameworks
-== Vue 2
-
-```js
-import { router } from '@inertiajs/vue2'
-
-// Save local component state to history state...
-router.remember(data, 'my-key')
-
-// Restore local component state from history state...
-let data = router.restore('my-key')
-```
-
-== Vue 3
+== Vue
 
 ```js
 import { router } from '@inertiajs/vue3'

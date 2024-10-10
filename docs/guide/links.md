@@ -7,16 +7,7 @@ To create links to other pages within an Inertia app, you will typically use the
 To create an Inertia link, use the Inertia `<Link>` component. Any attributes you provide to this component will be proxied to the underlying HTML tag.
 
 :::tabs key:frameworks
-
-== Vue 2
-
-```vue
-import { Link } from '@inertiajs/vue2'
-
-<Link href="/">Home</Link>
-```
-
-== Vue 3
+== Vue
 
 ```vue
 import { Link } from '@inertiajs/vue3'
@@ -50,18 +41,7 @@ import { inertia, Link } from '@inertiajs/svelte'
 By default, Inertia renders links as anchor `<a>` elements. However, you can change the tag using the `as` prop.
 
 :::tabs key:frameworks
-== Vue 2
-
-```vue
-import { Link } from '@inertiajs/vue2'
-
-<Link href="/logout" method="post" as="button" type="button">Logout</Link>
-
-// Renders as...
-<button type="button">Logout</button>
-```
-
-== Vue 3
+== Vue
 
 ```vue
 import { Link } from '@inertiajs/vue3'
@@ -107,15 +87,7 @@ import { inertia } from '@inertiajs/svelte'
 You can specify the HTTP request method for an Inertia link request using the `method` prop. The default method used by links is `GET`, but you can use the `method` prop to make `POST`, `PUT`, `PATCH`, and `DELETE` requests via links.
 
 :::tabs key:frameworks
-== Vue 2
-
-```vue
-import { Link } from '@inertiajs/vue2'
-
-<Link href="/logout" method="post" as="button">Logout</Link>
-```
-
-== Vue 3
+== Vue
 
 ```vue
 import { Link } from '@inertiajs/vue3'
@@ -148,20 +120,7 @@ import { inertia, Link } from '@inertiajs/svelte'
 When making `POST` or `PUT` requests, you may wish to add additional data to the request. You can accomplish this using the `data` prop. The provided data can be an `object` or `FormData` instance.
 
 :::tabs key:frameworks
-== Vue 2
-
-```vue
-import { Link } from '@inertiajs/vue2'
-
-<Link
-  href="/endpoint"
-  method="post"
-  as="button"
-  :data="{ foo: bar }"
->Save</Link>
-```
-
-== Vue 3
+== Vue
 
 ```vue
 import { Link } from '@inertiajs/vue3'
@@ -201,15 +160,7 @@ import { inertia, Link } from '@inertiajs/svelte'
 The `headers` prop allows you to add custom headers to an Inertia link. However, the headers Inertia uses internally to communicate its state to the server take priority and therefore cannot be overwritten.
 
 :::tabs key:frameworks
-== Vue 2
-
-```vue
-import { Link } from '@inertiajs/vue2'
-
-<Link href="/endpoint" :headers="{ foo: bar }">Save</Link>
-```
-
-== Vue 3
+== Vue
 
 ```vue
 import { Link } from '@inertiajs/vue3'
@@ -244,15 +195,7 @@ import { inertia, Link } from '@inertiajs/svelte'
 The `replace` prop allows you to specify the browser's history behavior. By default, page visits push (new) state (`window.history.pushState`) into the history; however, it's also possible to replace state (`window.history.replaceState`) by setting the `replace` prop to `true`. This will cause the visit to replace the current history state instead of adding a new history state to the stack.
 
 :::tabs key:frameworks
-== Vue 2
-
-```vue
-import { Link } from '@inertiajs/vue2'
-
-<Link href="/" replace>Home</Link>
-```
-
-== Vue 3
+== Vue
 
 ```vue
 import { Link } from '@inertiajs/vue3'
@@ -287,17 +230,7 @@ import { inertia, Link } from '@inertiajs/svelte'
 You can preserve a page component's local state using the `preserveState` prop. This will prevent a page component from fully re-rendering. The `preserveState` prop is especially helpful on pages that contain forms, since you can avoid manually repopulating input fields and can also maintain a focused input.
 
 :::tabs key:frameworks
-== Vue 2
-
-```vue
-import { Link } from '@inertiajs/vue2'
-
-<input v-model="query" type="text" />
-
-<Link href="/search" :data="{ query }" preserve-state>Search</Link>
-```
-
-== Vue 3
+== Vue
 
 ```vue
 import { Link } from '@inertiajs/vue3'
@@ -336,15 +269,7 @@ import { inertia, Link } from '@inertiajs/svelte'
 You can use the `preserveScroll` prop to prevent Inertia from automatically resetting the scroll position when making a page visit.
 
 :::tabs key:frameworks
-== Vue 2
-
-```vue
-import { Link } from '@inertiajs/vue2'
-
-<Link href="/" preserve-scroll>Home</Link>
-```
-
-== Vue 3
+== Vue
 
 ```vue
 import { Link } from '@inertiajs/vue3'
@@ -381,15 +306,7 @@ For more information on managing scroll position, please consult the documentati
 The `only` prop allows you to specify that only a subset of a page's props (data) should be retrieved from the server on subsequent visits to that page.
 
 :::tabs key:frameworks
-== Vue 2
-
-```vue
-import { Link } from '@inertiajs/vue2'
-
-<Link href="/users?active=true" :only="['users']">Show active</Link>
-```
-
-== Vue 3
+== Vue
 
 ```vue
 import { Link } from '@inertiajs/vue3'
@@ -426,34 +343,7 @@ For more information on this topic, please consult the complete documentation on
 It's often desirable to set an active state for navigation links based on the current page. This can be accomplished when using Inertia by inspecting the `page` object and doing string comparisons against the `page.url` and `page.component` properties.
 
 :::tabs key:frameworks
-== Vue 2
-
-```vue
-import { Link } from '@inertiajs/vue2'
-
-// URL exact match...
-<Link href="/users" :class="{ active: $page.url === '/users' }">Users</Link>
-
-// Component exact match...
-<Link
-  href="/users"
-  :class="{ active: $page.component === 'Users/Index' }"
->Users</Link>
-
-// URL starts with (/users, /users/create, /users/1, etc.)...
-<Link
-  href="/users"
-  :class="{ active: $page.url.startsWith('/users') }"
->Users</Link>
-
-// Component starts with (Users/Index, Users/Create, Users/Show, etc.)...
-<Link
-  href="/users"
-  :class="{ active: $page.component.startsWith('Users') }"
->Users</Link>
-```
-
-== Vue 3
+== Vue
 
 ```vue
 import { Link } from '@inertiajs/vue3'

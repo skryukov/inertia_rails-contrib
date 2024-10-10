@@ -13,18 +13,7 @@ Since Inertia powered JavaScript apps are rendered within the document `<body>`,
 To add `<head>` elements to your page, use the `<Head>` component. Within this component, you can include the elements that you wish to add to the document `<head>`.
 
 :::tabs key:frameworks
-== Vue 2
-
-```vue
-import { Head } from '@inertiajs/vue2'
-
-<Head>
-  <title>Your page title</title>
-  <meta name="description" content="Your page description" />
-</Head>
-```
-
-== Vue 3
+== Vue
 
 ```vue
 import { Head } from '@inertiajs/vue3'
@@ -65,15 +54,7 @@ Title shorthand
 If you only need to add a `<title>` to the document `<head>`, you may simply pass the title as a prop to the `<Head>` component.
 
 :::tabs key:frameworks
-== Vue 2
-
-```vue
-import { Head } from '@inertiajs/vue2'
-
-<Head title="Your page title" />
-```
-
-== Vue 3
+== Vue
 
 ```vue
 import { Head } from '@inertiajs/vue3'
@@ -111,15 +92,7 @@ createInertiaApp({
 After defining the title callback, the callback will automatically be invoked when you set a title using the `<Head>` component.
 
 :::tabs key:frameworks
-== Vue 2
-
-```vue
-import { Head } from '@inertiajs/vue2'
-
-<Head title="Home" />
-```
-
-== Vue 3
+== Vue
 
 ```vue
 import { Head } from '@inertiajs/vue3'
@@ -152,17 +125,7 @@ Which, in this example, will result in the following `<title>` tag.
 The `title` callback will also be invoked when you set the title using a `<title>` tag within your `<Head>` component.
 
 :::tabs key:frameworks
-== Vue 2
-
-```vue
-import { Head } from '@inertiajs/vue2'
-
-<Head>
-  <title>Home</title>
-</Head>
-```
-
-== Vue 3
+== Vue
 
 ```vue
 import { Head } from '@inertiajs/vue3'
@@ -195,26 +158,7 @@ import { Head } from '@inertiajs/react'
 It's possible to have multiple instances of the `<Head>` component throughout your application. For example, your layout can set some default `<Head>` elements, and then your individual pages can override those defaults.
 
 :::tabs key:frameworks
-== Vue 2
-
-```vue
-// Layout.vue import { Head } from '@inertiajs/vue2'
-
-<Head>
-  <title>My app</title>
-  <meta head-key="description" name="description" content="This is the default description" />
-  <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-</Head>
-
-// About.vue import { Head } from '@inertiajs/vue2'
-
-<Head>
-  <title>About - My app</title>
-  <meta head-key="description" name="description" content="This is a page specific description" />
-</Head>
-```
-
-== Vue 3
+== Vue
 
 ```vue
 // Layout.vue import { Head } from '@inertiajs/vue3'
@@ -289,32 +233,7 @@ The code example above will render the following HTML.
 When building a real application, it can sometimes be helpful to create a custom head component that extends Inertia's `<Head>` component. This gives you a place to set app-wide defaults, such as appending the app name to the page title.
 
 :::tabs key:frameworks
-== Vue 2
-
-```vue
-<!-- AppHead.vue -->
-
-<template>
-  <Head :title="title ? `${title} - My App` : 'My App'">
-    <slot />
-  </Head>
-</template>
-
-<script>
-import { Head } from '@inertiajs/vue2'
-
-export default {
-  components: {
-    Head,
-  },
-  props: {
-    title: String,
-  },
-}
-</script>
-```
-
-== Vue 3
+== Vue
 
 ```vue
 <!-- AppHead.vue -->
@@ -362,15 +281,7 @@ export default AppHead
 Once you have created the custom component, you may simply start using the custom component in your pages.
 
 :::tabs key:frameworks
-== Vue 2
-
-```vue
-import AppHead from './AppHead'
-
-<AppHead title="About" />
-```
-
-== Vue 3
+== Vue
 
 ```vue
 import AppHead from './AppHead'

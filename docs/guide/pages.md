@@ -9,34 +9,7 @@ In addition, all of the data needed for the page can be retrieved before the pag
 Inertia pages are simply JavaScript components. If you have ever written a Vue, React, or Svelte component, you will feel right at home. As you can see in the example below, pages receive data from your application's controllers as props.
 
 :::tabs key:frameworks
-== Vue 2
-
-```vue
-<template>
-  <Layout>
-    <Head title="Welcome" />
-    <h1>Welcome</h1>
-    <p>Hello {{ user.name }}, welcome to your first Inertia app!</p>
-  </Layout>
-</template>
-
-<script>
-import Layout from '../Layout'
-import { Head } from '@inertiajs/vue2'
-
-export default {
-  components: {
-    Head,
-    Layout,
-  },
-  props: {
-    user: Object,
-  },
-}
-</script>
-```
-
-== Vue 3
+== Vue
 
 ```vue
 <script setup>
@@ -111,34 +84,7 @@ See [the responses documentation](/guide/responses) for more information on how 
 While not required, for most projects it makes sense to create a site layout that all of your pages can extend. You may have noticed in our page example above that we're wrapping the page content within a `<Layout>` component. Here's an example of such a component:
 
 :::tabs key:frameworks
-== Vue 2
-
-```vue
-<template>
-  <main>
-    <header>
-      <Link href="/">Home</Link>
-      <Link href="/about">About</Link>
-      <Link href="/contact">Contact</Link>
-    </header>
-    <article>
-      <slot />
-    </article>
-  </main>
-</template>
-
-<script>
-import { Link } from '@inertiajs/vue2'
-
-export default {
-  components: {
-    Link,
-  },
-}
-</script>
-```
-
-== Vue 3
+== Vue
 
 ```vue
 <script setup>
@@ -208,34 +154,7 @@ While it's simple to implement layouts as children of page components, it forces
 For example, maybe you have an audio player on a podcast website that you want to continue playing as users navigate the site. Or, maybe you simply want to maintain the scroll position in your sidebar navigation between page visits. In these situations, the solution is to leverage Inertia's persistent layouts.
 
 :::tabs key:frameworks
-== Vue 2
-
-```vue
-<template>
-  <div>
-    <H1>Welcome</H1>
-    <p>Hello {{ user.name }}, welcome to your first Inertia app!</p>
-  </div>
-</template>
-
-<script>
-import Layout from '../Layout'
-
-export default {
-  // Using a render function...
-  layout: (h, page) => h(Layout, [page]),
-
-  // Using shorthand syntax...
-  layout: Layout,
-
-  props: {
-    user: Object,
-  },
-}
-</script>
-```
-
-== Vue 3
+== Vue
 
 ```vue
 <script>
@@ -299,47 +218,7 @@ export default Home
 You can also create more complex layout arrangements using nested layouts.
 
 :::tabs key:frameworks
-== Vue 2
-
-```vue
-<template>
-  <div>
-    <H1>Welcome</H1>
-    <p>Hello {{ user.name }}, welcome to your first Inertia app!</p>
-  </div>
-</template>
-
-<script>
-import SiteLayout from './SiteLayout'
-import NestedLayout from './NestedLayout'
-
-export default {
-  // Using a render function...
-  layout: (h, page) => {
-    return h(SiteLayout, [h(NestedLayout, [page])])
-  },
-
-  // Using shorthand syntax...
-  layout: [SiteLayout, NestedLayout],
-
-  props: {
-    user: Object,
-  },
-}
-</script>
-```
-
-If you're using Vue 2.7 or Vue 3, you can alternatively use the [defineOptions plugin](https://vue-macros.dev/macros/define-options.html) to define a layout within `<script setup>`:
-
-```vue
-<script setup>
-import Layout from '../Layout'
-
-defineOptions({ layout: Layout })
-</script>
-```
-
-== Vue 3
+== Vue
 
 ```vue
 <script>
@@ -367,7 +246,7 @@ defineProps({ user: Object })
 </template>
 ```
 
-If you're using Vue 2.7 or Vue 3, you can alternatively use the [defineOptions plugin](https://vue-macros.dev/macros/define-options.html) to define a layout within `<script setup>`:
+You can alternatively use the [defineOptions plugin](https://vue-macros.dev/macros/define-options.html) to define a layout within `<script setup>`:
 
 ```vue
 <script setup>
@@ -425,24 +304,7 @@ export default Home
 If you're using persistent layouts, you may find it convenient to define the default page layout in the `resolve()` callback of your application's main JavaScript file.
 
 :::tabs key:frameworks
-== Vue 2
-
-```js
-// frontend/entrypoints/inertia.js
-import Layout from '../Layout'
-
-createInertiaApp({
-  resolve: (name) => {
-    const pages = import.meta.glob('../pages/**/*.vue', { eager: true })
-    let page = pages[`../pages/${name}.vue`]
-    page.default.layout = page.default.layout || Layout
-    return page
-  },
-  // ...
-})
-```
-
-== Vue 3
+== Vue
 
 ```js
 // frontend/entrypoints/inertia.js
@@ -500,24 +362,7 @@ This will automatically set the page layout to `Layout` if a layout has not alre
 You can even go a step further and conditionally set the default page layout based on the page `name`, which is available to the `resolve()` callback. For example, maybe you don't want the default layout to be applied to your public pages.
 
 :::tabs key:frameworks
-== Vue 2
-
-```js
-// frontend/entrypoints/inertia.js
-import Layout from '../Layout'
-
-createInertiaApp({
-  resolve: (name) => {
-    const pages = import.meta.glob('../pages/**/*.vue', { eager: true })
-    let page = pages[`../pages/${name}.vue`]
-    page.default.layout = name.startsWith('Public/') ? undefined : Layout
-    return page
-  },
-  // ...
-})
-```
-
-== Vue 3
+== Vue
 
 ```js
 // frontend/entrypoints/inertia.js
