@@ -56,9 +56,6 @@ router.visit(url, {
 
 ## Except certain props
 
-> [!WARNING]
-> The `except` option is not yet supported by the Inertia Rails.
-
 :::tabs key:frameworks
 == Vue 2
 
@@ -215,6 +212,18 @@ class UsersController < ApplicationController
 end
 ```
 
+On the inverse, you can use the `InertiaRails.always` method to specify that a prop should always be included, even if it has not been explicitly required in a partial reload.
+
+```ruby
+class UsersController < ApplicationController
+  def index
+    render inertia: 'Users/Index', props: {
+      users: InertiaRails.always(User.all),
+    }
+  end
+end
+```
+
 Here's a summary of each approach:
 
 ```ruby
@@ -235,6 +244,11 @@ class UsersController < ApplicationController
       # OPTIONALLY included on partial reloads
       # ONLY evaluated when needed
       users: InertiaRails.lazy(-> { User.all }),
+
+      # ALWAYS included on standard visits
+      # ALWAYS included on partial reloads
+      # ALWAYS evaluated
+      users: InertiaRails.always(User.all),
     }
   end
 end
