@@ -39,11 +39,11 @@ npm install @inertiajs/svelte@next
 ```
 :::
 
-
-Next, upgrade the `inertia-rails` gem to use the `2.x` dev branch:
+Next, upgrade the `inertia-rails` gem to use the unreleased version of the gem from [the PR branch](https://github.com/inertiajs/inertia-rails/pull/132):
 
 ```ruby
-gem 'inertia_rails', github: 'inertiajs/inertia-rails', branch: '2.x'
+# See the PR https://github.com/inertiajs/inertia-rails/pull/132
+gem 'inertia_rails', github: 'skryukov/inertia-rails', branch: 'v2/all'
 ```
 
 ## Breaking changes
