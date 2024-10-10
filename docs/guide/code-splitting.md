@@ -11,22 +11,7 @@ To enable code splitting you'll need to tweak the resolve callback in your `crea
 Vite enables code splitting (or lazy-loading as they call it) by default when using their `import.meta.glob()` function, so simply omit the `{ eager: true }` option, or set it to false, to disable eager loading.
 
 :::tabs key:frameworks
-== Vue 2
-
-```js
-// frontend/entrypoints/inertia.js
-createInertiaApp({
-  resolve: name => {
-    const pages = import.meta.glob('../pages/**/*.vue', {eager: true}) // [!code --]
-    return pages[`../pages/${name}.vue`] // [!code --]
-    const pages = import.meta.glob('../pages/**/*.vue') // [!code ++]
-    return pages[`../pages/${name}.vue`]() // [!code ++]
-  },
-  //...
-})
-```
-
-== Vue 3
+== Vue
 
 ```js
 // frontend/entrypoints/inertia.js
@@ -95,18 +80,7 @@ Next, create a `.babelrc` file in your project with the following configuration:
 Finally, update the `resolve` callback in your app's initialization code to use `import` instead of `require`.
 
 :::tabs key:frameworks
-== Vue 2
-
-```js
-// javascript/packs/inertia.js
-createInertiaApp({
-  resolve: name => require(`../pages/${name}`), // [!code ii]
-  resolve: name => import(`../pages/${name}`), // [!code ++]
-  //...
-})
-```
-
-== Vue 3
+== Vue
 
 ```js
 // javascript/packs/inertia.js

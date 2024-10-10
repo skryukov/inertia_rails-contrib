@@ -31,46 +31,7 @@ end
 You may have noticed we're returning an `Error` page component in the example above. You'll need to actually create this component, which will serve as the generic error page for your application. Here's an example error component you can use as a starting point.
 
 :::tabs key:frameworks
-== Vue 2
-
-```vue
-<template>
-  <div>
-    <H1>{{ status }}: {{ title }}</H1>
-    <div>{{ description }}</div>
-  </div>
-</template>
-
-<script>
-export default {
-  props: {
-    status: Number,
-  },
-  computed: {
-    title() {
-      return (
-        {
-          503: 'Service Unavailable',
-          500: 'Server Error',
-          404: 'Page Not Found',
-          403: 'Forbidden',
-        }[this.status] || 'Unexpected error'
-      )
-    },
-    description() {
-      return {
-        503: 'Sorry, we are doing some maintenance. Please check back soon.',
-        500: 'Whoops, something went wrong on our servers.',
-        404: 'Sorry, the page you are looking for could not be found.',
-        403: 'Sorry, you are forbidden from accessing this page.',
-      }[this.status]
-    },
-  },
-}
-</script>
-```
-
-== Vue 3
+== Vue
 
 ```vue
 <script setup>

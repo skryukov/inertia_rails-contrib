@@ -10,13 +10,7 @@ Once you have your [server-side framework configured](/guide/server-side-setup.m
 First, install the Inertia client-side adapter corresponding to your framework of choice.
 
 :::tabs key:frameworks
-== Vue 2
-
-```shell
-npm install @inertiajs/vue2 vue@^2
-```
-
-== Vue 3
+== Vue
 
 ```shell
 npm install @inertiajs/vue3 vue
@@ -41,29 +35,7 @@ npm install @inertiajs/svelte svelte
 Next, update your main JavaScript file to boot your Inertia app. To accomplish this, we'll initialize the client-side framework with the base Inertia component.
 
 :::tabs key:frameworks
-== Vue 2
-
-```js
-// frontend/entrypoints/inertia.js
-import Vue from 'vue'
-import { createInertiaApp } from '@inertiajs/vue2'
-
-createInertiaApp({
-  resolve: (name) => {
-    const pages = import.meta.glob('../pages/**/*.vue', { eager: true })
-    return pages[`../pages/${name}.vue`]
-  },
-  setup({ el, App, props, plugin }) {
-    Vue.use(plugin)
-
-    new Vue({
-      render: (h) => h(App, props),
-    }).$mount(el)
-  },
-})
-```
-
-== Vue 3
+== Vue
 
 ```js
 // frontend/entrypoints/inertia.js
@@ -129,28 +101,7 @@ The `setup` callback receives everything necessary to initialize the client-side
 The `resolve` callback tells Inertia how to load a page component. It receives a page name (string), and returns a page component module. How you implement this callback depends on which bundler (Vite or Webpack) you're using.
 
 :::tabs key:frameworks
-== Vue 2
-
-```js
-// Vite
-// frontend/entrypoints/inertia.js
-createInertiaApp({
-  resolve: name => {
-    const pages = import.meta.glob('../pages/**/*.vue', {eager: true})
-    return pages[`../pages/${name}.vue`]
-  },
-  // ...
-})
-
-// Webpacker/Shakapacker
-// javascript/packs/inertia.js
-createInertiaApp({
-  resolve: name => require(`../pages/${name}`),
-  // ...
-})
-```
-
-== Vue 3
+== Vue
 
 ```js
 // Vite

@@ -7,19 +7,7 @@ Inertia's Rails adapter automatically includes the proper CSRF token when making
 However, if you need to handle CSRF protection manually, one approach is to include the CSRF token as a prop on every response. You can then use the token when making Inertia requests.
 
 :::tabs key:frameworks
-== Vue 2
-
-```js
-import { router } from '@inertiajs/vue2'
-
-router.post('/users', {
-  _token: this.$page.props.csrf_token,
-  name: 'John Doe',
-  email: 'john.doe@example.com',
-})
-```
-
-== Vue 3
+== Vue
 
 ```js
 import { router, usePage } from '@inertiajs/vue3'

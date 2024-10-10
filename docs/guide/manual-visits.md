@@ -3,33 +3,7 @@
 In addition to [creating links](/guide/links.md), it's also possible to manually make Inertia visits / requests programmatically via JavaScript. This is accomplished via the `router.visit()` method.
 
 :::tabs key:frameworks
-== Vue 2
-
-```js
-import { router } from '@inertiajs/vue2'
-
-router.visit(url, {
-  method: 'get',
-  data: {},
-  replace: false,
-  preserveState: false,
-  preserveScroll: false,
-  only: [],
-  headers: {},
-  errorBag: null,
-  forceFormData: false,
-  onCancelToken: (cancelToken) => {},
-  onCancel: () => {},
-  onBefore: (visit) => {},
-  onStart: (visit) => {},
-  onProgress: (progress) => {},
-  onSuccess: (page) => {},
-  onError: (errors) => {},
-  onFinish: (visit) => {},
-})
-```
-
-== Vue 3
+== Vue
 
 ```js
 import { router } from '@inertiajs/vue3'
@@ -112,20 +86,7 @@ router.visit(url, {
 However, it's generally more convenient to use one of Inertia's shortcut request methods. These methods share all the same options as `router.visit()`.
 
 :::tabs key:frameworks
-== Vue 2
-
-```js
-import { router } from '@inertiajs/vue2'
-
-router.get(url, data, options)
-router.post(url, data, options)
-router.put(url, data, options)
-router.patch(url, data, options)
-router.delete(url, options)
-router.reload(options) // Uses the current URL
-```
-
-== Vue 3
+== Vue
 
 ```js
 import { router } from '@inertiajs/vue3'
@@ -173,15 +134,7 @@ The `reload()` method is a convenient, shorthand method that automatically visit
 When making manual visits, you may use the `method` option to set the request's HTTP method to `get`, `post`, `put`, `patch` or `delete`. The default method is `get`.
 
 :::tabs key:frameworks
-== Vue 2
-
-```js
-import { router } from '@inertiajs/vue2'
-
-router.visit(url, { method: 'post' })
-```
-
-== Vue 3
+== Vue
 
 ```js
 import { router } from '@inertiajs/vue3'
@@ -215,21 +168,7 @@ router.visit(url, { method: 'post' })
 You may use the `data` option to add data to the request.
 
 :::tabs key:frameworks
-== Vue 2
-
-```js
-import { router } from '@inertiajs/vue2'
-
-router.visit('/users', {
-  method: 'post',
-  data: {
-    name: 'John Doe',
-    email: 'john.doe@example.com',
-  },
-})
-```
-
-== Vue 3
+== Vue
 
 ```js
 import { router } from '@inertiajs/vue3'
@@ -276,18 +215,7 @@ router.visit('/users', {
 For convenience, the `get()`, `post()`, `put()`, and `patch()` methods all accept data as their second argument.
 
 :::tabs key:frameworks
-== Vue 2
-
-```js
-import { router } from '@inertiajs/vue2'
-
-router.post('/users', {
-  name: 'John Doe',
-  email: 'john.doe@example.com',
-})
-```
-
-== Vue 3
+== Vue
 
 ```js
 import { router } from '@inertiajs/vue3'
@@ -328,19 +256,7 @@ email: 'john.doe@example.com',
 The `headers` option allows you to add custom headers to a request.
 
 :::tabs key:frameworks
-== Vue 2
-
-```js
-import { router } from '@inertiajs/vue2'
-
-router.post('/users', data, {
-  headers: {
-    'Custom-Header': 'value',
-  },
-})
-```
-
-== Vue 3
+== Vue
 
 ```js
 import { router } from '@inertiajs/vue3'
@@ -386,17 +302,7 @@ router.post('/users', data, {
 When making visits / requests that include files, Inertia will automatically convert the request data into a `FormData` object. If you would like the request to always use a `FormData` object, you may use the `forceFormData` option.
 
 :::tabs key:frameworks
-== Vue 2
-
-```js
-import { router } from '@inertiajs/vue2'
-
-router.post('/companies', data, {
-  forceFormData: true,
-})
-```
-
-== Vue 3
+== Vue
 
 ```js
 import { router } from '@inertiajs/vue3'
@@ -435,15 +341,7 @@ For more information on uploading files, please consult the dedicated [file uplo
 When making visits, Inertia automatically adds a new entry into the browser history. However, it's also possible to replace the current history entry by setting the `replace` option to `true`.
 
 :::tabs key:frameworks
-== Vue 2
-
-```js
-import { router } from '@inertiajs/vue2'
-
-router.get('/users', { search: 'John' }, { replace: true })
-```
-
-== Vue 3
+== Vue
 
 ```js
 import { router } from '@inertiajs/vue3'
@@ -484,15 +382,7 @@ For this reason, the `post`, `put`, `patch`, `delete`, and `reload` methods all 
 You can instruct Inertia to preserve the component's state when using the `get` method by setting the `preserveState` option to `true`.
 
 :::tabs key:frameworks
-== Vue 2
-
-```js
-import { router } from '@inertiajs/vue2'
-
-router.get('/users', { search: 'John' }, { preserveState: true })
-```
-
-== Vue 3
+== Vue
 
 ```js
 import { router } from '@inertiajs/vue3'
@@ -523,15 +413,7 @@ You can also lazily evaluate the `preserveState` option based on the response by
 If you'd like to only preserve state if the response includes validation errors, set the `preserveState` option to `"errors"`.
 
 :::tabs key:frameworks
-== Vue 2
-
-```js
-import { router } from '@inertiajs/vue2'
-
-router.get('/users', { search: 'John' }, { preserveState: 'errors' })
-```
-
-== Vue 3
+== Vue
 
 ```js
 import { router } from '@inertiajs/vue3'
@@ -560,17 +442,7 @@ router.get('/users', { search: 'John' }, { preserveState: 'errors' })
 You can also lazily evaluate the `preserveState` option based on the response by providing a callback.
 
 :::tabs key:frameworks
-== Vue 2
-
-```js
-import { router } from '@inertiajs/vue2'
-
-router.post('/users', data, {
-  preserveState: (page) => page.props.someProp === 'value',
-})
-```
-
-== Vue 3
+== Vue
 
 ```js
 import { router } from '@inertiajs/vue3'
@@ -609,15 +481,7 @@ When navigating between pages, Inertia mimics default browser behavior by automa
 You can disable this behaviour by setting the `preserveScroll` option to `false`.
 
 :::tabs key:frameworks
-== Vue 2
-
-```js
-import { router } from '@inertiajs/vue2'
-
-router.visit(url, { preserveScroll: false })
-```
-
-== Vue 3
+== Vue
 
 ```js
 import { router } from '@inertiajs/vue3'
@@ -646,15 +510,7 @@ router.visit(url, { preserveScroll: false })
 If you'd like to only preserve the scroll position if the response includes validation errors, set the `preserveScroll` option to `"errors"`.
 
 :::tabs key:frameworks
-== Vue 2
-
-```js
-import { router } from '@inertiajs/vue2'
-
-router.visit(url, { preserveScroll: 'errors' })
-```
-
-== Vue 3
+== Vue
 
 ```js
 import { router } from '@inertiajs/vue3'
@@ -683,17 +539,7 @@ router.visit(url, { preserveScroll: 'errors' })
 You can also lazily evaluate the `preserveScroll` option based on the response by providing a callback.
 
 :::tabs key:frameworks
-== Vue 2
-
-```js
-import { router } from '@inertiajs/vue2'
-
-router.post('/users', data, {
-  preserveScroll: (page) => page.props.someProp === 'value',
-})
-```
-
-== Vue 3
+== Vue
 
 ```js
 import { router } from '@inertiajs/vue3'
@@ -732,15 +578,7 @@ For more information regarding this feature, please consult the [scroll manageme
 The `only` option allows you to request a subset of the props (data) from the server on subsequent visits to the same page, thus making your application more efficient since it does not need to retrieve data that the page is not interested in refreshing.
 
 :::tabs key:frameworks
-== Vue 2
-
-```js
-import { router } from '@inertiajs/vue2'
-
-router.visit('/users', { search: 'John' }, { only: ['users'] })
-```
-
-== Vue 3
+== Vue
 
 ```js
 import { router } from '@inertiajs/vue3'
@@ -773,20 +611,7 @@ For more information on this feature, please consult the [partial reloads](/guid
 You can cancel a visit using a cancel token, which Inertia automatically generates and provides via the `onCancelToken()` callback prior to making the visit.
 
 :::tabs key:frameworks
-== Vue 2
-
-```js
-import { router } from '@inertiajs/vue2'
-
-router.post('/users', data, {
-  onCancelToken: (cancelToken) => (this.cancelToken = cancelToken),
-})
-
-// Cancel the visit...
-this.cancelToken.cancel()
-```
-
-== Vue 3
+== Vue
 
 ```js
 import { router } from '@inertiajs/vue3'
@@ -834,23 +659,7 @@ The `onCancel()` and `onFinish()` event callbacks will be executed when a visit 
 In addition to Inertia's [global events](/guide/events.md), Inertia also provides a number of per-visit event callbacks.
 
 :::tabs key:frameworks
-== Vue 2
-
-```js
-import { router } from '@inertiajs/vue2'
-
-router.post('/users', data, {
-  onBefore: (visit) => {},
-  onStart: (visit) => {},
-  onProgress: (progress) => {},
-  onSuccess: (page) => {},
-  onError: (errors) => {},
-  onCancel: () => {},
-  onFinish: (visit) => {},
-})
-```
-
-== Vue 3
+== Vue
 
 ```js
 import { router } from '@inertiajs/vue3'
@@ -903,17 +712,7 @@ router.post('/users', data, {
 Returning `false` from the `onBefore()` callback will cause the visit to be cancelled.
 
 :::tabs key:frameworks
-== Vue 2
-
-```js
-import { router } from '@inertiajs/vue2'
-
-router.delete(`/users/${user.id}`, {
-  onBefore: () => confirm('Are you sure you want to delete this user?'),
-})
-```
-
-== Vue 3
+== Vue
 
 ```js
 import { router } from '@inertiajs/vue3'
@@ -948,23 +747,7 @@ router.delete(`/users/${user.id}`, {
 It's also possible to return a promise from the `onSuccess()` and `onError()` callbacks. When doing so, the "finish" event will be delayed until the promise has resolved.
 
 :::tabs key:frameworks
-== Vue 2
-
-```js
-import { router } from '@inertiajs/vue2'
-
-router.post(url, {
-  onSuccess: () => {
-    return Promise.all([this.doThing(), this.doAnotherThing()])
-  },
-  onFinish: (visit) => {
-    // This won't be called until doThing()
-    // and doAnotherThing() have finished.
-  },
-})
-```
-
-== Vue 3
+== Vue
 
 ```js
 import { router } from '@inertiajs/vue3'

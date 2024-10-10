@@ -10,13 +10,7 @@ Server-side rendering pre-renders your JavaScript pages on the server, allowing 
 First, install the additional dependencies required for server-side rendering. This is only necessary for the Vue adapters, so you can skip this step if you're using React or Svelte.
 
 :::tabs key:frameworks
-== Vue 2
-
-```shell
-npm install vue-server-renderer
-```
-
-== Vue 3
+== Vue
 
 ```shell
 npm install @vue/server-renderer
@@ -43,33 +37,7 @@ Next, we'll create a `app/frontend/ssr/ssr.js` file within the Rails project tha
 This file is going to look very similar to your regular inertia initialization file, except it's not going to run in the browser, but rather in Node.js. Here's a complete example.
 
 :::tabs key:frameworks
-== Vue 2
-
-```js
-import { createInertiaApp } from '@inertiajs/vue2'
-import createServer from '@inertiajs/vue2/server'
-import Vue from 'vue'
-import { createRenderer } from 'vue-server-renderer'
-
-createServer((page) =>
-  createInertiaApp({
-    page,
-    render: createRenderer().renderToString,
-    resolve: (name) => {
-      const pages = import.meta.glob('../pages/**/*.vue', { eager: true })
-      return pages[`../pages/${name}.vue`]
-    },
-    setup({ App, props, plugin }) {
-      Vue.use(plugin)
-      return new Vue({
-        render: (h) => h(App, props),
-      })
-    },
-  }),
-)
-```
-
-== Vue 3
+== Vue
 
 ```js
 import { createInertiaApp } from '@inertiajs/vue3'
@@ -180,13 +148,7 @@ Since your website is now being server-side rendered, you can instruct your clie
 To enable client-side hydration, update your initialization file:
 
 :::tabs key:frameworks
-== Vue 2
-
-```js
-// No changes required
-```
-
-== Vue 3
+== Vue
 
 ```js
 // frontend/entrypoints/inertia.js
