@@ -8,6 +8,9 @@ When you instruct Inertia to encrypt your app's history, it uses the browser's b
 
 Once you instruct Inertia to clear your history state, we simply clear the existing key from session storage roll a new one. If we attempt to decrypt the history state with the new key, it will fail an Inertia will make a fresh request back to your server for the page data.
 
+> [!NOTE]
+> History encryption relies on `window.crypto.subtle` which is only available in secure environments (sites with SSL enabled).
+
 ## Opting in
 
 History encryption is an opt-in feature. There are several methods for enabling it:

@@ -30,7 +30,7 @@ import { WhenVisible } from '@inertiajs/vue3'
 import { WhenVisible } from '@inertiajs/react'
 
 export default () => (
-  <WhenVisible data="permissions" fallback={() => <div>Loading...</div>}>
+  <WhenVisible data="permissions" fallback={<div>Loading...</div>}>
     <PermissionsChildComponent />
   </WhenVisible>
 )
@@ -79,7 +79,7 @@ import { WhenVisible } from '@inertiajs/vue3'
 import { WhenVisible } from '@inertiajs/react'
 
 export default () => (
-  <WhenVisible data={['teams', 'users']} fallback={() => <div>Loading...</div>}>
+  <WhenVisible data={['teams', 'users']} fallback={<div>Loading...</div>}>
     <ChildComponent />
   </WhenVisible>
 )
@@ -132,7 +132,7 @@ import { WhenVisible } from '@inertiajs/vue3'
 ```jsx
 import { WhenVisible } from '@inertiajs/react'
 export default () => (
-  <WhenVisible data="permissions" buffer={500} fallback={() => <div>Loading...</div>}>
+  <WhenVisible data="permissions" buffer={500} fallback={<div>Loading...</div>}>
     <PermissionsChildComponent />
   </WhenVisible>
 )
