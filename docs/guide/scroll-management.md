@@ -11,15 +11,7 @@ In addition, Inertia keeps track of the scroll position of each page and automat
 Sometimes it's desirable to prevent the default scroll resetting when making visits. You can disable this behaviour by setting the `preserveScroll` option to `false`.
 
 :::tabs key:frameworks
-== Vue 2
-
-```js
-import { router } from '@inertiajs/vue2'
-
-router.visit(url, { preserveScroll: false })
-```
-
-== Vue 3
+== Vue
 
 ```js
 import { router } from '@inertiajs/vue3'
@@ -48,15 +40,7 @@ router.visit(url, { preserveScroll: false })
 If you'd like to only preserve the scroll position if the response includes validation errors, set the `preserveScroll` option to `"errors"`.
 
 :::tabs key:frameworks
-== Vue 2
-
-```js
-import { router } from '@inertiajs/vue2'
-
-router.visit(url, { preserveScroll: 'errors' })
-```
-
-== Vue 3
+== Vue
 
 ```js
 import { router } from '@inertiajs/vue3'
@@ -85,17 +69,7 @@ router.visit(url, { preserveScroll: 'errors' })
 You can also lazily evaluate the `preserveScroll` option based on the response by providing a callback.
 
 :::tabs key:frameworks
-== Vue 2
-
-```js
-import { router } from '@inertiajs/vue2'
-
-router.post('/users', data, {
-  preserveScroll: (page) => page.props.someProp === 'value',
-})
-```
-
-== Vue 3
+== Vue
 
 ```js
 import { router } from '@inertiajs/vue3'
@@ -130,15 +104,7 @@ router.post('/users', data, {
 When using an [Inertia link](/guide/links), you can preserve the scroll position using the `preserveScroll` prop.
 
 :::tabs key:frameworks
-== Vue 2
-
-```vue
-import { Link } from '@inertiajs/vue2'
-
-<Link href="/" preserve-scroll>Home</Link>
-```
-
-== Vue 3
+== Vue
 
 ```vue
 import { Link } from '@inertiajs/vue3'

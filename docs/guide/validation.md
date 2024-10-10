@@ -39,53 +39,7 @@ In order for your server-side validation errors to be available client-side, you
 Since validation errors are made available client-side as page component props, you can conditionally display them based on their existence. Remember, when using Rails server adapter, the `errors` prop will automatically be available to your page.
 
 :::tabs key:frameworks
-== Vue 2
-
-```vue
-<template>
-  <form @submit.prevent="submit">
-    <label for="first_name">First name:</label>
-    <input id="first_name" v-model="form.first_name" />
-    <div v-if="errors.first_name">{{ errors.first_name }}</div>
-    <label for="last_name">Last name:</label>
-    <input id="last_name" v-model="form.last_name" />
-    <div v-if="errors.last_name">{{ errors.last_name }}</div>
-    <label for="email">Email:</label>
-    <input id="email" v-model="form.email" />
-    <div v-if="errors.email">{{ errors.email }}</div>
-    <button type="submit">Submit</button>
-  </form>
-</template>
-
-<script>
-import { router } from '@inertiajs/vue2'
-
-export default {
-  props: {
-    errors: Object,
-  },
-  data() {
-    return {
-      form: {
-        first_name: null,
-        last_name: null,
-        email: null,
-      },
-    }
-  },
-  methods: {
-    submit() {
-      router.post('/users', this.form)
-    },
-  },
-}
-</script>
-```
-
-> [!NOTE]
-> When using the Vue adapters, you may also access the errors via the `$page.props.errors` object.
-
-== Vue 3
+== Vue
 
 ```vue
 <script setup>
@@ -228,21 +182,7 @@ For pages that have more than one form, it's possible to encounter conflicts whe
 To solve this issue, you can use "error bags". Error bags scope the validation errors returned from the server within a unique key specific to that form. Continuing with our example above, you might have a `createCompany` error bag for the first form and a `createUser` error bag for the second form.
 
 :::tabs key:frameworks
-== Vue 2
-
-```js
-import { router } from '@inertiajs/vue2'
-
-router.post('/companies', data, {
-  errorBag: 'createCompany',
-})
-
-router.post('/users', data, {
-  errorBag: 'createUser',
-})
-```
-
-== Vue 3
+== Vue
 
 ```js
 import { router } from '@inertiajs/vue3'

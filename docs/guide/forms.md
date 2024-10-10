@@ -5,44 +5,7 @@
 While it's possible to make classic HTML form submissions with Inertia, it's not recommended since they cause full-page reloads. Instead, it's better to intercept form submissions and then make the [request using Inertia](/guide/manual-visits.md).
 
 :::tabs key:frameworks
-== Vue 2
-
-```vue
-<template>
-  <form @submit.prevent="submit">
-    <label for="first_name">First name:</label>
-    <input id="first_name" v-model="form.first_name" />
-    <label for="last_name">Last name:</label>
-    <input id="last_name" v-model="form.last_name" />
-    <label for="email">Email:</label>
-    <input id="email" v-model="form.email" />
-    <button type="submit">Submit</button>
-  </form>
-</template>
-
-<script>
-import { router } from '@inertiajs/vue2'
-
-export default {
-  data() {
-    return {
-      form: {
-        first_name: null,
-        last_name: null,
-        email: null,
-      },
-    }
-  },
-  methods: {
-    submit() {
-      router.post('/users', this.form)
-    },
-  },
-}
-</script>
-```
-
-== Vue 3
+== Vue
 
 ```vue
 <script setup>
@@ -188,42 +151,7 @@ For a full discussion on handling and displaying [validation](/guide/validation.
 Since working with forms is so common, Inertia includes a form helper designed to help reduce the amount of boilerplate code needed for handling typical form submissions.
 
 :::tabs key:frameworks
-== Vue 2
-
-```vue
-<template>
-  <form @submit.prevent="form.post('/login')">
-    <!-- email -->
-    <input type="text" v-model="form.email" />
-    <div v-if="form.errors.email">{{ form.errors.email }}</div>
-    <!-- password -->
-    <input type="password" v-model="form.password" />
-    <div v-if="form.errors.password">{{ form.errors.password }}</div>
-    <!-- remember me -->
-    <input type="checkbox" v-model="form.remember" /> Remember Me
-    <!-- submit -->
-    <button type="submit" :disabled="form.processing">Login</button>
-  </form>
-</template>
-
-<script>
-import { useForm } from '@inertiajs/vue2'
-
-export default {
-  data() {
-    return {
-      form: useForm({
-        email: null,
-        password: null,
-        remember: false,
-      }),
-    }
-  },
-}
-</script>
-```
-
-== Vue 3
+== Vue
 
 ```vue
 <script setup>
@@ -331,18 +259,7 @@ function submit() {
 To submit the form, you may use the `get`, `post`, `put`, `patch` and `delete` methods.
 
 :::tabs key:frameworks
-== Vue 2
-
-```js
-form.submit(method, url, options)
-form.get(url, options)
-form.post(url, options)
-form.put(url, options)
-form.patch(url, options)
-form.delete(url, options)
-```
-
-== Vue 3
+== Vue
 
 ```js
 form.submit(method, url, options)
@@ -382,16 +299,7 @@ $form.delete(url, options)
 The submit methods support all of the typical [visit options](/guide/manual-visits.md), such as `preserveState`, `preserveScroll`, and event callbacks, which can be helpful for performing tasks on successful form submissions. For example, you might use the `onSuccess` callback to reset inputs to their original state.
 
 :::tabs key:frameworks
-== Vue 2
-
-```js
-form.post('/profile', {
-  preserveScroll: true,
-  onSuccess: () => form.reset('password'),
-})
-```
-
-== Vue 3
+== Vue
 
 ```js
 form.post('/profile', {
@@ -425,18 +333,7 @@ $form.post('/profile', {
 If you need to modify the form data before it's sent to the server, you can do so via the `transform()` method.
 
 :::tabs key:frameworks
-== Vue 2
-
-```js
-form
-  .transform((data) => ({
-    ...data,
-    remember: data.remember ? 'on' : '',
-  }))
-  .post('/login')
-```
-
-== Vue 3
+== Vue
 
 ```js
 form
@@ -474,13 +371,7 @@ $form
 You can use the `processing` property to track if a form is currently being submitted. This can be helpful for preventing double form submissions by disabling the submit button.
 
 :::tabs key:frameworks
-== Vue 2
-
-```vue
-<button type="submit" :disabled="form.processing">Submit</button>
-```
-
-== Vue 3
+== Vue
 
 ```vue
 <button type="submit" :disabled="form.processing">Submit</button>
@@ -505,15 +396,7 @@ const { processing } = useForm({ ... })
 If your form is uploading files, the current progress event is available via the `progress` property, allowing you to easily display the upload progress.
 
 :::tabs key:frameworks
-== Vue 2
-
-```vue
-<progress v-if="form.progress" :value="form.progress.percentage" max="100">
-  {{ form.progress.percentage }}%
-</progress>
-```
-
-== Vue 3
+== Vue
 
 ```vue
 <progress v-if="form.progress" :value="form.progress.percentage" max="100">
@@ -548,13 +431,7 @@ const { progress } = useForm({ ... })
 If there are form validation errors, they are available via the `errors` property. When building Rails powered Inertia applications, form errors will automatically be populated when your application throws instances of `ActiveRecord::RecordInvalid`, such as when using `#save!`.
 
 :::tabs key:frameworks
-== Vue 2
-
-```vue
-<div v-if="form.errors.email">{{ form.errors.email }}</div>
-```
-
-== Vue 3
+== Vue
 
 ```vue
 <div v-if="form.errors.email">{{ form.errors.email }}</div>
@@ -584,17 +461,7 @@ const { errors } = useForm({ ... })
 To determine if a form has any errors, you may use the `hasErrors` property. To clear form errors, use the `clearErrors()` method.
 
 :::tabs key:frameworks
-== Vue 2
-
-```js
-// Clear all errors...
-form.clearErrors()
-
-// Clear errors for specific fields...
-form.clearErrors('field', 'anotherfield')
-```
-
-== Vue 3
+== Vue
 
 ```js
 // Clear all errors...
@@ -631,20 +498,7 @@ $form.clearErrors('field', 'anotherfield')
 If you're using a client-side input validation libraries or do client-side validation manually, you can set your own errors on the form using the `setErrors()` method.
 
 :::tabs key:frameworks
-== Vue 2
-
-```js
-// Set a single error...
-form.setError('field', 'Your error message.')
-
-// Set multiple errors at once...
-form.setError({
-  foo: 'Your error message for the foo field.',
-  bar: 'Some other error for the bar field.',
-})
-```
-
-== Vue 3
+== Vue
 
 ```js
 // Set a single error...
@@ -695,17 +549,7 @@ When a form has been successfully submitted, the `wasSuccessful` property will b
 To reset the form's values back to their default values, you can use the `reset()` method.
 
 :::tabs key:frameworks
-== Vue 2
-
-```js
-// Reset the form...
-form.reset()
-
-// Reset specific fields...
-form.reset('field', 'anotherfield')
-```
-
-== Vue 3
+== Vue
 
 ```js
 // Reset the form...
@@ -742,23 +586,7 @@ $form.reset('field', 'anotherfield')
 If your form's default values become outdated, you can use the `defaults()` method to update them. Then, the form will be reset to the correct values the next time the `reset()` method is invoked.
 
 :::tabs key:frameworks
-== Vue 2
-
-```js
-// Set the form's current values as the new defaults...
-form.defaults()
-
-// Update the default value of a single field...
-form.defaults('email', 'updated-default@example.com')
-
-// Update the default value of multiple fields...
-form.defaults({
-  name: 'Updated Example',
-  email: 'updated-default@example.com',
-})
-```
-
-== Vue 3
+== Vue
 
 ```js
 // Set the form's current values as the new defaults...
@@ -813,13 +641,7 @@ $form.defaults({
 To determine if a form has any changes, you may use the `isDirty` property.
 
 :::tabs key:frameworks
-== Vue 2
-
-```vue
-<div v-if="form.isDirty">There are unsaved form changes.</div>
-```
-
-== Vue 3
+== Vue
 
 ```vue
 <div v-if="form.isDirty">There are unsaved form changes.</div>
@@ -846,13 +668,7 @@ const { isDirty } = useForm({ ... })
 To cancel a form submission, use the `cancel()` method.
 
 :::tabs key:frameworks
-== Vue 2
-
-```vue
-form.cancel()
-```
-
-== Vue 3
+== Vue
 
 ```vue
 form.cancel()
@@ -877,16 +693,7 @@ $form.cancel()
 To instruct Inertia to store a form's data and errors in [history state](/guide/remembering-state.md), you can provide a unique form key as the first argument when instantiating your form.
 
 :::tabs key:frameworks
-== Vue 2
-
-```vue
-import { useForm } from '@inertiajs/vue2'
-
-form: useForm('CreateUser', data)
-form: useForm(`EditUser:${this.user.id}`, data)
-```
-
-== Vue 3
+== Vue
 
 ```vue
 import { useForm } from '@inertiajs/vue3'
