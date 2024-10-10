@@ -14,7 +14,7 @@ History encryption is an opt-in feature. There are several methods for enabling 
 
 ### Global encryption
 
-If you'd like to enable history encryption globally, set the `history_encrypted` config value to `true`.
+If you'd like to enable history encryption globally, set the `encrypt_history` config value to `true`.
 
 You are able to opt out of encryption on specific pages by passing `false` to the `encrypt_history` option:
 
@@ -32,11 +32,11 @@ render inertia: 'Dashboard', props: {}, encrypt_history: true
 
 ### Controller-level encryption
 
-You can also enable history encryption for all actions in a controller by setting the `history_encrypted` config value in the controller:
+You can also enable history encryption for all actions in a controller by setting the `encrypt_history` config value in the controller:
 
 ```ruby
 class DashboardController < ApplicationController
-  inertia_config(history_encrypted: true)
+  inertia_config(encrypt_history: true)
   
   # ...
 end
