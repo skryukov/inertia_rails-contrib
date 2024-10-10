@@ -67,61 +67,75 @@ export default defineConfig({
       "/guide": [
         {
           items: [
-            { text: "Introduction", link: "/guide" },
-            { text: "Demo app", link: "/guide/demo-application" },
+            {text: "Introduction", link: "/guide"},
+            {text: "Demo app", link: "/guide/demo-application"},
+            {text: "Upgrade guide", link: "/guide/upgrade-guide"},
           ],
         },
         {
           text: "Installation",
           items: [
-            { text: "Server-side", link: "/guide/server-side-setup" },
-            { text: "Client-side", link: "/guide/client-side-setup" },
-          ],
+            {text: "Server-side", link: "/guide/server-side-setup"},
+            {text: "Client-side", link: "/guide/client-side-setup"},
+          ]
         },
         {
           text: "Core concepts",
           items: [
-            { text: "Who is it for", link: "/guide/who-is-it-for" },
-            { text: "How it works", link: "/guide/how-it-works" },
-            { text: "The protocol", link: "/guide/the-protocol" },
-          ],
+            {text: "Who is it for", link: "/guide/who-is-it-for"},
+            {text: "How it works", link: "/guide/how-it-works"},
+            {text: "The protocol", link: "/guide/the-protocol"},
+          ]
         },
         {
           text: "The basics",
           items: [
-            { text: "Pages", link: "/guide/pages" },
-            { text: "Responses", link: "/guide/responses" },
-            { text: "Redirects", link: "/guide/redirects" },
-            { text: "Routing", link: "/guide/routing" },
-            { text: "Title & meta", link: "/guide/title-and-meta" },
-            { text: "Links", link: "/guide/links" },
-            { text: "Manual visits", link: "/guide/manual-visits" },
-            { text: "Forms", link: "/guide/forms" },
-            { text: "File uploads", link: "/guide/file-uploads" },
-            { text: "Validation", link: "/guide/validation" },
-            { text: "Shared data", link: "/guide/shared-data" },
-          ],
+            {text: "Pages", link: "/guide/pages"},
+            {text: "Responses", link: "/guide/responses"},
+            {text: "Redirects", link: "/guide/redirects"},
+            {text: "Routing", link: "/guide/routing"},
+            {text: "Title & meta", link: "/guide/title-and-meta"},
+            {text: "Links", link: "/guide/links"},
+            {text: "Manual visits", link: "/guide/manual-visits"},
+            {text: "Forms", link: "/guide/forms"},
+            {text: "File uploads", link: "/guide/file-uploads"},
+            {text: "Validation", link: "/guide/validation"},
+          ]
+        },
+        {
+          text: "Data & Props",
+          items: [
+            {text: "Shared data", link: "/guide/shared-data"},
+            {text: "Partial reloads", link: "/guide/partial-reloads"},
+            {text: "Deferred props", link: "/guide/deferred-props"},
+            {text: "Polling", link: "/guide/polling"},
+            {text: "Prefetching", link: "/guide/prefetching"},
+            {text: "Load when visible", link: "/guide/load-when-visible"},
+            {text: "Merging props", link: "/guide/merging-props"},
+            {text: "Remembering state", link: "/guide/remembering-state"},
+          ]
+        },
+        {
+          text: "Security",
+          items: [
+            {text: "Authentication", link: "/guide/authentication"},
+            {text: "Authorization", link: "/guide/authorization"},
+            {text: "CSRF protection", link: "/guide/csrf-protection"},
+            {text: "History encryption", link: "/guide/history-encryption"},
+          ]
         },
         {
           text: "Advanced",
           items: [
-            { text: "Events", link: "/guide/events" },
-            { text: "Testing", link: "/guide/testing" },
-            { text: "Partial reloads", link: "/guide/partial-reloads" },
-            { text: "Scroll management", link: "/guide/scroll-management" },
-            { text: "Authentication", link: "/guide/authentication" },
-            { text: "Authorization", link: "/guide/authorization" },
-            { text: "CSRF protection", link: "/guide/csrf-protection" },
-            { text: "Error handling", link: "/guide/error-handling" },
-            { text: "Asset versioning", link: "/guide/asset-versioning" },
-            { text: "Progress indicators", link: "/guide/progress-indicators" },
-            { text: "Remembering state", link: "/guide/remembering-state" },
-            { text: "Code splitting", link: "/guide/code-splitting" },
-            {
-              text: "Server-side rendering",
-              link: "/guide/server-side-rendering",
-            },
-          ],
+            {text: "Asset versioning", link: "/guide/asset-versioning"},
+            {text: "Code splitting", link: "/guide/code-splitting"},
+            {text: "Error handling", link: "/guide/error-handling"},
+            {text: "Events", link: "/guide/events"},
+            {text: "Progress indicators", link: "/guide/progress-indicators"},
+            {text: "Scroll management", link: "/guide/scroll-management"},
+            {text: "Server-side rendering", link: "/guide/server-side-rendering"},
+            {text: "Testing", link: "/guide/testing"},
+          ]
         },
       ],
       "/cookbook": [

@@ -189,7 +189,7 @@ const form = useForm(`EditUser:${user.id}`, data)
 
 ## Manually saving state
 
-The `useRemember` hook watches for data changes and automatically saves those changes to the history state. Then, Inertia restores the data on page load.
+The `useRemember` hook in Vue and React, and the `remember` store in Svelte all watch for data changes and automatically save those changes to the history state. Then, Inertia will restore the data on page load.
 
 However, it's also possible to manage this manually using the underlying `remember()` and `restore()` methods in Inertia.
 

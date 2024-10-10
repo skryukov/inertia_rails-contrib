@@ -246,7 +246,7 @@ defineProps({ user: Object })
 </template>
 ```
 
-You can alternatively use the [defineOptions plugin](https://vue-macros.dev/macros/define-options.html) to define a layout within `<script setup>`:
+Alternatively use the [defineOptions plugin](https://vue-macros.dev/macros/define-options.html) to define a layout within `<script setup>`:
 
 ```vue
 <script setup>
