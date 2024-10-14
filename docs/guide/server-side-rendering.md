@@ -10,13 +10,7 @@ Server-side rendering pre-renders your JavaScript pages on the server, allowing 
 First, install the additional dependencies required for server-side rendering. This is only necessary for the Vue adapters, so you can skip this step if you're using React or Svelte.
 
 :::tabs key:frameworks
-== Vue 2
-
-```shell
-npm install vue-server-renderer
-```
-
-== Vue 3
+== Vue
 
 ```shell
 npm install @vue/server-renderer
@@ -28,7 +22,7 @@ npm install @vue/server-renderer
 // No additional dependencies required
 ```
 
-== Svelte
+== Svelte 4|Svelte 5
 
 ```shell
 // No additional dependencies required
@@ -43,33 +37,7 @@ Next, we'll create a `app/frontend/ssr/ssr.js` file within the Rails project tha
 This file is going to look very similar to your regular inertia initialization file, except it's not going to run in the browser, but rather in Node.js. Here's a complete example.
 
 :::tabs key:frameworks
-== Vue 2
-
-```js
-import { createInertiaApp } from '@inertiajs/vue2'
-import createServer from '@inertiajs/vue2/server'
-import Vue from 'vue'
-import { createRenderer } from 'vue-server-renderer'
-
-createServer((page) =>
-  createInertiaApp({
-    page,
-    render: createRenderer().renderToString,
-    resolve: (name) => {
-      const pages = import.meta.glob('../pages/**/*.vue', { eager: true })
-      return pages[`../pages/${name}.vue`]
-    },
-    setup({ App, props, plugin }) {
-      Vue.use(plugin)
-      return new Vue({
-        render: (h) => h(App, props),
-      })
-    },
-  }),
-)
-```
-
-== Vue 3
+== Vue
 
 ```js
 import { createInertiaApp } from '@inertiajs/vue3'
@@ -114,7 +82,7 @@ createServer((page) =>
 )
 ```
 
-== Svelte
+== Svelte 4|Svelte 5
 
 ```js
 import { createInertiaApp } from '@inertiajs/svelte'
@@ -180,13 +148,7 @@ Since your website is now being server-side rendered, you can instruct your clie
 To enable client-side hydration, update your initialization file:
 
 :::tabs key:frameworks
-== Vue 2
-
-```js
-// No changes required
-```
-
-== Vue 3
+== Vue
 
 ```js
 // frontend/entrypoints/inertia.js
@@ -228,9 +190,28 @@ createInertiaApp({
 })
 ```
 
-== Svelte
+== Svelte 4
 
 ```js
+// frontend/entrypoints/inertia.js
+import { createInertiaApp } from '@inertiajs/svelte'
+
+createInertiaApp({
+  resolve: (name) => {
+    const pages = import.meta.glob('../pages/**/*.svelte', { eager: true })
+    return pages[`../pages/${name}.svelte`]
+  },
+  setup({ el, App }) {
+    new App({ target: el }) // [!code --]
+    new App({ target: el, hydrate: true }) // [!code ++]
+  },
+})
+```
+
+You will also need to set the `hydratable` compiler option to `true` in your `vite.config.js` file:
+
+```js
+// vite.config.js
 import { svelte } from '@sveltejs/vite-plugin-svelte'
 import laravel from 'laravel-vite-plugin'
 import { defineConfig } from 'vite'
@@ -243,9 +224,9 @@ export default defineConfig({
       refresh: true,
     }),
     svelte(), // [!code --]
-    svelte({
+    svelte({ // [!code ++]
       // [!code ++]
-      compilerOptions: {
+      compilerOptions: { // [!code ++]
         // [!code ++]
         hydratable: true, // [!code ++]
       }, // [!code ++]
@@ -254,25 +235,27 @@ export default defineConfig({
 })
 ```
 
-You'll also need to enable hydration in your initialization file:
+== Svelte 5
 
 ```js
 // frontend/entrypoints/inertia.js
 import { createInertiaApp } from '@inertiajs/svelte'
+import { mount } from 'svelte' // [!code --]
+import { hydrate, mount } from 'svelte' // [!code ++]
 
 createInertiaApp({
-  resolve: (name) => {
-    const pages = import.meta.glob('../pages/**/*.svelte', { eager: true })
-    return pages[`../pages/${name}.svelte`]
-  },
-  setup({ el, App, props }) {
-    // [!code --]
-    new App({ target: el, props }) // [!code --]
-  }, // [!code --]
-  setup({ el, App }) {
-    // [!code ++]
-    new App({ target: el, hydrate: true }) // [!code ++]
-  }, // [!code ++]
+   resolve: name => {
+     const pages = import.meta.glob('./Pages/**/*.svelte', { eager: true })
+     return pages[`./Pages/${name}.svelte`]
+   },
+   setup({ el, App }) {
+     mount(App, { target: el }) // [!code --]
+     if (el.dataset.serverRendered === 'true') { // [!code ++]
+       hydrate(App, { target: el }) // [!code ++]
+     } else { // [!code ++]
+       mount(App, { target: el }) // [!code ++]
+     } // [!code ++]
+   },
 })
 ```
 

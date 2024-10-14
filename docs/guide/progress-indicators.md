@@ -1,6 +1,6 @@
 # Progress indicators
 
-Since Inertia requests are made via XHR, there would typically not be a browser loading indicator when navigating from one page to another. To solve this, Inertia displays a progress indicator at the top of the page whenever you make an Inertia visit.
+Since Inertia requests are made via XHR, there would typically not be a browser loading indicator when navigating from one page to another. To solve this, Inertia displays a progress indicator at the top of the page whenever you make an Inertia visit. However, [asynchronous requests](#visit-options) do not show the progress indicator unless explicitly configured.
 
 Of course, if you prefer, you can disable Inertia's default loading indicator and provide your own custom implementation. We'll discuss both approaches below.
 
@@ -67,14 +67,7 @@ After installation, you'll need to add the [NProgress styles](https://github.com
 Next, import both `NProgress` and the Inertia `router` into your application.
 
 :::tabs key:frameworks
-== Vue 2
-
-```js
-import NProgress from 'nprogress'
-import { router } from '@inertiajs/vue2'
-```
-
-== Vue 3
+== Vue
 
 ```js
 import NProgress from 'nprogress'
@@ -88,7 +81,7 @@ import NProgress from 'nprogress'
 import { router } from '@inertiajs/react'
 ```
 
-== Svelte
+== Svelte 4|Svelte 5
 
 ```js
 import NProgress from 'nprogress'
@@ -201,40 +194,7 @@ That's it, you now have a beautiful custom page loading indicator!
 For convenience, here is the full source code of the final version of our custom loading indicator.
 
 :::tabs key:frameworks
-== Vue 2
-
-```js
-import NProgress from 'nprogress'
-import { router } from '@inertiajs/vue2'
-
-let timeout = null
-
-router.on('start', () => {
-  timeout = setTimeout(() => NProgress.start(), 250)
-})
-
-router.on('progress', (event) => {
-  if (NProgress.isStarted() && event.detail.progress.percentage) {
-    NProgress.set((event.detail.progress.percentage / 100) * 0.9)
-  }
-})
-
-router.on('finish', (event) => {
-  clearTimeout(timeout)
-  if (!NProgress.isStarted()) {
-    return
-  } else if (event.detail.visit.completed) {
-    NProgress.done()
-  } else if (event.detail.visit.interrupted) {
-    NProgress.set(0)
-  } else if (event.detail.visit.cancelled) {
-    NProgress.done()
-    NProgress.remove()
-  }
-})
-```
-
-== Vue 3
+== Vue
 
 ```js
 import NProgress from 'nprogress'
@@ -300,7 +260,7 @@ router.on('finish', (event) => {
 })
 ```
 
-== Svelte
+== Svelte 4|Svelte 5
 
 ```js
 import NProgress from 'nprogress'
@@ -334,3 +294,26 @@ router.on('finish', (event) => {
 ```
 
 :::
+
+## Visit Options
+
+In addition to these configurations, Inertia.js provides two visit options to control the loading indicator on a per-request basis: `showProgress` and `async`. These options offer greater control over how Inertia.js handles asynchronous requests and manages progress indicators.
+
+### `showProgress`
+
+The `showProgress` option provides fine-grained control over the visibility of the loading indicator during requests.
+
+```js
+router.get('/settings', {}, { showProgress: false })
+```
+
+### `async`
+
+The `async` option allows you to perform asynchronous requests without displaying the default progress indicator. It can be used in combination with the `showProgress` option.
+
+```js
+// Disable the progress indicator
+router.get('/settings', {}, { async: true })
+// Enable the progress indicator with async requests
+router.get('/settings', {}, { async: true, showProgress: true })
+```

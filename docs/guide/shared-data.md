@@ -8,7 +8,7 @@ Inertia's Rails adapter comes with the `shared_data` controller method. This met
 
 ```ruby
 class EventsController < ApplicationController
-  # share syncronously
+  # share synchronously
   inertia_share app_name: env['app.name']
 
   # share lazily, evaluated at render time
@@ -36,30 +36,7 @@ end
 Once you have shared the data server-side, you will be able to access it within any of your pages or components. Here's an example of how to access shared data in a layout component.
 
 :::tabs key:frameworks
-== Vue 2
-
-```vue
-<template>
-  <main>
-    <header>You are logged in as: {{ user.name }}</header>
-    <article>
-      <slot />
-    </article>
-  </main>
-</template>
-
-<script>
-export default {
-  computed: {
-    user() {
-      return this.$page.props.auth.user
-    },
-  },
-}
-</script>
-```
-
-== Vue 3
+== Vue
 
 ```vue
 <script setup>
@@ -98,7 +75,7 @@ export default function Layout({ children }) {
 }
 ```
 
-== Svelte
+== Svelte 4|Svelte 5
 
 ```svelte
 <script>
@@ -132,27 +109,7 @@ end
 Next, display the flash message in a frontend component, such as the site layout.
 
 :::tabs key:frameworks
-== Vue 2
-
-```vue
-<template>
-  <main>
-    <header></header>
-    <article>
-      <div v-if="$page.props.flash.alert" class="alert">
-        {{ $page.props.flash.alert }}
-      </div>
-      <div v-if="$page.props.flash.notice" class="notice">
-        {{ $page.props.flash.notice }}
-      </div>
-      <slot />
-    </article>
-    <footer></footer>
-  </main>
-</template>
-```
-
-== Vue 3
+== Vue
 
 ```vue
 <template>
@@ -194,7 +151,7 @@ export default function Layout({ children }) {
 }
 ```
 
-== Svelte
+== Svelte 4|Svelte 5
 
 ```svelte
 <script>
