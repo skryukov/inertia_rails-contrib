@@ -27,10 +27,13 @@ function submit() {
   <form @submit.prevent="submit">
     <label for="first_name">First name:</label>
     <input id="first_name" v-model="form.first_name" />
+
     <label for="last_name">Last name:</label>
     <input id="last_name" v-model="form.last_name" />
+
     <label for="email">Email:</label>
     <input id="email" v-model="form.email" />
+
     <button type="submit">Submit</button>
   </form>
 </template>
@@ -71,17 +74,20 @@ export default function Edit() {
         value={values.first_name}
         onChange={handleChange}
       />
+
       <label htmlFor="last_name">Last name:</label>
       <input id="last_name" value={values.last_name} onChange={handleChange} />
+
       <label htmlFor="email">Email:</label>
       <input id="email" value={values.email} onChange={handleChange} />
+
       <button type="submit">Submit</button>
     </form>
   )
 }
 ```
 
-== Svelte
+== Svelte 4
 
 ```svelte
 <script>
@@ -93,12 +99,44 @@ export default function Edit() {
     email: null,
   }
 
-  function handleSubmit() {
+  function submit() {
     router.post('/users', values)
   }
 </script>
 
-<form on:submit|preventDefault={handleSubmit}>
+<form on:submit|preventDefault={submit}>
+  <label for="first_name">First name:</label>
+  <input id="first_name" bind:value={values.first_name}>
+
+  <label for="last_name">Last name:</label>
+  <input id="last_name" bind:value={values.last_name}>
+
+  <label for="email">Email:</label>
+  <input id="email" bind:value={values.email}>
+
+  <button type="submit">Submit</button>
+</form>
+```
+
+== Svelte 5
+
+```svelte
+<script>
+  import { router } from '@inertiajs/svelte'
+
+  let values = {
+    first_name: null,
+    last_name: null,
+    email: null,
+  }
+
+  function submit(e) {
+    e.preventDefault()
+    router.post('/users', values)
+  }
+</script>
+
+<form onsubmit={submit}>
   <label for="first_name">First name:</label>
   <input id="first_name" bind:value={values.first_name}>
 
@@ -223,24 +261,56 @@ return (
 )
 ```
 
-== Svelte
+== Svelte 4|Svelte 5
 
 ```svelte
 <script>
-import { useForm } from '@inertiajs/svelte'
+  import { useForm } from '@inertiajs/svelte'
 
-let form = useForm({
-  email: null,
-  password: null,
-  remember: false,
-})
+  const form = useForm({
+    email: null,
+    password: null,
+    remember: false,
+  })
 
-function submit() {
-  $form.post('/login')
-}
+  function submit() {
+    $form.post('/login')
+  }
 </script>
 
 <form on:submit|preventDefault={submit}>
+  <input type="text" bind:value={$form.email} />
+  {#if $form.errors.email}
+    <div class="form-error">{$form.errors.email}</div>
+  {/if}
+  <input type="password" bind:value={$form.password} />
+  {#if $form.errors.password}
+    <div class="form-error">{$form.errors.password}</div>
+  {/if}
+  <input type="checkbox" bind:checked={$form.remember} /> Remember Me
+  <button type="submit" disabled={$form.processing}>Submit</button>
+</form>
+```
+
+== Svelte 5
+
+```svelte
+<script>
+  import { useForm } from '@inertiajs/svelte'
+
+  const form = useForm({
+    email: null,
+    password: null,
+    remember: false,
+  })
+
+  function submit(e) {
+    e.preventDefault()
+    $form.post('/login')
+  }
+</script>
+
+<form onsubmit={submit}>
   <input type="text" bind:value={$form.email} />
   {#if $form.errors.email}
     <div class="form-error">{$form.errors.email}</div>
@@ -283,7 +353,7 @@ patch(url, options)
 destroy(url, options)
 ```
 
-== Svelte
+== Svelte 4|Svelte 5
 
 ```js
 $form.submit(method, url, options)
@@ -319,7 +389,7 @@ onSuccess: () => reset('password'),
 })
 ```
 
-== Svelte
+== Svelte 4|Svelte 5
 
 ```js
 $form.post('/profile', {
@@ -355,7 +425,7 @@ transform((data) => ({
 }))
 ```
 
-== Svelte
+== Svelte 4|Svelte 5
 
 ```js
 $form
@@ -385,7 +455,7 @@ const { processing } = useForm({ ... })
 <button type="submit" disabled={processing}>Submit</button>
 ```
 
-== Svelte
+== Svelte 4|Svelte 5
 
 ```svelte
 <button type="submit" disabled={$form.processing}>Submit</button>
@@ -416,7 +486,7 @@ const { progress } = useForm({ ... })
 )}
 ```
 
-== Svelte
+== Svelte 4|Svelte 5
 
 ```svelte
 {#if $form.progress}
@@ -445,7 +515,7 @@ const { errors } = useForm({ ... })
 {errors.email && <div>{errors.email}</div>}
 ```
 
-== Svelte
+== Svelte 4|Svelte 5
 
 ```svelte
 {#if $form.errors.email}
@@ -483,7 +553,7 @@ clearErrors()
 clearErrors('field', 'anotherfield')
 ```
 
-== Svelte
+== Svelte 4|Svelte 5
 
 ```js
 // Clear all errors...
@@ -526,7 +596,7 @@ setError({
 });
 ```
 
-== Svelte
+== Svelte 4|Svelte 5
 
 ```js
 // Set a single error
@@ -571,7 +641,7 @@ reset()
 reset('field', 'anotherfield')
 ```
 
-== Svelte
+== Svelte 4|Svelte 5
 
 ```js
 // Reset the form...
@@ -620,7 +690,7 @@ setDefaults({
 })
 ```
 
-== Svelte
+== Svelte 4|Svelte 5
 
 ```js
 // Set the form's current values as the new defaults...
@@ -655,7 +725,7 @@ const { isDirty } = useForm({ ... })
 {isDirty && <div>There are unsaved form changes.</div>}
 ```
 
-== Svelte
+== Svelte 4|Svelte 5
 
 ```svelte
 {#if $form.isDirty}
@@ -682,7 +752,7 @@ const { cancel } = useForm({ ... })
 cancel()
 ```
 
-== Svelte
+== Svelte 4|Svelte 5
 
 ```svelte
 $form.cancel()
@@ -711,7 +781,7 @@ const form = useForm('CreateUser', data)
 const form = useForm(`EditUser:${user.id}`, data)
 ```
 
-== Svelte
+== Svelte 4|Svelte 5
 
 ```svelte
 import { useForm } from '@inertiajs/svelte'

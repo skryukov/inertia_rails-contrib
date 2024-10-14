@@ -81,7 +81,7 @@ import NProgress from 'nprogress'
 import { router } from '@inertiajs/react'
 ```
 
-== Svelte
+== Svelte 4|Svelte 5
 
 ```js
 import NProgress from 'nprogress'
@@ -260,7 +260,7 @@ router.on('finish', (event) => {
 })
 ```
 
-== Svelte
+== Svelte 4|Svelte 5
 
 ```js
 import NProgress from 'nprogress'

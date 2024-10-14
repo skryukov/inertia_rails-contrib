@@ -32,7 +32,7 @@ router.visit(url, {
 })
 ```
 
-== Svelte
+== Svelte 4|Svelte 5
 
 ```js
 import { router } from '@inertiajs/svelte'
@@ -67,7 +67,7 @@ router.visit(url, {
 })
 ```
 
-== Svelte
+== Svelte 4|Svelte 5
 
 ```js
 import { router } from '@inertiajs/svelte'
@@ -102,7 +102,7 @@ import { router } from '@inertiajs/react'
 router.reload({ only: ['users'] })
 ```
 
-== Svelte
+== Svelte 4|Svelte 5
 
 ```svelte
 import { router } from '@inertiajs/svelte'
@@ -135,12 +135,12 @@ import { Link } from '@inertiajs/react'
 </Link>
 ```
 
-== Svelte
+== Svelte 4|Svelte 5
 
 ```svelte
 import { inertia, Link } from '@inertiajs/svelte'
 
-<a href="/users?active=true" use:inertia="{{ only: ['users'] }}">Show active</a>
+<a href="/users?active=true" use:inertia={{ only: ['users'] }}>Show active</a>
 
 <Link href="/users?active=true" only={['users']}>Show active</Link>
 ```

@@ -29,7 +29,7 @@ export default () => (
 )
 ```
 
-== Svelte
+== Svelte 4|Svelte 5
 
 ```svelte
 <script>
@@ -71,7 +71,7 @@ export default () => (
 )
 ```
 
-== Svelte
+== Svelte 4|Svelte 5
 
 ```svelte
 <script>
@@ -109,7 +109,7 @@ export default () => (
 )
 ```
 
-== Svelte
+== Svelte 4|Svelte 5
 
 ```svelte
 <script>
@@ -146,7 +146,7 @@ export default () => (
 )
 ```
 
-== Svelte
+== Svelte 4|Svelte 5
 
 ```svelte
 <script>
@@ -182,7 +182,7 @@ export default () => (
 )
 ```
 
-== Svelte
+== Svelte 4|Svelte 5
 
 ```svelte
 <script>
@@ -237,7 +237,7 @@ const { lastUpdatedAt, isPrefetching, isPrefetched } = usePrefetch(
 )
 ```
 
-== Svelte
+== Svelte 4|Svelte 5
 
 ```js
 import { usePrefetch } from '@inertiajs/svelte'
@@ -303,7 +303,7 @@ export default () => (
 )
 ```
 
-== Svelte
+== Svelte 4|Svelte 5
 
 ```svelte
 <script>

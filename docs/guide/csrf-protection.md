@@ -35,7 +35,7 @@ router.post('/users', {
 })
 ```
 
-== Svelte
+== Svelte 4|Svelte 5
 
 ```js
 import { page, router } from '@inertiajs/svelte'

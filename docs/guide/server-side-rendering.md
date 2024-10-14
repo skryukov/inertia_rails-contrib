@@ -22,7 +22,7 @@ npm install @vue/server-renderer
 // No additional dependencies required
 ```
 
-== Svelte
+== Svelte 4|Svelte 5
 
 ```shell
 // No additional dependencies required
@@ -82,7 +82,7 @@ createServer((page) =>
 )
 ```
 
-== Svelte
+== Svelte 4|Svelte 5
 
 ```js
 import { createInertiaApp } from '@inertiajs/svelte'
@@ -190,9 +190,28 @@ createInertiaApp({
 })
 ```
 
-== Svelte
+== Svelte 4
 
 ```js
+// frontend/entrypoints/inertia.js
+import { createInertiaApp } from '@inertiajs/svelte'
+
+createInertiaApp({
+  resolve: (name) => {
+    const pages = import.meta.glob('../pages/**/*.svelte', { eager: true })
+    return pages[`../pages/${name}.svelte`]
+  },
+  setup({ el, App }) {
+    new App({ target: el }) // [!code --]
+    new App({ target: el, hydrate: true }) // [!code ++]
+  },
+})
+```
+
+You will also need to set the `hydratable` compiler option to `true` in your `vite.config.js` file:
+
+```js
+// vite.config.js
 import { svelte } from '@sveltejs/vite-plugin-svelte'
 import laravel from 'laravel-vite-plugin'
 import { defineConfig } from 'vite'
@@ -205,9 +224,9 @@ export default defineConfig({
       refresh: true,
     }),
     svelte(), // [!code --]
-    svelte({
+    svelte({ // [!code ++]
       // [!code ++]
-      compilerOptions: {
+      compilerOptions: { // [!code ++]
         // [!code ++]
         hydratable: true, // [!code ++]
       }, // [!code ++]
@@ -216,25 +235,27 @@ export default defineConfig({
 })
 ```
 
-You'll also need to enable hydration in your initialization file:
+== Svelte 5
 
 ```js
 // frontend/entrypoints/inertia.js
 import { createInertiaApp } from '@inertiajs/svelte'
+import { mount } from 'svelte' // [!code --]
+import { hydrate, mount } from 'svelte' // [!code ++]
 
 createInertiaApp({
-  resolve: (name) => {
-    const pages = import.meta.glob('../pages/**/*.svelte', { eager: true })
-    return pages[`../pages/${name}.svelte`]
-  },
-  setup({ el, App, props }) {
-    // [!code --]
-    new App({ target: el, props }) // [!code --]
-  }, // [!code --]
-  setup({ el, App }) {
-    // [!code ++]
-    new App({ target: el, hydrate: true }) // [!code ++]
-  }, // [!code ++]
+   resolve: name => {
+     const pages = import.meta.glob('./Pages/**/*.svelte', { eager: true })
+     return pages[`./Pages/${name}.svelte`]
+   },
+   setup({ el, App }) {
+     mount(App, { target: el }) // [!code --]
+     if (el.dataset.serverRendered === 'true') { // [!code ++]
+       hydrate(App, { target: el }) // [!code ++]
+     } else { // [!code ++]
+       mount(App, { target: el }) // [!code ++]
+     } // [!code ++]
+   },
 })
 ```
 

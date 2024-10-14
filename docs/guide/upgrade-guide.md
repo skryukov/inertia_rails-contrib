@@ -32,7 +32,7 @@ npm install @inertiajs/vue3@next
 npm install @inertiajs/react@next
 ```
 
-== Svelte
+== Svelte 4|Svelte 5
 
 ```svelte
 npm install @inertiajs/svelte@next
@@ -53,6 +53,11 @@ While a significant release, Inertia.js v2.0 doesn't introduce many breaking cha
 ### Dropped Vue 2 support
 
 The Vue 2 adapter has been removed. Vue 2 reached End of Life on December 3, 2023, so this felt like it was time.
+
+### Svelte adapter
+
+- Dropped support for Svelte 3 as it reached End of Life on June 20, 2023.
+- The `remember` helper has been rename to `useRemember` to be consistent with other helpers.
 
 ### Partial reloads are now async
 

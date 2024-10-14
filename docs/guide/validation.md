@@ -126,7 +126,7 @@ export default function Edit() {
 }
 ```
 
-== Svelte
+== Svelte 4|Svelte 5
 
 ```svelte
 <script>
@@ -210,7 +210,7 @@ router.post('/users', data, {
 })
 ```
 
-== Svelte
+== Svelte 4|Svelte 5
 
 ```js
 import { router } from '@inertiajs/svelte'

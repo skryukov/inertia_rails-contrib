@@ -27,7 +27,7 @@ router.on('start', (event) => {
 })
 ```
 
-== Svelte
+== Svelte 4|Svelte 5
 
 ```js
 import { router } from '@inertiajs/svelte'
@@ -62,7 +62,7 @@ document.addEventListener('inertia:start', (event) => {
 })
 ```
 
-== Svelte
+== Svelte 4|Svelte 5
 
 ```js
 import { router } from '@inertiajs/svelte'
@@ -105,7 +105,7 @@ let removeStartEventListener = router.on('start', (event) => {
 removeStartEventListener()
 ```
 
-== Svelte
+== Svelte 4|Svelte 5
 
 ```js
 import { router } from '@inertiajs/svelte'
@@ -149,13 +149,25 @@ useEffect(() => {
 }, [])
 ```
 
-== Svelte
+== Svelte 4
 
 ```js
 import { router } from '@inertiajs/svelte'
 import { onMount } from 'svelte'
 
 onMount(() => {
+  return router.on('start', (event) => {
+    console.log(`Starting a visit to ${event.detail.visit.url}`)
+  })
+})
+```
+
+== Svelte 5
+
+```js
+import { router } from '@inertiajs/svelte'
+
+$effect(() => {
   return router.on('start', (event) => {
     console.log(`Starting a visit to ${event.detail.visit.url}`)
   })
@@ -197,7 +209,7 @@ document.addEventListener('inertia:start', startEventListener)
 document.removeEventListener('inertia:start', startEventListener)
 ```
 
-== Svelte
+== Svelte 4|Svelte 5
 
 ```js
 import { router } from '@inertiajs/svelte'
@@ -243,7 +255,7 @@ router.on('before', (event) => {
 })
 ```
 
-== Svelte
+== Svelte 4|Svelte 5
 
 ```js
 import { router } from '@inertiajs/svelte'
@@ -280,7 +292,7 @@ router.on('before', (event) => {
 })
 ```
 
-== Svelte
+== Svelte 4|Svelte 5
 
 ```js
 import { router } from '@inertiajs/svelte'
@@ -319,7 +331,7 @@ router.on('before', (event) => {
 })
 ```
 
-== Svelte
+== Svelte 4|Svelte 5
 
 ```js
 import { router } from '@inertiajs/svelte'
@@ -354,7 +366,7 @@ router.on('before', (event) => {
 })
 ```
 
-== Svelte
+== Svelte 4|Svelte 5
 
 ```js
 import { router } from '@inertiajs/svelte'
@@ -391,7 +403,7 @@ router.on('start', (event) => {
 })
 ```
 
-== Svelte
+== Svelte 4|Svelte 5
 
 ```js
 import { router } from '@inertiajs/svelte'
@@ -430,7 +442,7 @@ router.on('progress', (event) => {
 })
 ```
 
-== Svelte
+== Svelte 4|Svelte 5
 
 ```js
 import { router } from '@inertiajs/svelte'
@@ -469,7 +481,7 @@ router.on('success', (event) => {
 })
 ```
 
-== Svelte
+== Svelte 4|Svelte 5
 
 ```js
 import { router } from '@inertiajs/svelte'
@@ -508,7 +520,7 @@ router.on('error', (errors) => {
 })
 ```
 
-== Svelte
+== Svelte 4|Svelte 5
 
 ```js
 import { router } from '@inertiajs/svelte'
@@ -551,7 +563,7 @@ router.on('invalid', (event) => {
 })
 ```
 
-== Svelte
+== Svelte 4|Svelte 5
 
 ```js
 import { router } from '@inertiajs/svelte'
@@ -591,7 +603,7 @@ router.on('invalid', (event) => {
 })
 ```
 
-== Svelte
+== Svelte 4|Svelte 5
 
 ```js
 import { router } from '@inertiajs/svelte'
@@ -632,7 +644,7 @@ router.on('exception', (event) => {
 })
 ```
 
-== Svelte
+== Svelte 4|Svelte 5
 
 ```js
 import { router } from '@inertiajs/svelte'
@@ -670,7 +682,7 @@ router.on('exception', (event) => {
 })
 ```
 
-== Svelte
+== Svelte 4|Svelte 5
 
 ```js
 import { router } from '@inertiajs/svelte'
@@ -710,7 +722,7 @@ router.on('finish', (event) => {
 })
 ```
 
-== Svelte
+== Svelte 4|Svelte 5
 
 ```js
 import { router } from '@inertiajs/svelte'
@@ -749,7 +761,7 @@ router.on('navigate', (event) => {
 })
 ```
 
-== Svelte
+== Svelte 4|Svelte 5
 
 ```js
 import { router } from '@inertiajs/svelte'

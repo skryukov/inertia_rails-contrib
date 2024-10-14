@@ -27,7 +27,7 @@ import { router } from '@inertiajs/react'
 router.visit(url, { preserveScroll: false })
 ```
 
-== Svelte
+== Svelte 4|Svelte 5
 
 ```js
 import { router } from '@inertiajs/svelte'
@@ -56,7 +56,7 @@ import { router } from '@inertiajs/react'
 router.visit(url, { preserveScroll: 'errors' })
 ```
 
-== Svelte
+== Svelte 4|Svelte 5
 
 ```js
 import { router } from '@inertiajs/svelte'
@@ -89,7 +89,7 @@ router.post('/users', data, {
 })
 ```
 
-== Svelte
+== Svelte 4|Svelte 5
 
 ```js
 import { router } from '@inertiajs/svelte'
@@ -122,12 +122,12 @@ import { Link } from '@inertiajs/react'
 </Link>
 ```
 
-== Svelte
+== Svelte 4|Svelte 5
 
 ```svelte
 import { inertia, Link } from '@inertiajs/svelte'
 
-<a href="/" use:inertia="{{ preserveScroll: true }}">Home</a>
+<a href="/" use:inertia={{ preserveScroll: true }}>Home</a>
 
 <Link href="/" preserveScroll>Home</Link>
 ```
