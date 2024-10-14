@@ -164,17 +164,20 @@ end
 
 When Inertia performs a request, it will determine which data is required and only then will it evaluate the closure. This can significantly increase the performance of pages that contain a lot of optional data.
 
-Additionally, Inertia provides an `InertiaRails.lazy` method to specify that a prop should never be included unless explicitly requested using the `only` option:
+Additionally, Inertia provides an `InertiaRails.optional` method to specify that a prop should never be included unless explicitly requested using the `only` option:
 
 ```ruby
 class UsersController < ApplicationController
   def index
     render inertia: 'Users/Index', props: {
-      users: InertiaRails.lazy(-> { User.all }),
+      users: InertiaRails.optional(-> { User.all }),
     }
   end
 end
 ```
+
+> [!NOTE]
+> Prior to Inertia.js v2, the method `InertiaRails.lazy` was used. It is now deprecated and has been replaced by `InertiaRails.optional`. Please update your code accordingly to ensure compatibility with the latest version.
 
 On the inverse, you can use the `InertiaRails.always` method to specify that a prop should always be included, even if it has not been explicitly required in a partial reload.
 
@@ -207,7 +210,7 @@ class UsersController < ApplicationController
       # NEVER included on standard visits
       # OPTIONALLY included on partial reloads
       # ONLY evaluated when needed
-      users: InertiaRails.lazy(-> { User.all }),
+      users: InertiaRails.optional(-> { User.all }),
 
       # ALWAYS included on standard visits
       # ALWAYS included on partial reloads
