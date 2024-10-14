@@ -59,7 +59,7 @@ import { router } from '@inertiajs/react'
 router.reload({ reset: ['results'] })
 ```
 
-== Svelte
+== Svelte 4|Svelte 5
 
 ```svelte
 import { router } from '@inertiajs/svelte'

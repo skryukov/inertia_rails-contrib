@@ -36,21 +36,45 @@ export default () => (
 )
 ```
 
-== Svelte
+== Svelte 4
 
 ```svelte
 <script>
-import { WhenVisible } from '@inertiajs/svelte'
-export let permissions
+  import { WhenVisible } from '@inertiajs/svelte'
+  export let permissions
 </script>
 
 <WhenVisible data="permissions">
   <svelte:fragment slot="fallback">
     <div>Loading...</div>
   </svelte:fragment>
-  {permissions}
+
+  {#each permissions as permission}
+    <!-- ... -->
+  {/each}
 </WhenVisible>
 ```
+
+== Svelte 5
+
+```svelte
+<script>
+  import { WhenVisible } from '@inertiajs/svelte'
+
+  let { permissions } = $props()
+</script>
+
+<WhenVisible data="permissions">
+  {#snippet fallback()}
+    <div>Loading...</div>
+  {/snippet}
+
+  {#each permissions as permission}
+    <!-- ... -->
+  {/each}
+</WhenVisible>
+```
+
 :::
 
 If you'd like to load multiple props when an element becomes visible, you can provide an array to the `data` prop.
@@ -85,19 +109,39 @@ export default () => (
 )
 ```
 
-== Svelte
+== Svelte 4
 
 ```svelte
 <script>
-import { WhenVisible } from '@inertiajs/svelte'
-export let teams
-export let users
+  import { WhenVisible } from '@inertiajs/svelte'
+
+  export let teams
+  export let users
 </script>
 
 <WhenVisible data={['teams', 'users']}>
   <svelte:fragment slot="fallback">
     <div>Loading...</div>
   </svelte:fragment>
+
+  <!-- Props are now loaded -->
+</WhenVisible>
+```
+
+== Svelte 5
+
+```svelte
+<script>
+  import { WhenVisible } from '@inertiajs/svelte'
+
+  let { teams, users } = $props()
+</script>
+
+<WhenVisible data={['teams', 'users']}>
+  {#snippet fallback()}
+    <div>Loading...</div>
+  {/snippet}
+  
   <!-- Props are now loaded -->
 </WhenVisible>
 ```
@@ -120,6 +164,7 @@ import { WhenVisible } from '@inertiajs/vue3'
     <template #fallback>
       <div>Loading...</div>
     </template>
+
     <div v-for="permission in permissions">
       <!-- ... -->
     </div>
@@ -131,6 +176,7 @@ import { WhenVisible } from '@inertiajs/vue3'
 
 ```jsx
 import { WhenVisible } from '@inertiajs/react'
+
 export default () => (
   <WhenVisible data="permissions" buffer={500} fallback={<div>Loading...</div>}>
     <PermissionsChildComponent />
@@ -138,22 +184,44 @@ export default () => (
 )
 ```
 
-== Svelte
+== Svelte 4
 
 ```svelte
 <script>
-import { WhenVisible } from '@inertiajs/svelte'
-export let permissions
+  import { WhenVisible } from '@inertiajs/svelte'
+
+  export let permissions
 </script>
 
 <WhenVisible data="permissions" buffer={500}>
   <svelte:fragment slot="fallback">
     <div>Loading...</div>
   </svelte:fragment>
-  {permissions}
+  
+  {#each permissions as permission}
+    <!-- ... -->
+  {/each}
+</WhenVisible>
+
+== Svelte 5
+
+```svelte
+<script>
+  import { WhenVisible } from '@inertiajs/svelte'
+
+  let { permissions } = $props()
+</script>
+
+<WhenVisible data="permissions" buffer={500}>
+  {#snippet fallback()}
+    <div>Loading...</div>
+  {/snippet}
+
+  {#each permissions as permission}
+    <!-- ... -->
+  {/each}
 </WhenVisible>
 ```
-:::
 
 In the above example, the data will start loading 500 pixels before the element is visible.
 
@@ -186,16 +254,31 @@ export default () => (
 )
 ```
 
-== Svelte
+== Svelte 4
 
 ```svelte
 <script>
-import { WhenVisible } from '@inertiajs/svelte'
-export let products
+  import { WhenVisible } from '@inertiajs/svelte'
+
+  export let products
 </script>
 
 <WhenVisible data="products" as="span">
-  {products}
+  // ...
+</WhenVisible>
+```
+
+== Svelte 5
+
+```svelte
+<script>
+  import { WhenVisible } from '@inertiajs/svelte'
+
+  let { products } = $props()
+</script>
+
+<WhenVisible data="products" as="span">
+  <!-- ... -->
 </WhenVisible>
 ```
 :::
@@ -235,16 +318,31 @@ export default () => (
 )
 ```
 
-== Svelte
+== Svelte 4
 
 ```svelte
 <script>
-import { WhenVisible } from '@inertiajs/svelte'
-export let products
+  import { WhenVisible } from '@inertiajs/svelte'
+
+  export let products
 </script>
 
 <WhenVisible data="products" always>
-  {products}
+  <!-- ... -->
+</WhenVisible>
+```
+
+== Svelte 5
+  
+```svelte
+<script>
+  import { WhenVisible } from '@inertiajs/svelte'
+
+  let { products } = $props()
+</script>
+
+<WhenVisible data="products" always>
+  <!-- ... -->
 </WhenVisible>
 ```
 :::

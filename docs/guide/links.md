@@ -23,7 +23,7 @@ import { Link } from '@inertiajs/react'
 <Link href="/">Home</Link>
 ```
 
-== Svelte
+== Svelte 4|Svelte 5
 
 ```svelte
 import { inertia, Link } from '@inertiajs/svelte'
@@ -34,7 +34,7 @@ import { inertia, Link } from '@inertiajs/svelte'
 ```
 
 > [!TIP]
-> The `use:inertia` directive can be applied to any HTML element.
+> The `use:inertia` action can be applied to any HTML element.
 
 :::
 
@@ -46,10 +46,10 @@ By default, Inertia renders links as anchor `<a>` elements. However, you can cha
 ```vue
 import { Link } from '@inertiajs/vue3'
 
-<Link href="/logout" method="post" as="button" type="button">Logout</Link>
+<Link href="/logout" method="post" as="button">Logout</Link>
 
 // Renders as...
-<button type="button">Logout</button>
+// <button type="button">Logout</button>
 ```
 
 == React
@@ -57,30 +57,31 @@ import { Link } from '@inertiajs/vue3'
 ```jsx
 import { Link } from '@inertiajs/react'
 
-<Link href="/logout" method="post" as="button" type="button">Logout</Link>
+export default () => (
+  <Link href="/logout" method="post" as="button">Logout</Link>
+)
 
 // Renders as...
-<button type="button">Logout</button>
+// <button type="button">Logout</button>
 ```
 
-== Svelte
+== Svelte 4|Svelte 5
 
 ```svelte
-import { inertia } from '@inertiajs/svelte'
+<script>
+  import { Link } from '@inertiajs/svelte'
+</script>
 
-<button use:inertia="{{ href: '/logout', method: 'post' }}" type="button">Logout</button>
+<Link href="/logout" method="post" as="button">Logout</Link>
 
 // Renders as...
-<button type="button">Logout</button>
+// <button type="button">Logout</button>
 ```
-
-> [!NOTE]
-> Svelte does not support dynamic elements yet, but you can use the `inertia` directive to achieve the same results.
 
 :::
 
-> [!WARNING]
-> Creating `POST/PUT/PATCH/DELETE` anchor `<a>` links is discouraged as it causes "Open Link in New Tab / Window" accessibility issues. Instead, consider using a more appropriate element, such as a `<button>`.
+> [!NOTE]
+> Creating `POST/PUT/PATCH/DELETE` anchor `<a>` links is discouraged as it causes "Open Link in New Tab / Window" accessibility issues. The component automatically renders a `<button>` element when using these methods.
 
 ## Method
 
@@ -105,12 +106,14 @@ import { Link } from '@inertiajs/react'
 </Link>
 ```
 
-== Svelte
+== Svelte 4|Svelte 5
 
 ```svelte
 import { inertia, Link } from '@inertiajs/svelte'
 
-<button use:inertia="{{ href: '/logout', method: 'post' }}" type="button">Logout</button>
+<button use:inertia={{ href: '/logout', method: 'post' }} type="button">Logout</button>
+
+<Link href="/logout" method="post">Logout</button>
 ```
 
 :::
@@ -143,12 +146,12 @@ import { Link } from '@inertiajs/react'
 </Link>
 ```
 
-== Svelte
+== Svelte 4|Svelte 5
 
 ```svelte
 import { inertia, Link } from '@inertiajs/svelte'
 
-<button use:inertia="{{ href: '/endpoint', method: 'post', data: { foo: bar } }}" type="button">Save</button>
+<button use:inertia={{ href: '/endpoint', method: 'post', data: { foo: bar } }} type="button">Save</button>
 
 <Link href="/endpoint" method="post" data={{ foo: bar }}>Save</Link>
 ```
@@ -178,14 +181,14 @@ import { Link } from '@inertiajs/react'
 </Link>
 ```
 
-== Svelte
+== Svelte 4|Svelte 5
 
 ```svelte
 import { inertia, Link } from '@inertiajs/svelte'
 
-<button use:inertia="{{ href: '/endpoint', headers: { foo: bar } }}">Save</button>
+<button use:inertia={{ href: '/endpoint', headers: { foo: bar } }}>Save</button>
 
-<Link href="/endpoint" headers={{ foo: bar}}>Save</Link>
+<Link href="/endpoint" headers={{ foo: bar }}>Save</Link>
 ```
 
 :::
@@ -213,12 +216,12 @@ import { Link } from '@inertiajs/react'
 </Link>
 ```
 
-== Svelte
+== Svelte 4|Svelte 5
 
 ```svelte
 import { inertia, Link } from '@inertiajs/svelte'
 
-<a href="/" use:inertia="{{ replace: true }}">Home</a>
+<a href="/" use:inertia={{ replace: true }}>Home</a>
 
 <Link href="/" replace>Home</Link>
 ```
@@ -245,21 +248,21 @@ import { Link } from '@inertiajs/vue3'
 ```jsx
 import { Link } from '@inertiajs/react'
 
-<input onChange={this.handleChange} value={query} />
+<input onChange={this.handleChange} value={query} type="text" />
 
 <Link href="/search" data={query} preserveState>Search</Link>
 ```
 
-== Svelte
+== Svelte 4|Svelte 5
 
 ```svelte
 import { inertia, Link } from '@inertiajs/svelte'
 
-<input on:change={handleChange} value={query} />
+<input bind:value={query} type="text" />
 
-<button use:inertia="{{ href: '/search', data: query, preserveState: true }}">Search</button>
+<button use:inertia={{ href: '/search', data: { query }, preserveState: true }}>Search</button>
 
-<Link href="/search" data={query} preserveState>Search</Link>
+<Link href="/search" data={{ query }} preserveState>Search</Link>
 ```
 
 :::
@@ -287,12 +290,12 @@ import { Link } from '@inertiajs/react'
 </Link>
 ```
 
-== Svelte
+== Svelte 4|Svelte 5
 
 ```svelte
 import { inertia, Link } from '@inertiajs/svelte'
 
-<a href="/" use:inertia="{{ preserveScroll: true }}">Home</a>
+<a href="/" use:inertia={{ preserveScroll: true }}>Home</a>
 
 <Link href="/" preserveScroll>Home</Link>
 ```
@@ -324,12 +327,12 @@ import { Link } from '@inertiajs/react'
 </Link>
 ```
 
-== Svelte
+== Svelte 4|Svelte 5
 
 ```svelte
 import { inertia, Link } from '@inertiajs/svelte'
 
-<a href="/users?active=true" use:inertia="{{ only: ['users'] }}">Show active</a>
+<a href="/users?active=true" use:inertia={{ only: ['users'] }}>Show active</a>
 
 <Link href="/users?active=true" only={['users']}>Show active</Link>
 ```
@@ -390,16 +393,16 @@ const { url, component } = usePage()
 <Link href="/users" className={component.startsWith('Users') ? 'active' : ''}>Users</Link>
 ```
 
-== Svelte
+== Svelte 4|Svelte 5
 
 ```svelte
-import { page } from '@inertiajs/svelte'
+import { inertia, Link, page } from '@inertiajs/svelte'
 
 // URL exact match...
-<Link href="/users" class={$page.url === '/users' ? 'active' : ''}>Users</Link>
+<a href="/users" use:inertia class:active={$page.url === '/users'}>Users</a>
 
 // Component exact match...
-<Link href="/users" class={$page.component === 'Users/Index' ? 'active' : ''}>Users</Link>
+<a href="/users" use:inertia class:active={$page.component === 'Users/Index'}>Users</a>
 
 // URL starts with (/users, /users/create, /users/1, etc.)...
 <Link href="/users" class={$page.url.startsWith('/users') ? 'active' : ''}>Users</Link>

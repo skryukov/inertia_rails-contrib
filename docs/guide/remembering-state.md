@@ -8,19 +8,24 @@ To mitigate this issue, you can tell Inertia which local component state to save
 
 ## Saving local state
 
-To save local component state to the history state, use the `remember` feature to tell Inertia which data it should remember.
+To save local component state to the history state, use the "useRemember" hook to tell Inertia which data it should remember.
+
 
 :::tabs key:frameworks
 == Vue
 
-```vue
-import { useRemember } from '@inertiajs/vue3' const form = useRemember({
-first_name: null, last_name: null, })
+```js
+import { useRemember } from '@inertiajs/vue3'
+
+const form = useRemember({
+  first_name: null,
+  last_name: null,
+})
 ```
 
 == React
 
-```jsx
+```js
 import { useRemember } from '@inertiajs/react'
 
 export default function Profile() {
@@ -34,12 +39,12 @@ export default function Profile() {
 }
 ```
 
-== Svelte
+== Svelte 4|Svelte 5
 
-```svelte
-import { remember } from '@inertiajs/svelte'
+```js
+import { useRemember } from '@inertiajs/svelte'
 
-let form = remember({
+const form = useRemember({
   first_name: null,
   last_name: null,
 })
@@ -86,12 +91,12 @@ export default function Profile() {
 }
 ```
 
-== Svelte
+== Svelte 4|Svelte 5
 
 ```js
-import { page, remember } from '@inertiajs/svelte'
+import { page, useRemember } from '@inertiajs/svelte'
 
-let form = remember(
+let form = useRemember(
   {
     first_name: null,
     last_name: null,
@@ -137,12 +142,12 @@ export default function Profile() {
 }
 ```
 
-== Svelte
+== Svelte 4|Svelte 5
 
 ```js
-import { page, remember } from '@inertiajs/svelte'
+import { page, useRemember } from '@inertiajs/svelte'
 
-let form = remember(
+let form = useRemember(
   {
     first_name: $page.props.user.first_name,
     last_name: $page.props.user.last_name,
@@ -176,7 +181,7 @@ const form = useForm('CreateUser', data)
 const form = useForm(`EditUser:${user.id}`, data)
 ```
 
-== Svelte
+== Svelte 4|Svelte 5
 
 ```js
 import { useForm } from '@inertiajs/svelte'
@@ -189,7 +194,7 @@ const form = useForm(`EditUser:${user.id}`, data)
 
 ## Manually saving state
 
-The `useRemember` hook in Vue and React, and the `remember` store in Svelte all watch for data changes and automatically save those changes to the history state. Then, Inertia will restore the data on page load.
+The `useRemember` hook watches for data changes and automatically save those changes to the history state. Then, Inertia will restore the data on page load.
 
 However, it's also possible to manage this manually using the underlying `remember()` and `restore()` methods in Inertia.
 
@@ -218,7 +223,7 @@ router.remember(data, 'my-key')
 let data = router.restore('my-key')
 ```
 
-== Svelte
+== Svelte 4|Svelte 5
 
 ```js
 import { router } from '@inertiajs/svelte'

@@ -21,7 +21,7 @@ import { usePoll } from '@inertiajs/react'
 usePoll(2000)
 ```
 
-== Svelte
+== Svelte 4|Svelte 5
 
 ```js
 import { usePoll } from '@inertiajs/svelte'
@@ -63,7 +63,7 @@ usePoll(2000, {
 })
 ```
 
-== Svelte
+== Svelte 4|Svelte 5
 
 ```js
 import { usePoll } from '@inertiajs/svelte'
@@ -117,7 +117,7 @@ export default () => {
 }
 ```
 
-== Svelte
+== Svelte 4|Svelte 5
 
 ```svelte
 <script>
@@ -159,7 +159,7 @@ usePoll(2000, {}, {
 })
 ```
 
-== Svelte
+== Svelte 4|Svelte 5
 
 ```js
 import { usePoll } from '@inertiajs/svelte'

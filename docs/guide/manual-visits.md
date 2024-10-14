@@ -75,7 +75,7 @@ router.visit(url, {
 })
 ```
 
-== Svelte
+== Svelte 4|Svelte 5
 
 ```js
 import { router } from '@inertiajs/svelte'
@@ -142,7 +142,7 @@ router.delete(url, options)
 router.reload(options) // Uses the current URL
 ```
 
-== Svelte
+== Svelte 4|Svelte 5
 
 ```js
 import { router } from '@inertiajs/svelte'
@@ -180,7 +180,7 @@ import { router } from '@inertiajs/react'
 router.visit(url, { method: 'post' })
 ```
 
-== Svelte
+== Svelte 4|Svelte 5
 
 ```js
 import { router } from '@inertiajs/svelte'
@@ -226,7 +226,7 @@ router.visit('/users', {
 })
 ```
 
-== Svelte
+== Svelte 4|Svelte 5
 
 ```js
 import { router } from '@inertiajs/svelte'
@@ -267,7 +267,7 @@ router.post('/users', {
 })
 ```
 
-== Svelte
+== Svelte 4|Svelte 5
 
 ```js
 
@@ -310,7 +310,7 @@ router.post('/users', data, {
 })
 ```
 
-== Svelte
+== Svelte 4|Svelte 5
 
 ```js
 import { router } from '@inertiajs/svelte'
@@ -352,7 +352,7 @@ router.post('/companies', data, {
 })
 ```
 
-== Svelte
+== Svelte 4|Svelte 5
 
 ```js
 import { router } from '@inertiajs/svelte'
@@ -387,7 +387,7 @@ import { router } from '@inertiajs/react'
 router.get('/users', { search: 'John' }, { replace: true })
 ```
 
-== Svelte
+== Svelte 4|Svelte 5
 
 ```js
 import { router } from '@inertiajs/svelte'
@@ -428,7 +428,7 @@ import { router } from '@inertiajs/react'
 router.get('/users', { search: 'John' }, { preserveState: true })
 ```
 
-== Svelte
+== Svelte 4|Svelte 5
 
 ```js
 import { router } from '@inertiajs/svelte'
@@ -459,7 +459,7 @@ import { router } from '@inertiajs/react'
 router.get('/users', { search: 'John' }, { preserveState: 'errors' })
 ```
 
-== Svelte
+== Svelte 4|Svelte 5
 
 ```js
 import { router } from '@inertiajs/svelte'
@@ -492,7 +492,7 @@ router.post('/users', data, {
 })
 ```
 
-== Svelte
+== Svelte 4|Svelte 5
 
 ```js
 import { router } from '@inertiajs/svelte'
@@ -527,7 +527,7 @@ import { router } from '@inertiajs/react'
 router.visit(url, { preserveScroll: false })
 ```
 
-== Svelte
+== Svelte 4|Svelte 5
 
 ```js
 import { router } from '@inertiajs/svelte'
@@ -556,7 +556,7 @@ import { router } from '@inertiajs/react'
 router.visit(url, { preserveScroll: 'errors' })
 ```
 
-== Svelte
+== Svelte 4|Svelte 5
 
 ```js
 import { router } from '@inertiajs/svelte'
@@ -589,7 +589,7 @@ router.post('/users', data, {
 })
 ```
 
-== Svelte
+== Svelte 4|Svelte 5
 
 ```js
 import { router } from '@inertiajs/svelte'
@@ -624,7 +624,7 @@ import { router } from '@inertiajs/react'
 router.visit('/users', { search: 'John' }, { only: ['users'] })
 ```
 
-== Svelte
+== Svelte 4|Svelte 5
 
 ```js
 import { router } from '@inertiajs/svelte'
@@ -667,7 +667,7 @@ router.post('/users', data, {
 this.cancelToken.cancel()
 ```
 
-== Svelte
+== Svelte 4|Svelte 5
 
 ```js
 import { router } from '@inertiajs/svelte'
@@ -721,7 +721,7 @@ router.post('/users', data, {
 })
 ```
 
-== Svelte
+== Svelte 4|Svelte 5
 
 ```js
 import { router } from '@inertiajs/svelte'
@@ -762,7 +762,7 @@ router.delete(`/users/${user.id}`, {
 })
 ```
 
-== Svelte
+== Svelte 4|Svelte 5
 
 ```js
 import { router } from '@inertiajs/svelte'
@@ -809,7 +809,7 @@ router.post(url, {
 })
 ```
 
-== Svelte
+== Svelte 4|Svelte 5
 
 ```js
 import { router } from '@inertiajs/svelte'

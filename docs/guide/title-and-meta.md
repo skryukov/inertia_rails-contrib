@@ -35,7 +35,7 @@ import { Head } from '@inertiajs/react'
 </Head>
 ```
 
-== Svelte
+== Svelte 4|Svelte 5
 
 ```svelte
 <svelte:head>
@@ -70,7 +70,7 @@ import { Head } from '@inertiajs/react'
 <Head title="Your page title" />
 ```
 
-== Svelte
+== Svelte 4|Svelte 5
 
 ```svelte
 // Not supported
@@ -108,7 +108,7 @@ import { Head } from '@inertiajs/react'
 <Head title="Home" />
 ```
 
-== Svelte
+== Svelte 4|Svelte 5
 
 ```svelte
 // Not supported
@@ -145,7 +145,7 @@ import { Head } from '@inertiajs/react'
 </Head>
 ```
 
-== Svelte
+== Svelte 4|Svelte 5
 
 ```svelte
 // Not supported
@@ -208,7 +208,7 @@ import { Head } from '@inertiajs/react'
 </Head>
 ```
 
-== Svelte
+== Svelte 4|Svelte 5
 
 ```svelte
 // Not supported
@@ -270,7 +270,7 @@ const AppHead = ({ title, children }) => {
 export default AppHead
 ```
 
-== Svelte
+== Svelte 4|Svelte 5
 
 ```svelte
 // Not supported
@@ -297,7 +297,7 @@ import AppHead from './AppHead'
 <AppHead title="About" />
 ```
 
-== Svelte
+== Svelte 4|Svelte 5
 
 ```svelte
 // Not supported

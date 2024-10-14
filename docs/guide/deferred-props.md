@@ -75,21 +75,44 @@ export default () => (
 )
 ```
 
-== Svelte
+== Svelte 4
 
 ```svelte
 <script>
-import { Deferred } from '@inertiajs/svelte'
-export let permissions
+  import { Deferred } from '@inertiajs/svelte'
+  export let permissions
 </script>
 
 <Deferred data="permissions">
   <svelte:fragment slot="fallback">
     <div>Loading...</div>
   </svelte:fragment>
-  {permissions}
+
+  {#each permissions as permission}
+    <!-- ... -->
+  {/each}
 </Deferred>
 ```
+
+== Svelte 5
+
+```svelte
+<script>
+  import { Deferred } from '@inertiajs/svelte'
+  let { permissions } = $props()
+</script>
+
+<Deferred data="permissions">
+  {#snippet fallback()}
+    <div>Loading...</div>
+  {/snippet}
+
+  {#each permissions as permission}
+    <!-- ... -->
+  {/each}
+</Deferred>
+```
+
 :::
 
 If you need to wait for multiple deferred props to become available, you can specify an array to the `data` prop.
@@ -124,19 +147,37 @@ export default () => (
 )
 ```
 
-== Svelte
+== Svelte 4
 
 ```svelte
 <script>
-import { Deferred } from '@inertiajs/svelte'
-export let teams
-export let users
+  import { Deferred } from '@inertiajs/svelte'
+  export let teams
+  export let users
 </script>
 
 <Deferred data={['teams', 'users']}>
   <svelte:fragment slot="fallback">
     <div>Loading...</div>
   </svelte:fragment>
+
+  <!-- Props are now loaded -->
+</Deferred>
+```
+
+== Svelte 5
+
+```svelte
+<script>
+  import { Deferred } from '@inertiajs/svelte'
+  let { teams, users } = $props()
+</script>
+
+<Deferred data={['teams', 'users']}>
+  {#snippet fallback()}
+    <div>Loading...</div>
+  {/snippet}
+
   <!-- Props are now loaded -->
 </Deferred>
 ```

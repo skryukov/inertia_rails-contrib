@@ -75,7 +75,7 @@ export default function Layout({ children }) {
 }
 ```
 
-== Svelte
+== Svelte 4|Svelte 5
 
 ```svelte
 <script>
@@ -151,7 +151,7 @@ export default function Layout({ children }) {
 }
 ```
 
-== Svelte
+== Svelte 4|Svelte 5
 
 ```svelte
 <script>

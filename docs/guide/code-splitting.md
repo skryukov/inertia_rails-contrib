@@ -41,7 +41,7 @@ createInertiaApp({
 })
 ```
 
-== Svelte
+== Svelte 4|Svelte 5
 
 ```js
 // frontend/entrypoints/inertia.js
@@ -102,7 +102,7 @@ createInertiaApp({
 })
 ```
 
-== Svelte
+== Svelte 4|Svelte 5
 
 ```js
 // javascript/packs/inertia.js

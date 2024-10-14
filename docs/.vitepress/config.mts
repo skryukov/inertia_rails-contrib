@@ -1,5 +1,5 @@
 import { defineConfig } from "vitepress";
-import { tabsMarkdownPlugin } from "vitepress-plugin-tabs";
+import { tabsMarkdownPlugin } from "./vitepress-plugin-tabs/tabsMarkdownPlugin";
 
 const title = "Inertia Rails";
 const description = "Community documentation for Inertia.js Rails adapter";

@@ -22,7 +22,7 @@ npm install @inertiajs/vue3 vue
 npm install @inertiajs/react react react-dom
 ```
 
-== Svelte
+== Svelte 4|Svelte 5
 
 ```shell
 npm install @inertiajs/svelte svelte
@@ -75,7 +75,7 @@ createInertiaApp({
 })
 ```
 
-== Svelte
+== Svelte 4
 
 ```js
 // frontend/entrypoints/inertia.js
@@ -86,12 +86,29 @@ createInertiaApp({
     const pages = import.meta.glob('../pages/**/*.svelte', { eager: true })
     return pages[`../pages/${name}.svelte`]
   },
-  setup({ el, App, props }) {
-    new App({ target: el, props })
+  setup({ el, App }) {
+    new App({ target: el })
   },
 })
 ```
 
+== Svelte 5
+
+```js
+// frontend/entrypoints/inertia.js
+import { createInertiaApp } from '@inertiajs/svelte'
+import { mount } from 'svelte'
+
+createInertiaApp({
+  resolve: name => {
+    const pages = import.meta.glob('./Pages/**/*.svelte', { eager: true })
+    return pages[`./Pages/${name}.svelte`]
+  },
+  setup({ el, App }) {
+    mount(App, { target: el })
+  },
+})
+```
 :::
 
 The `setup` callback receives everything necessary to initialize the client-side framework, including the root Inertia `App` component.
@@ -143,7 +160,7 @@ createInertiaApp({
 })
 ```
 
-== Svelte
+== Svelte 4|Svelte 5
 
 ```js
 // Vite
