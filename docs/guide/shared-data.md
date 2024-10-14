@@ -8,7 +8,7 @@ Inertia's Rails adapter comes with the `shared_data` controller method. This met
 
 ```ruby
 class EventsController < ApplicationController
-  # share syncronously
+  # share synchronously
   inertia_share app_name: env['app.name']
 
   # share lazily, evaluated at render time
