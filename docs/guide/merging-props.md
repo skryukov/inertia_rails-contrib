@@ -14,7 +14,13 @@ class UsersController < ApplicationController
     _pagy, records = pagy(User.all)
 
     render inertia: 'Users/Index', props: {
-      results: InertiaRails.merge(-> { records }),
+      results: InertiaRails.merge(records),
+ 
+      # Also works with block:
+      # results: InertiaRails.merge { records },
+
+      # Also works with a lambda:
+      # results: InertiaRails.merge(-> { records }),
     }
   end
 end
@@ -30,7 +36,7 @@ class UsersController < ApplicationController
 
   def index
     render inertia: 'Users/Index', props: {
-      results: InertiaRails.defer(-> { pagy(User.all)[1] }).merge,
+      results: InertiaRails.defer { pagy(User.all)[1] }.merge,
     }
   end
 end

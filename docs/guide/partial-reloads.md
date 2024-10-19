@@ -170,7 +170,15 @@ Additionally, Inertia provides an `InertiaRails.optional` method to specify that
 class UsersController < ApplicationController
   def index
     render inertia: 'Users/Index', props: {
-      users: InertiaRails.optional(-> { User.all }),
+      users: InertiaRails.optional { User.all },
+
+      # Also works with a lambda:
+      # users: InertiaRails.optional(-> { User.all }),
+
+      # Also works with a simple value,
+      # but this way the prop is always evaluated,
+      # even if not included:
+      # users: InertiaRails.optional(User.all),
     }
   end
 end
@@ -186,6 +194,12 @@ class UsersController < ApplicationController
   def index
     render inertia: 'Users/Index', props: {
       users: InertiaRails.always(User.all),
+
+      # Also works with block:
+      # users: InertiaRails.optional { User.all },
+
+      # Also works with a lambda:
+      # users: InertiaRails.optional(-> { User.all }),
     }
   end
 end
@@ -210,7 +224,7 @@ class UsersController < ApplicationController
       # NEVER included on standard visits
       # OPTIONALLY included on partial reloads
       # ONLY evaluated when needed
-      users: InertiaRails.optional(-> { User.all }),
+      users: InertiaRails.optional { User.all },
 
       # ALWAYS included on standard visits
       # ALWAYS included on partial reloads
