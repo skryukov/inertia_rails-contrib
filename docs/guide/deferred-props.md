@@ -12,7 +12,15 @@ class UsersController < ApplicationController
     render inertia: 'Users/Index', props: {
       users: -> { User.all },
       roles: -> { Role.all },
-      permissions: InertiaRails.defer(-> { Permission.all }),
+      permissions: InertiaRails.defer { Permission.all },
+
+      # Also works with a lambda:
+      # permissions: InertiaRails.defer(-> { Permission.all }),
+
+      # Also works with a simple value,
+      # but this way the prop is always evaluated,
+      # even if not included:
+      # permissions: InertiaRails.defer(Permission.all),
     }
   end
 end
@@ -28,10 +36,12 @@ class UsersController < ApplicationController
     render inertia: 'Users/Index', props: {
       users: -> { User.all },
       roles: -> { Role.all },
-      permissions: InertiaRails.defer(-> { Permission.all }),
-      teams: InertiaRails.defer(-> { Team.all }, 'attributes'),
-      projects: InertiaRails.defer(-> { Project.all }, 'attributes'),
-      tasks: InertiaRails.defer(-> { Task.all }, 'attributes'),
+      permissions: InertiaRails.defer { Permission.all },
+      # using block:
+      teams: InertiaRails.defer(group: 'attributes') { Team.all },
+      # using lambda:
+      projects: InertiaRails.defer(-> { Project.all }, group: 'attributes'),
+      tasks: InertiaRails.defer(-> { Task.all }, group: 'attributes'),
     }
   end
 end
