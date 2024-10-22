@@ -12,17 +12,7 @@ As an example, consider a "user index" page that includes a list of users, as we
 To perform a partial reload, use the `only` visit option to specify which data the server should return. This option should be an array of keys which correspond to the keys of the props.
 
 :::tabs key:frameworks
-== Vue 2
-
-```js
-import { router } from '@inertiajs/vue2'
-
-router.visit(url, {
-  only: ['users'],
-})
-```
-
-== Vue 3
+== Vue
 
 ```js
 import { router } from '@inertiajs/vue3'
@@ -42,7 +32,7 @@ router.visit(url, {
 })
 ```
 
-== Svelte
+== Svelte 4|Svelte 5
 
 ```js
 import { router } from '@inertiajs/svelte'
@@ -56,21 +46,8 @@ router.visit(url, {
 
 ## Except certain props
 
-> [!WARNING]
-> The `except` option is not yet supported by the Inertia Rails.
-
 :::tabs key:frameworks
-== Vue 2
-
-```js
-import { router } from '@inertiajs/vue2'
-
-router.visit(url, {
-  except: ['users'],
-})
-```
-
-== Vue 3
+== Vue
 
 ```js
 import { router } from '@inertiajs/vue3'
@@ -90,7 +67,7 @@ router.visit(url, {
 })
 ```
 
-== Svelte
+== Svelte 4|Svelte 5
 
 ```js
 import { router } from '@inertiajs/svelte'
@@ -109,15 +86,7 @@ In addition to the only visit option you can also use the except option to speci
 Since partial reloads can only be made to the same page component the user is already on, it almost always makes sense to just use the `router.reload()` method, which automatically uses the current URL.
 
 :::tabs key:frameworks
-== Vue 2
-
-```vue
-import { router } from '@inertiajs/vue2'
-
-router.reload({ only: ['users'] })
-```
-
-== Vue 3
+== Vue
 
 ```vue
 import { router } from '@inertiajs/vue3'
@@ -133,7 +102,7 @@ import { router } from '@inertiajs/react'
 router.reload({ only: ['users'] })
 ```
 
-== Svelte
+== Svelte 4|Svelte 5
 
 ```svelte
 import { router } from '@inertiajs/svelte'
@@ -148,15 +117,7 @@ router.reload({ only: ['users'] })
 It's also possible to perform partial reloads with Inertia links using the `only` property.
 
 :::tabs key:frameworks
-== Vue 2
-
-```vue
-import { Link } from '@inertiajs/vue2'
-
-<Link href="/users?active=true" :only="['users']">Show active</Link>
-```
-
-== Vue 3
+== Vue
 
 ```vue
 import { Link } from '@inertiajs/vue3'
@@ -174,12 +135,12 @@ import { Link } from '@inertiajs/react'
 </Link>
 ```
 
-== Svelte
+== Svelte 4|Svelte 5
 
 ```svelte
 import { inertia, Link } from '@inertiajs/svelte'
 
-<a href="/users?active=true" use:inertia="{{ only: ['users'] }}">Show active</a>
+<a href="/users?active=true" use:inertia={{ only: ['users'] }}>Show active</a>
 
 <Link href="/users?active=true" only={['users']}>Show active</Link>
 ```
@@ -203,13 +164,42 @@ end
 
 When Inertia performs a request, it will determine which data is required and only then will it evaluate the closure. This can significantly increase the performance of pages that contain a lot of optional data.
 
-Additionally, Inertia provides an `InertiaRails.lazy` method to specify that a prop should never be included unless explicitly requested using the `only` option:
+Additionally, Inertia provides an `InertiaRails.optional` method to specify that a prop should never be included unless explicitly requested using the `only` option:
 
 ```ruby
 class UsersController < ApplicationController
   def index
     render inertia: 'Users/Index', props: {
-      users: InertiaRails.lazy(-> { User.all }),
+      users: InertiaRails.optional { User.all },
+
+      # Also works with a lambda:
+      # users: InertiaRails.optional(-> { User.all }),
+
+      # Also works with a simple value,
+      # but this way the prop is always evaluated,
+      # even if not included:
+      # users: InertiaRails.optional(User.all),
+    }
+  end
+end
+```
+
+> [!NOTE]
+> Prior to Inertia.js v2, the method `InertiaRails.lazy` was used. It is now deprecated and has been replaced by `InertiaRails.optional`. Please update your code accordingly to ensure compatibility with the latest version.
+
+On the inverse, you can use the `InertiaRails.always` method to specify that a prop should always be included, even if it has not been explicitly required in a partial reload.
+
+```ruby
+class UsersController < ApplicationController
+  def index
+    render inertia: 'Users/Index', props: {
+      users: InertiaRails.always(User.all),
+
+      # Also works with block:
+      # users: InertiaRails.always { User.all },
+
+      # Also works with a lambda:
+      # users: InertiaRails.always(-> { User.all }),
     }
   end
 end
@@ -234,7 +224,12 @@ class UsersController < ApplicationController
       # NEVER included on standard visits
       # OPTIONALLY included on partial reloads
       # ONLY evaluated when needed
-      users: InertiaRails.lazy(-> { User.all }),
+      users: InertiaRails.optional { User.all },
+
+      # ALWAYS included on standard visits
+      # ALWAYS included on partial reloads
+      # ALWAYS evaluated
+      users: InertiaRails.always(User.all),
     }
   end
 end

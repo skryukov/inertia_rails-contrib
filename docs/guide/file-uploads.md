@@ -7,17 +7,7 @@ When making Inertia requests that include files (even nested files), Inertia wil
 If you would like the request to always use a `FormData` object regardless of whether a file is present in the data, you may provide the `forceFormData` option when making the request.
 
 :::tabs key:frameworks
-== Vue 2
-
-```js
-import { router } from '@inertiajs/vue2'
-
-router.post('/users', data, {
-  forceFormData: true,
-})
-```
-
-== Vue 3
+== Vue
 
 ```js
 import { router } from '@inertiajs/vue3'
@@ -37,7 +27,7 @@ router.post('/users', data, {
 })
 ```
 
-== Svelte
+== Svelte 4|Svelte 5
 
 ```js
 import { router } from '@inertiajs/svelte'
@@ -59,42 +49,7 @@ You can learn more about the `FormData` interface via its [MDN documentation](ht
 Let's examine a complete file upload example using Inertia. This example includes both a `name` text input and an `avatar` file input.
 
 :::tabs key:frameworks
-== Vue 2
-
-```vue
-<template>
-  <form @submit.prevent="submit">
-    <input type="text" v-model="form.name" />
-    <input type="file" @input="form.avatar = $event.target.files[0]" />
-    <progress v-if="form.progress" :value="form.progress.percentage" max="100">
-      {{ form.progress.percentage }}%
-    </progress>
-    <button type="submit">Submit</button>
-  </form>
-</template>
-
-<script>
-import { useForm } from '@inertiajs/vue2'
-
-export default {
-  data() {
-    return {
-      form: useForm({
-        name: null,
-        avatar: null,
-      }),
-    }
-  },
-  methods: {
-    submit() {
-      this.form.post('/users')
-    },
-  },
-}
-</script>
-```
-
-== Vue 3
+== Vue
 
 ```vue
 <script setup>
@@ -158,25 +113,54 @@ return (
 )
 ```
 
-== Svelte
+== Svelte 4
 
 ```svelte
 <script>
-import { useForm } from '@inertiajs/svelte'
+  import { useForm } from '@inertiajs/svelte'
 
-let form = useForm({
-  name: null,
-  avatar: null,
-})
+  const form = useForm({
+    name: null,
+    avatar: null,
+  })
 
-function submit() {
-  $form.post('/users')
-}
+  function submit() {
+    $form.post('/users')
+  }
 </script>
 
 <form on:submit|preventDefault={submit}>
   <input type="text" bind:value={$form.name} />
   <input type="file" on:input={e => $form.avatar = e.target.files[0]} />
+  {#if $form.progress}
+    <progress value={$form.progress.percentage} max="100">
+      {$form.progress.percentage}%
+    </progress>
+  {/if}
+  <button type="submit">Submit</button>
+</form>
+```
+
+== Svelte 5
+
+```svelte
+<script>
+  import { useForm } from '@inertiajs/svelte'
+
+  const form = useForm({
+    name: null,
+    avatar: null,
+  })
+
+  function submit(e) {
+    e.preventDefault()
+    $form.post('/users')
+  }
+</script>
+
+<form onsubmit={submit}>
+  <input type="text" bind:value={$form.name} />
+  <input type="file" oninput={e => $form.avatar = e.target.files[0]} />
   {#if $form.progress}
     <progress value={$form.progress.percentage} max="100">
       {$form.progress.percentage}%
@@ -200,24 +184,7 @@ However, some frameworks, such as Laravel and Rails, support form method spoofin
 > For more info see [`Rack::MethodOverride`](https://github.com/rack/rack/blob/main/lib/rack/method_override.rb).
 
 :::tabs key:frameworks
-== Vue 2
-
-```js
-import { router } from '@inertiajs/vue2'
-
-router.post(`/users/${user.id}`, {
-  _method: 'put',
-  avatar: form.avatar,
-})
-
-// or
-
-form.post(`/users/${user.id}`, {
-  headers: { 'X-HTTP-METHOD-OVERRIDE': 'put' },
-})
-```
-
-== Vue 3
+== Vue
 
 ```js
 import { router } from '@inertiajs/vue3'
@@ -251,7 +218,7 @@ form.post(`/users/${user.id}`, {
 })
 ```
 
-== Svelte
+== Svelte 4|Svelte 5
 
 ```js
 import { router } from '@inertiajs/svelte'
