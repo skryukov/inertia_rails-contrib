@@ -202,6 +202,7 @@ export default () => (
     <!-- ... -->
   {/each}
 </WhenVisible>
+```
 
 == Svelte 5
 
@@ -222,6 +223,8 @@ export default () => (
   {/each}
 </WhenVisible>
 ```
+
+:::
 
 In the above example, the data will start loading 500 pixels before the element is visible.
 
