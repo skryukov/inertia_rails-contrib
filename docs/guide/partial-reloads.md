@@ -199,7 +199,7 @@ class UsersController < ApplicationController
       # users: InertiaRails.optional { User.all },
 
       # Also works with a lambda:
-      # users: InertiaRails.optional(-> { User.all }),
+      # users: InertiaRails.always(-> { User.all }),
     }
   end
 end
