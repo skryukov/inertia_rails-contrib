@@ -93,15 +93,15 @@
 :root {
   --vp-home-hero-name-color: transparent;
   --vp-home-hero-name-background: -webkit-linear-gradient(
-      0deg,
-      #9553e9,
-      #6d74ed
+    0deg,
+    #9553e9,
+    #6d74ed
   );
 
   --vp-home-hero-image-background-image: linear-gradient(
-      -45deg,
-      #9553e9 50%,
-      #6d74ed 50%
+    -45deg,
+    #9553e9 50%,
+    #6d74ed 50%
   );
   --vp-home-hero-image-filter: blur(44px);
 }
@@ -153,11 +153,11 @@
   padding: 0 !important;
 }
 
-.plugin-tabs--content div[class*='language-'] {
+.plugin-tabs--content div[class*="language-"] {
   background-color: var(--vp-code-block-bg) !important;
 }
 
-.plugin-tabs--content div[class*='language-']:first-child {
+.plugin-tabs--content div[class*="language-"]:first-child {
   border-top-left-radius: 0 !important;
   border-top-right-radius: 0 !important;
 }
