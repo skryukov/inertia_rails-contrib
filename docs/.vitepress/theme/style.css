@@ -161,3 +161,15 @@
   border-top-left-radius: 0 !important;
   border-top-right-radius: 0 !important;
 }
+
+.plugin-tabs--content:has(> p:first-child) {
+  border-left: 2px solid var(--vp-c-divider) !important;
+  border-right: 2px solid var(--vp-c-divider) !important;
+  border-bottom: 2px solid var(--vp-c-divider) !important;
+  padding: 8px !important;
+}
+
+.plugin-tabs--content:has(> p:first-child) p {
+  margin-top: 16px !important;
+  padding-left: 16px;
+}
