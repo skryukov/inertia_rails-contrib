@@ -1,15 +1,16 @@
 module InertiaRailsContrib
   module GeneratorsHelper
     def self.guess_the_default_framework
-      case Rails.root.join("package.json").read
+      package = Rails.root.join("package.json").read
+      case package
       when /@inertiajs\/react/
         "react"
       when /@inertiajs\/svelte/
-        "svelte"
+        package.match?(/"svelte": "\^5/) ? "svelte" : "svelte4"
       when /@inertiajs\/vue3/
         "vue"
       else
-        say_error "Could not determine the Inertia.js framework you are using."
+        Thor::Shell::Basic.new.say_error "Could not determine the Inertia.js framework you are using."
       end
     end
 

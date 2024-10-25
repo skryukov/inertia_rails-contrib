@@ -1,11 +1,11 @@
 <script>
-  let { <%= singular_table_name %> } = $props()
+  export let <%= singular_table_name %>
 </script>
 
 <div>
 <% attributes.reject(&:password_digest?).each do |attribute| -%>
-  <p class="my-5">
-    <strong class="block font-medium mb-1"><%= attribute.human_name %>:</strong>
+  <p>
+    <strong><%= attribute.human_name %>:</strong>
 <% if attribute.attachment? -%>
     {#if <%= singular_table_name %>.<%= attribute.column_name %>}
       <a href={<%= singular_table_name %>.<%= attribute.column_name %>.url}>

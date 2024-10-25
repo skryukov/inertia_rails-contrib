@@ -2,7 +2,10 @@
   import { useForm } from '@inertiajs/svelte'
   import { createEventDispatcher } from 'svelte'
 
-  let { <%= singular_table_name %>, submitText, onSubmit } = $props()
+  const dispatch = createEventDispatcher()
+
+  export let <%= singular_table_name %>
+  export let submitText
 
   const form = useForm({
 <% attributes.each do |attribute| -%>
@@ -14,14 +17,12 @@
 <% end -%>
 <% end -%>
   })
-
-  const handleSubmit = (e) => {
-    e.preventDefault()
-    onSubmit({form: $form })
-  }
 </script>
 
-<form class="contents" onsubmit={handleSubmit}>
+<form
+  class="contents"
+  on:submit|preventDefault={dispatch('submit', { form: $form })}
+>
 <% attributes.each do |attribute| -%>
   <div class="my-5">
 <% if attribute.password_digest? -%>
@@ -63,13 +64,13 @@
       bind:value={$form.<%= attribute.column_name %>}
       rows="4"
       class="block shadow rounded-md border border-gray-400 outline-none px-3 py-2 mt-2 w-full"
-    ></textarea>
+    />
 <% elsif attribute.attachment? -%>
     <input
       type="file"
       name="<%= attribute.singular_name %>"
       id="<%= attribute.singular_name %>"
-      oninput={(e) => ($form.<%= attribute.column_name %> = e.target.files[0])}
+      on:input={(e) => ($form.<%= attribute.column_name %> = e.target.files[0])}
       class="block shadow rounded-md border border-gray-400 outline-none px-3 py-2 mt-2 w-full"
     />
 <% elsif attribute.attachments? -%>
@@ -78,7 +79,7 @@
       multiple
       name="<%= attribute.singular_name %>[]"
       id="<%= attribute.singular_name %>"
-      oninput={(e) => ($form.<%= attribute.column_name %> = Array.from(e.target.files))}
+      on:input={(e) => ($form.<%= attribute.column_name %> = Array.from(e.target.files))}
       class="block shadow rounded-md border border-gray-400 outline-none px-3 py-2 mt-2 w-full"
     />
 <% elsif input_type(attribute) == "checkbox" -%>

@@ -44,7 +44,7 @@
 <% elsif attribute.attachments? -%>
       <input
         type="file"
-        multiple="multiple"
+        multiple
         name="<%= attribute.singular_name %>[]"
         id="<%= attribute.singular_name %>"
         @input="form.<%= attribute.column_name %> = Array.from($event.target.files)"

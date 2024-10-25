@@ -73,12 +73,12 @@ export default function Form({ <%= singular_table_name %>, onSubmit, submitText 
 <% elsif attribute.attachments? -%>
         <input
           type="file"
-          multiple="multiple"
+          multiple
           name="<%= attribute.singular_name %>[]"
           id="<%= attribute.singular_name %>"
           onChange={(e) => setData('<%= attribute.column_name %>', Array.from(e.target.files))}
         />
-<% elsif attribute.field_type == :check_box -%>
+<% elsif input_type(attribute) == "checkbox" -%>
         <input
           type="<%= input_type(attribute) %>"
           name="<%= attribute.singular_name %>"

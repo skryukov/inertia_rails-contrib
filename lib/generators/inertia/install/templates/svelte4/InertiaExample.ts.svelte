@@ -3,9 +3,13 @@
   import inertiaSvg from '/assets/inertia.svg'
   import viteRubySvg from '/assets/vite_ruby.svg'
 
-  let { name }: { name: string } = $props()
+  export let name: string
 
-  let count = $state(0)
+  let count = 0
+
+  function handleClick() {
+    count += 1
+  }
 </script>
 
 <svelte:head>
@@ -30,7 +34,7 @@
   <h2>Inertia + Vite Ruby + Svelte</h2>
 
   <div class="card">
-    <button onclick={() => count++}>
+    <button on:click={handleClick}>
       count is {count}
     </button>
     <p>

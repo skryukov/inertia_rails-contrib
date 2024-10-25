@@ -47,13 +47,38 @@ vue:
   copy_files_js:
     "InertiaExample.vue": "%{js_destination_path}/pages/InertiaExample.vue"
 
+svelte4:
+  inertia_package: "@inertiajs/svelte"
+  packages:
+    - "svelte@4"
+    - "@sveltejs/vite-plugin-svelte@3"
+  packages_ts:
+    - "@tsconfig/svelte@4"
+    - "svelte-check"
+    - "typescript"
+    - "tslib"
+  vite_plugin_import: "import { svelte } from '@sveltejs/vite-plugin-svelte'"
+  vite_plugin_call: "svelte()"
+  copy_files_ts:
+    "InertiaExample.ts.svelte": "%{js_destination_path}/pages/InertiaExample.svelte"
+    "tsconfig.json": "tsconfig.json"
+    "tsconfig.node.json": "tsconfig.node.json"
+    "vite-env.d.ts": "%{js_destination_path}/vite-env.d.ts"
+  copy_files_js:
+    "InertiaExample.svelte": "%{js_destination_path}/pages/InertiaExample.svelte"
+  copy_files:
+    "svelte.config.js": "svelte.config.js"
+    "../assets/svelte.svg": "%{js_destination_path}/assets/svelte.svg"
+    "../assets/inertia.svg": "%{js_destination_path}/assets/inertia.svg"
+    "../assets/vite_ruby.svg": "%{js_destination_path}/assets/vite_ruby.svg"
+
 svelte:
   inertia_package: "@inertiajs/svelte"
   packages:
-    - "svelte"
-    - "@sveltejs/vite-plugin-svelte"
+    - "svelte@5"
+    - "@sveltejs/vite-plugin-svelte@4"
   packages_ts:
-    - "@tsconfig/svelte"
+    - "@tsconfig/svelte@5"
     - "svelte-check"
     - "typescript"
     - "tslib"

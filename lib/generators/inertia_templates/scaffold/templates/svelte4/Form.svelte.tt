@@ -2,7 +2,10 @@
   import { useForm } from '@inertiajs/svelte'
   import { createEventDispatcher } from 'svelte'
 
-  let { <%= singular_table_name %>, submitText, onSubmit } = $props()
+  const dispatch = createEventDispatcher()
+
+  export let <%= singular_table_name %>
+  export let submitText
 
   const form = useForm({
 <% attributes.each do |attribute| -%>
@@ -14,14 +17,9 @@
 <% end -%>
 <% end -%>
   })
-
-  const handleSubmit = (e) => {
-    e.preventDefault()
-    onSubmit({form: $form })
-  }
 </script>
 
-<form onsubmit={handleSubmit}>
+<form on:submit|preventDefault={dispatch('submit', { form: $form })}>
 <% attributes.each do |attribute| -%>
 <% if attribute.password_digest? -%>
   <div>
