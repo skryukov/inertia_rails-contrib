@@ -1,5 +1,5 @@
 <script>
-  let { <%= singular_table_name %> } = $props()
+  export let <%= singular_table_name %>
 </script>
 
 <div>

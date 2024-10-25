@@ -99,7 +99,7 @@ module Inertia
             insert_into_file application_layout.to_s, "<%= vite_react_refresh_tag %>\n    ", before: "<%= vite_client_tag %>"
           end
 
-          gsub_file application_layout.to_s, /<title>/, "<title inertia>" if framework != "svelte"
+          gsub_file application_layout.to_s, /<title>/, "<title inertia>" unless svelte?
         else
           say_error "Could not find the application layout file. Please add the following tags manually:", :red
           say_error "-  <title>...</title>"
@@ -112,7 +112,7 @@ module Inertia
 
       def install_typescript
         say "Adding TypeScript support"
-        if framework == "svelte" && inertia_resolved_version.release < Gem::Version.new("1.3.0")
+        if svelte? && inertia_resolved_version.release < Gem::Version.new("1.3.0")
           say "WARNING: @inertiajs/svelte < 1.3.0 does not support TypeScript (resolved version: #{inertia_resolved_version}).", :yellow
           say "Skipping TypeScript support for @inertiajs/svelte", :yellow
           @typescript = false
@@ -268,6 +268,10 @@ module Inertia
 
       def verbose?
         options[:verbose]
+      end
+
+      def svelte?
+        framework.start_with? "svelte"
       end
 
       def inertia_package

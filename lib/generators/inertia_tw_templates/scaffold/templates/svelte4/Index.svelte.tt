@@ -2,7 +2,8 @@
   import { Link } from '@inertiajs/svelte'
   import <%= inertia_component_name %> from './<%= inertia_component_name %>.svelte'
 
-  let { <%= plural_table_name %>, flash } = $props()
+  export let <%= plural_table_name %>
+  export let flash
 </script>
 
 <svelte:head>
