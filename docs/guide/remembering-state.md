@@ -193,7 +193,7 @@ const form = useForm(`EditUser:${user.id}`, data)
 
 ## Manually saving state
 
-The `useRemember` hook watches for data changes and automatically save those changes to the history state. Then, Inertia will restore the data on page load.
+The `useRemember` hook watches for data changes and automatically saves them to the history state. When navigating back to the page, Inertia will restore this data.
 
 However, it's also possible to manage this manually using the underlying `remember()` and `restore()` methods in Inertia.
 

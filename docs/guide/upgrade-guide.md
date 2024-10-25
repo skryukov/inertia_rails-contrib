@@ -59,7 +59,9 @@ The Vue 2 adapter has been removed. Vue 2 reached End of Life on December 3, 202
 ### Svelte adapter
 
 - Dropped support for Svelte 3 as it reached End of Life on June 20, 2023.
-- The `remember` helper has been rename to `useRemember` to be consistent with other helpers.
+- The `remember` helper has been renamed to `useRemember` to be consistent with other helpers.
+- Updated `setup` callback in `inertia.js`. You need to pass `props` when initializing the `App` component. [See the updated guide](/guide/client-side-setup#initialize-the-inertia-app)
+- The `setup` callback is now required in `ssr.js`. [See the updated guide](/guide/server-side-rendering#add-server-entry-point)
 
 ### Partial reloads are now async
 
