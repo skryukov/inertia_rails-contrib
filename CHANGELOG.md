@@ -7,6 +7,14 @@ and this project adheres to [Semantic Versioning].
 
 ## [Unreleased]
 
+Added:
+
+- [BREAKING] Svelte 5 support ([@skryukov])
+  - The `--framework=svelte` option now installs Svelte 5
+  - New `--framework=svelte4` option installs Svelte 4
+  - Support for Svelte 5 in the installation generator
+  - Support for Svelte 5 in the scaffold templates
+
 ## [0.2.2] - 2024-10-09
 
 Added:
