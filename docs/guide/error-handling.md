@@ -104,12 +104,13 @@ export default function ErrorPage({ status }) {
 <script>
   export let status
 
-  $: title = {
-    503: 'Service Unavailable',
-    500: 'Server Error',
-    404: 'Page Not Found',
-    403: 'Forbidden',
-  }[status] || 'Unexpected error'
+  $: title =
+    {
+      503: 'Service Unavailable',
+      500: 'Server Error',
+      404: 'Page Not Found',
+      403: 'Forbidden',
+    }[status] || 'Unexpected error'
 
   $: description = {
     503: 'Sorry, we are doing some maintenance. Please check back soon.',

@@ -10,9 +10,13 @@ To create an Inertia link, use the Inertia `<Link>` component. Any attributes yo
 == Vue
 
 ```vue
+<script setup>
 import { Link } from '@inertiajs/vue3'
+</script>
 
-<Link href="/">Home</Link>
+<template>
+  <Link href="/">Home</Link>
+</template>
 ```
 
 == React
@@ -20,13 +24,15 @@ import { Link } from '@inertiajs/vue3'
 ```jsx
 import { Link } from '@inertiajs/react'
 
-<Link href="/">Home</Link>
+export default () => <Link href="/">Home</Link>
 ```
 
 == Svelte 4|Svelte 5
 
 ```svelte
-import { inertia, Link } from '@inertiajs/svelte'
+<script>
+  import { inertia, Link } from '@inertiajs/svelte'
+</script>
 
 <a href="/" use:inertia>Home</a>
 
@@ -44,12 +50,15 @@ By default, Inertia renders links as anchor `<a>` elements. However, you can cha
 == Vue
 
 ```vue
+<script setup>
 import { Link } from '@inertiajs/vue3'
+</script>
 
-<Link href="/logout" method="post" as="button">Logout</Link>
-
-// Renders as...
-// <button type="button">Logout</button>
+<template>
+  <Link href="/logout" method="post" as="button">Logout</Link>
+  <!-- Renders as... -->
+  <!--  <button type="button">Logout</button> -->
+</template>
 ```
 
 == React
@@ -58,7 +67,9 @@ import { Link } from '@inertiajs/vue3'
 import { Link } from '@inertiajs/react'
 
 export default () => (
-  <Link href="/logout" method="post" as="button">Logout</Link>
+  <Link href="/logout" method="post" as="button">
+    Logout
+  </Link>
 )
 
 // Renders as...
@@ -74,8 +85,8 @@ export default () => (
 
 <Link href="/logout" method="post" as="button">Logout</Link>
 
-// Renders as...
-// <button type="button">Logout</button>
+<!-- Renders as... -->
+<!-- <button type="button">Logout</button> -->
 ```
 
 :::
@@ -91,9 +102,13 @@ You can specify the HTTP request method for an Inertia link request using the `m
 == Vue
 
 ```vue
+<script setup>
 import { Link } from '@inertiajs/vue3'
+</script>
 
-<Link href="/logout" method="post" as="button">Logout</Link>
+<template>
+  <Link href="/logout" method="post" as="button">Logout</Link>
+</template>
 ```
 
 == React
@@ -101,15 +116,19 @@ import { Link } from '@inertiajs/vue3'
 ```jsx
 import { Link } from '@inertiajs/react'
 
-<Link href="/logout" method="post" as="button">
-  Logout
-</Link>
+export default () => (
+  <Link href="/logout" method="post" as="button">
+    Logout
+  </Link>
+)
 ```
 
 == Svelte 4|Svelte 5
 
 ```svelte
-import { inertia, Link } from '@inertiajs/svelte'
+<script>
+  import { inertia, Link } from '@inertiajs/svelte'
+</script>
 
 <button use:inertia={{ href: '/logout', method: 'post' }} type="button">Logout</button>
 
@@ -126,14 +145,15 @@ When making `POST` or `PUT` requests, you may wish to add additional data to the
 == Vue
 
 ```vue
+<script setup>
 import { Link } from '@inertiajs/vue3'
+</script>
 
-<Link
-  href="/endpoint"
-  method="post"
-  as="button"
-  :data="{ foo: bar }"
->Save</Link>
+<template>
+  <Link href="/endpoint" method="post" as="button" :data="{ foo: bar }">
+    Save
+  </Link>
+</template>
 ```
 
 == React
@@ -141,17 +161,26 @@ import { Link } from '@inertiajs/vue3'
 ```jsx
 import { Link } from '@inertiajs/react'
 
-<Link href="/endpoint" method="post" as="button" data={{ foo: bar }}>
-  Save
-</Link>
+export default () => (
+  <Link href="/endpoint" method="post" as="button" data={{ foo: bar }}>
+    Save
+  </Link>
+)
 ```
 
 == Svelte 4|Svelte 5
 
 ```svelte
-import { inertia, Link } from '@inertiajs/svelte'
+<script>
+  import { inertia, Link } from '@inertiajs/svelte'
+</script>
 
-<button use:inertia={{ href: '/endpoint', method: 'post', data: { foo: bar } }} type="button">Save</button>
+<button
+  use:inertia={{ href: '/endpoint', method: 'post', data: { foo: bar } }}
+  type="button"
+>
+  Save
+</button>
 
 <Link href="/endpoint" method="post" data={{ foo: bar }}>Save</Link>
 ```
@@ -166,9 +195,13 @@ The `headers` prop allows you to add custom headers to an Inertia link. However,
 == Vue
 
 ```vue
+<script setup>
 import { Link } from '@inertiajs/vue3'
+</script>
 
-<Link href="/endpoint" :headers="{ foo: bar }">Save</Link>
+<template>
+  <Link href="/endpoint" :headers="{ foo: bar }">Save</Link>
+</template>
 ```
 
 == React
@@ -176,15 +209,19 @@ import { Link } from '@inertiajs/vue3'
 ```jsx
 import { Link } from '@inertiajs/react'
 
-<Link href="/endpoint" headers={{ foo: bar }}>
-  Save
-</Link>
+export default () => (
+  <Link href="/endpoint" headers={{ foo: bar }}>
+    Save
+  </Link>
+)
 ```
 
 == Svelte 4|Svelte 5
 
 ```svelte
-import { inertia, Link } from '@inertiajs/svelte'
+<script>
+  import { inertia, Link } from '@inertiajs/svelte'
+</script>
 
 <button use:inertia={{ href: '/endpoint', headers: { foo: bar } }}>Save</button>
 
@@ -201,9 +238,13 @@ The `replace` prop allows you to specify the browser's history behavior. By defa
 == Vue
 
 ```vue
+<script setup>
 import { Link } from '@inertiajs/vue3'
+</script>
 
-<Link href="/" replace>Home</Link>
+<template>
+  <Link href="/" replace>Home</Link>
+</template>
 ```
 
 == React
@@ -211,15 +252,19 @@ import { Link } from '@inertiajs/vue3'
 ```jsx
 import { Link } from '@inertiajs/react'
 
-<Link href="/" replace>
-  Home
-</Link>
+export default () => (
+  <Link href="/" replace>
+    Home
+  </Link>
+)
 ```
 
 == Svelte 4|Svelte 5
 
 ```svelte
-import { inertia, Link } from '@inertiajs/svelte'
+<script>
+  import { inertia, Link } from '@inertiajs/svelte'
+</script>
 
 <a href="/" use:inertia={{ replace: true }}>Home</a>
 
@@ -236,11 +281,15 @@ You can preserve a page component's local state using the `preserveState` prop. 
 == Vue
 
 ```vue
+<script setup>
 import { Link } from '@inertiajs/vue3'
+</script>
 
-<input v-model="query" type="text" />
+<template>
+  <input v-model="query" type="text" />
 
-<Link href="/search" :data="{ query }" preserve-state>Search</Link>
+  <Link href="/search" :data="{ query }" preserve-state>Search</Link>
+</template>
 ```
 
 == React
@@ -248,19 +297,29 @@ import { Link } from '@inertiajs/vue3'
 ```jsx
 import { Link } from '@inertiajs/react'
 
-<input onChange={this.handleChange} value={query} type="text" />
+export default () => (
+  <>
+    <input onChange={this.handleChange} value={query} type="text" />
 
-<Link href="/search" data={query} preserveState>Search</Link>
+    <Link href="/search" data={query} preserveState>
+      Search
+    </Link>
+  </>
+)
 ```
 
 == Svelte 4|Svelte 5
 
 ```svelte
-import { inertia, Link } from '@inertiajs/svelte'
+<script>
+  import { inertia, Link } from '@inertiajs/svelte'
+</script>
 
 <input bind:value={query} type="text" />
 
-<button use:inertia={{ href: '/search', data: { query }, preserveState: true }}>Search</button>
+<button use:inertia={{ href: '/search', data: { query }, preserveState: true }}>
+  Search
+</button>
 
 <Link href="/search" data={{ query }} preserveState>Search</Link>
 ```
@@ -275,9 +334,13 @@ You can use the `preserveScroll` prop to prevent Inertia from automatically rese
 == Vue
 
 ```vue
+<script setup>
 import { Link } from '@inertiajs/vue3'
+</script>
 
-<Link href="/" preserve-scroll>Home</Link>
+<template>
+  <Link href="/" preserve-scroll>Home</Link>
+</template>
 ```
 
 == React
@@ -285,15 +348,19 @@ import { Link } from '@inertiajs/vue3'
 ```jsx
 import { Link } from '@inertiajs/react'
 
-<Link href="/" preserveScroll>
-  Home
-</Link>
+export default () => (
+  <Link href="/" preserveScroll>
+    Home
+  </Link>
+)
 ```
 
 == Svelte 4|Svelte 5
 
 ```svelte
-import { inertia, Link } from '@inertiajs/svelte'
+<script>
+  import { inertia, Link } from '@inertiajs/svelte'
+</script>
 
 <a href="/" use:inertia={{ preserveScroll: true }}>Home</a>
 
@@ -312,9 +379,13 @@ The `only` prop allows you to specify that only a subset of a page's props (data
 == Vue
 
 ```vue
+<script setup>
 import { Link } from '@inertiajs/vue3'
+</script>
 
-<Link href="/users?active=true" :only="['users']">Show active</Link>
+<template>
+  <Link href="/users?active=true" :only="['users']">Show active</Link>
+</template>
 ```
 
 == React
@@ -322,15 +393,19 @@ import { Link } from '@inertiajs/vue3'
 ```jsx
 import { Link } from '@inertiajs/react'
 
-<Link href="/users?active=true" only={['users']}>
-  Show active
-</Link>
+export default () => (
+  <Link href="/users?active=true" only={['users']}>
+    Show active
+  </Link>
+)
 ```
 
 == Svelte 4|Svelte 5
 
 ```svelte
-import { inertia, Link } from '@inertiajs/svelte'
+<script>
+  import { inertia, Link } from '@inertiajs/svelte'
+</script>
 
 <a href="/users?active=true" use:inertia={{ only: ['users'] }}>Show active</a>
 
@@ -349,28 +424,29 @@ It's often desirable to set an active state for navigation links based on the cu
 == Vue
 
 ```vue
+<script setup>
 import { Link } from '@inertiajs/vue3'
+</script>
 
-// URL exact match...
-<Link href="/users" :class="{ active: $page.url === '/users' }">Users</Link>
+<template>
+  <!-- URL exact match...-->
+  <Link href="/users" :class="{ active: $page.url === '/users' }">Users</Link>
 
-// Component exact match...
-<Link
-  href="/users"
-  :class="{ active: $page.component === 'Users/Index' }"
->Users</Link>
+  <!-- Component exact match...-->
+  <Link href="/users" :class="{ active: $page.component === 'Users/Index' }">
+    Users
+  </Link>
 
-// URL starts with (/users, /users/create, /users/1, etc.)...
-<Link
-  href="/users"
-  :class="{ active: $page.url.startsWith('/users') }"
->Users</Link>
+  <!-- URL starts with (/users, /users/create, /users/1, etc.)...-->
+  <Link href="/users" :class="{ active: $page.url.startsWith('/users') }">
+    Users
+  </Link>
 
-// Component starts with (Users/Index, Users/Create, Users/Show, etc.)...
-<Link
-  href="/users"
-  :class="{ active: $page.component.startsWith('Users') }"
->Users</Link>
+  <!-- Component starts with (Users/Index, Users/Create, Users/Show, etc.)...-->
+  <Link href="/users" :class="{ active: $page.component.startsWith('Users') }">
+    Users
+  </Link>
+</template>
 ```
 
 == React
@@ -378,37 +454,67 @@ import { Link } from '@inertiajs/vue3'
 ```jsx
 import { usePage } from '@inertiajs/react'
 
-const { url, component } = usePage()
+export default () => {
+  const { url, component } = usePage()
 
-// URL exact match...
-<Link href="/users" className={url === '/users' ? 'active' : ''}>Users</Link>
-
-// Component exact match...
-<Link href="/users" className={component === 'Users/Index' ? 'active' : ''}>Users</Link>
-
-// URL starts with (/users, /users/create, /users/1, etc.)...
-<Link href="/users" className={url.startsWith('/users') ? 'active' : ''}>Users</Link>
-
-// Component starts with (Users/Index, Users/Create, Users/Show, etc.)...
-<Link href="/users" className={component.startsWith('Users') ? 'active' : ''}>Users</Link>
+  return (
+    <>
+      // URL exact match...
+      <Link href="/users" className={url === '/users' ? 'active' : ''}>
+        Users
+      </Link>
+      // Component exact match...
+      <Link
+        href="/users"
+        className={component === 'Users/Index' ? 'active' : ''}
+      >
+        Users
+      </Link>
+      // URL starts with (/users, /users/create, /users/1, etc.)...
+      <Link href="/users" className={url.startsWith('/users') ? 'active' : ''}>
+        Users
+      </Link>
+      // Component starts with (Users/Index, Users/Create, Users/Show, etc.)...
+      <Link
+        href="/users"
+        className={component.startsWith('Users') ? 'active' : ''}
+      >
+        Users
+      </Link>
+    </>
+  )
+}
 ```
 
 == Svelte 4|Svelte 5
 
 ```svelte
-import { inertia, Link, page } from '@inertiajs/svelte'
+<script>
+  import { inertia, Link, page } from '@inertiajs/svelte'
+</script>
 
-// URL exact match...
-<a href="/users" use:inertia class:active={$page.url === '/users'}>Users</a>
+<template>
+  <!-- URL exact match... -->
+  <a href="/users" use:inertia class:active={$page.url === '/users'}>Users</a>
 
-// Component exact match...
-<a href="/users" use:inertia class:active={$page.component === 'Users/Index'}>Users</a>
+  <!-- Component exact match... -->
+  <a href="/users" use:inertia class:active={$page.component === 'Users/Index'}>
+    Users
+  </a>
 
-// URL starts with (/users, /users/create, /users/1, etc.)...
-<Link href="/users" class={$page.url.startsWith('/users') ? 'active' : ''}>Users</Link>
+  <!-- URL starts with (/users, /users/create, /users/1, etc.)... -->
+  <Link href="/users" class={$page.url.startsWith('/users') ? 'active' : ''}>
+    Users
+  </Link>
 
-// Component starts with (Users/Index, Users/Create, Users/Show, etc.)...
-<Link href="/users" class={$page.component.startsWith('Users') ? 'active' : ''}>Users</Link>
+  <!-- Component starts with (Users/Index, Users/Create, Users/Show, etc.)... -->
+  <Link
+    href="/users"
+    class={$page.component.startsWith('Users') ? 'active' : ''}
+  >
+    Users
+  </Link>
+</template>
 ```
 
 :::

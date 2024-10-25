@@ -42,40 +42,35 @@ Installing Inertia's Rails adapter
 
 Let's configure our project to work seamlessly with `shadcn/ui`. Choose your path based on whether you're using TypeScript or JavaScript.
 
-
 :::tabs key:languages
 
 == TypeScript
 
 You'll need to configure two files. First, update your `tsconfig.app.json`:
 
-```json5
+```json lines
 {
   "compilerOptions": {
     // ...
     "baseUrl": ".",
     "paths": {
-      "@/*": [
-        "./app/frontend/*"
-      ]
+      "@/*": ["./app/frontend/*"]
     }
-  },
+  }
   // ...
 }
 ```
 
 Then, set up your `tsconfig.json` to match `shadcn/ui`'s requirements (note the `baseUrl` and `paths` properties are different from the `tsconfig.app.json`):
 
-```json5
+```json lines
 {
   //...
   "compilerOptions": {
     /* Required for shadcn-ui/ui */
     "baseUrl": "./app/frontend",
     "paths": {
-      "@/*": [
-        "./*"
-      ]
+      "@/*": ["./*"]
     }
   }
 }

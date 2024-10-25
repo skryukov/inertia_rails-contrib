@@ -77,19 +77,23 @@ export const ruleBlockTab: RuleBlock = (state, startLine, endLine, silent) => {
   // this will prevent lazy continuations from ever going past our end marker
   state.lineMax = nextLine
 
-  state.src.slice(pos, max).trimStart().split('|').forEach((label) => {
-    const startToken = state.push('tab_open', 'div', 1)
-    startToken.markup = state.src.slice(mem, pos)
-    startToken.block = true
-    startToken.info = label
-    startToken.map = [startLine, nextLine - 1]
+  state.src
+    .slice(pos, max)
+    .trimStart()
+    .split('|')
+    .forEach((label) => {
+      const startToken = state.push('tab_open', 'div', 1)
+      startToken.markup = state.src.slice(mem, pos)
+      startToken.block = true
+      startToken.info = label
+      startToken.map = [startLine, nextLine - 1]
 
-    state.md.block.tokenize(state, startLine + 1, nextLine)
+      state.md.block.tokenize(state, startLine + 1, nextLine)
 
-    const endToken = state.push('tab_close', 'div', -1)
-    endToken.markup = state.src.slice(endStart, endPos)
-    endToken.block = true
-  })
+      const endToken = state.push('tab_close', 'div', -1)
+      endToken.markup = state.src.slice(endStart, endPos)
+      endToken.block = true
+    })
 
   state.parentType = oldParent
   state.lineMax = oldLineMax

@@ -62,8 +62,8 @@ class EventsController < ApplicationController
   end
 end
 ```
-This renders the `app/frontend/pages/events/index.(jsx|vue|svelte)` page component and passes the `@events` instance variable as the `events` prop.
 
+This renders the `app/frontend/pages/events/index.(jsx|vue|svelte)` page component and passes the `@events` instance variable as the `events` prop.
 
 Setting the `default_render` configuration value to `true` establishes this as the default behavior:
 
@@ -76,7 +76,7 @@ end
 ```ruby
 class EventsController < ApplicationController
   use_inertia_instance_props
-  
+
   def index
     @events = Event.all
   end
@@ -125,7 +125,7 @@ You can then access this variable like a regular local variable.
 
 ## Rails generators
 
-Gem `inertia_rails-contrib` provides a number of generators to help you get started with Inertia in your Rails application. You can generate controllers or use scaffolds to create a new resource with Inertia responses. 
+Gem `inertia_rails-contrib` provides a number of generators to help you get started with Inertia in your Rails application. You can generate controllers or use scaffolds to create a new resource with Inertia responses.
 
 ### Scaffold generator
 

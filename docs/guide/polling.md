@@ -27,10 +27,10 @@ usePoll(2000)
 import { usePoll } from '@inertiajs/svelte'
 usePoll(2000)
 ```
+
 :::
 
 If you need to pass additional request options to the poll helper, you can pass any of the `router.reload` options as the second parameter.
-
 
 :::tabs key:frameworks
 == Vue
@@ -40,11 +40,11 @@ import { usePoll } from '@inertiajs/vue3'
 
 usePoll(2000, {
   onStart() {
-      console.log('Polling request started')
+    console.log('Polling request started')
   },
   onFinish() {
-      console.log('Polling request finished')
-  }
+    console.log('Polling request finished')
+  },
 })
 ```
 
@@ -55,11 +55,11 @@ import { usePoll } from '@inertiajs/react'
 
 usePoll(2000, {
   onStart() {
-      console.log('Polling request started')
+    console.log('Polling request started')
   },
   onFinish() {
-      console.log('Polling request finished')
-  }
+    console.log('Polling request finished')
+  },
 })
 ```
 
@@ -70,16 +70,17 @@ import { usePoll } from '@inertiajs/svelte'
 
 usePoll(2000, {
   onStart() {
-      console.log('Polling request started')
+    console.log('Polling request started')
   },
   onFinish() {
-      console.log('Polling request finished')
-  }
+    console.log('Polling request finished')
+  },
 })
 ```
+
 :::
 
-If you'd like more control over the polling behavior, the poll helper provides `stop` and  `start` methods that allow you to manually start and stop polling. You can pass the `autoStart: false` option to the poll helper to prevent it from automatically starting polling when the component is mounted.
+If you'd like more control over the polling behavior, the poll helper provides `stop` and `start` methods that allow you to manually start and stop polling. You can pass the `autoStart: false` option to the poll helper to prevent it from automatically starting polling when the component is mounted.
 
 :::tabs key:frameworks
 == Vue
@@ -87,16 +88,19 @@ If you'd like more control over the polling behavior, the poll helper provides `
 ```vue
 <script setup>
 import { usePoll } from '@inertiajs/vue3'
-const { start, stop } = usePoll(2000, {}, {
-  autoStart: false,
-})
+const { start, stop } = usePoll(
+  2000,
+  {},
+  {
+    autoStart: false,
+  },
+)
 </script>
 
 <template>
   <button @click="start">Start polling</button>
   <button @click="stop">Stop polling</button>
 </template>
-
 ```
 
 == React
@@ -105,9 +109,13 @@ const { start, stop } = usePoll(2000, {}, {
 import { usePoll } from '@inertiajs/react'
 
 export default () => {
-  const { start, stop } = usePoll(2000, {}, {
-    autoStart: false,
-  })
+  const { start, stop } = usePoll(
+    2000,
+    {},
+    {
+      autoStart: false,
+    },
+  )
   return (
     <div>
       <button onClick={start}>Start polling</button>
@@ -121,18 +129,22 @@ export default () => {
 
 ```svelte
 <script>
-import { usePoll } from '@inertiajs/svelte'
+  import { usePoll } from '@inertiajs/svelte'
 
-const { start, stop } = usePoll(2000, {}, {
-  autoStart: false,
-})
+  const { start, stop } = usePoll(
+    2000,
+    {},
+    {
+      autoStart: false,
+    },
+  )
 </script>
 
 <button on:click={start}>Start polling</button>
 <button on:click={stop}>Stop polling</button>
 ```
-:::
 
+:::
 
 ## Throttling
 
@@ -144,9 +156,13 @@ By default, the poll helper will throttle requests by 90% when the browser tab i
 ```js
 import { usePoll } from '@inertiajs/vue3'
 
-usePoll(2000, {}, {
-  keepAlive: true,
-})
+usePoll(
+  2000,
+  {},
+  {
+    keepAlive: true,
+  },
+)
 ```
 
 == React
@@ -154,9 +170,13 @@ usePoll(2000, {}, {
 ```js
 import { usePoll } from '@inertiajs/react'
 
-usePoll(2000, {}, {
-  keepAlive: true,
-})
+usePoll(
+  2000,
+  {},
+  {
+    keepAlive: true,
+  },
+)
 ```
 
 == Svelte 4|Svelte 5
@@ -164,8 +184,13 @@ usePoll(2000, {}, {
 ```js
 import { usePoll } from '@inertiajs/svelte'
 
-usePoll(2000, {}, {
-  keepAlive: true,
-})
+usePoll(
+  2000,
+  {},
+  {
+    keepAlive: true,
+  },
+)
 ```
+
 :::

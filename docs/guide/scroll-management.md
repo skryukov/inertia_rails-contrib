@@ -107,9 +107,13 @@ When using an [Inertia link](/guide/links), you can preserve the scroll position
 == Vue
 
 ```vue
+<script setup>
 import { Link } from '@inertiajs/vue3'
+</script>
 
-<Link href="/" preserve-scroll>Home</Link>
+<template>
+  <Link href="/" preserve-scroll>Home</Link>
+</template>
 ```
 
 == React
@@ -117,15 +121,19 @@ import { Link } from '@inertiajs/vue3'
 ```jsx
 import { Link } from '@inertiajs/react'
 
-<Link href="/" preserveScroll>
-  Home
-</Link>
+export default () => (
+  <Link href="/" preserveScroll>
+    Home
+  </Link>
+)
 ```
 
 == Svelte 4|Svelte 5
 
 ```svelte
-import { inertia, Link } from '@inertiajs/svelte'
+<script>
+  import { inertia, Link } from '@inertiajs/svelte'
+</script>
 
 <a href="/" use:inertia={{ preserveScroll: true }}>Home</a>
 

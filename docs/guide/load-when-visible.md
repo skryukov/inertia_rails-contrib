@@ -141,10 +141,11 @@ export default () => (
   {#snippet fallback()}
     <div>Loading...</div>
   {/snippet}
-  
+
   <!-- Props are now loaded -->
 </WhenVisible>
 ```
+
 :::
 
 ## Loading before visible
@@ -197,7 +198,7 @@ export default () => (
   <svelte:fragment slot="fallback">
     <div>Loading...</div>
   </svelte:fragment>
-  
+
   {#each permissions as permission}
     <!-- ... -->
   {/each}
@@ -267,7 +268,7 @@ export default () => (
 </script>
 
 <WhenVisible data="products" as="span">
-  // ...
+  <!-- ... -->
 </WhenVisible>
 ```
 
@@ -284,6 +285,7 @@ export default () => (
   <!-- ... -->
 </WhenVisible>
 ```
+
 :::
 
 ## Always trigger
@@ -336,7 +338,7 @@ export default () => (
 ```
 
 == Svelte 5
-  
+
 ```svelte
 <script>
   import { WhenVisible } from '@inertiajs/svelte'
@@ -348,5 +350,5 @@ export default () => (
   <!-- ... -->
 </WhenVisible>
 ```
-:::
 
+:::

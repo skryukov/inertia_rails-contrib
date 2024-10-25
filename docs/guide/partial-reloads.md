@@ -88,7 +88,7 @@ Since partial reloads can only be made to the same page component the user is al
 :::tabs key:frameworks
 == Vue
 
-```vue
+```js
 import { router } from '@inertiajs/vue3'
 
 router.reload({ only: ['users'] })
@@ -96,7 +96,7 @@ router.reload({ only: ['users'] })
 
 == React
 
-```jsx
+```js
 import { router } from '@inertiajs/react'
 
 router.reload({ only: ['users'] })
@@ -104,7 +104,7 @@ router.reload({ only: ['users'] })
 
 == Svelte 4|Svelte 5
 
-```svelte
+```js
 import { router } from '@inertiajs/svelte'
 
 router.reload({ only: ['users'] })
@@ -120,9 +120,13 @@ It's also possible to perform partial reloads with Inertia links using the `only
 == Vue
 
 ```vue
+<script setup>
 import { Link } from '@inertiajs/vue3'
+</script>
 
-<Link href="/users?active=true" :only="['users']">Show active</Link>
+<template>
+  <Link href="/users?active=true" :only="['users']">Show active</Link>
+</template>
 ```
 
 == React
@@ -130,15 +134,19 @@ import { Link } from '@inertiajs/vue3'
 ```jsx
 import { Link } from '@inertiajs/react'
 
-<Link href="/users?active=true" only={['users']}>
-  Show active
-</Link>
+export default () => (
+  <Link href="/users?active=true" only={['users']}>
+    Show active
+  </Link>
+)
 ```
 
 == Svelte 4|Svelte 5
 
 ```svelte
-import { inertia, Link } from '@inertiajs/svelte'
+<script>
+  import { inertia, Link } from '@inertiajs/svelte'
+</script>
 
 <a href="/users?active=true" use:inertia={{ only: ['users'] }}>Show active</a>
 

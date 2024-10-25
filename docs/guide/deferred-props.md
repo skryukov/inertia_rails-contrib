@@ -191,4 +191,5 @@ export default () => (
   <!-- Props are now loaded -->
 </Deferred>
 ```
+
 :::

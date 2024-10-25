@@ -147,15 +147,15 @@ export default function Edit() {
 
 <form on:submit|preventDefault={handleSubmit}>
   <label for="first_name">First name:</label>
-  <input id="first_name" bind:value={values.first_name}>
+  <input id="first_name" bind:value={values.first_name} />
   {#if errors.first_name}<div>{errors.first_name}</div>{/if}
 
   <label for="last_name">Last name:</label>
-  <input id="last_name" bind:value={values.last_name}>
+  <input id="last_name" bind:value={values.last_name} />
   {#if errors.last_name}<div>{errors.last_name}</div>{/if}
 
   <label for="email">Email:</label>
-  <input id="email" bind:value={values.email}>
+  <input id="email" bind:value={values.email} />
   {#if errors.email}<div>{errors.email}</div>{/if}
 
   <button type="submit">Submit</button>

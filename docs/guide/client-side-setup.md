@@ -100,7 +100,7 @@ import { createInertiaApp } from '@inertiajs/svelte'
 import { mount } from 'svelte'
 
 createInertiaApp({
-  resolve: name => {
+  resolve: (name) => {
     const pages = import.meta.glob('./Pages/**/*.svelte', { eager: true })
     return pages[`./Pages/${name}.svelte`]
   },
@@ -109,6 +109,7 @@ createInertiaApp({
   },
 })
 ```
+
 :::
 
 The `setup` callback receives everything necessary to initialize the client-side framework, including the root Inertia `App` component.
@@ -124,7 +125,7 @@ The `resolve` callback tells Inertia how to load a page component. It receives a
 // Vite
 // frontend/entrypoints/inertia.js
 createInertiaApp({
-  resolve: name => {
+  resolve: (name) => {
     const pages = import.meta.glob('../pages/**/*.vue', { eager: true })
     return pages[`../pages/${name}.vue`]
   },
@@ -134,7 +135,7 @@ createInertiaApp({
 // Webpacker/Shakapacker
 // javascript/packs/inertia.js
 createInertiaApp({
-  resolve: name => require(`../pages/${name}`),
+  resolve: (name) => require(`../pages/${name}`),
   // ...
 })
 ```
@@ -145,8 +146,8 @@ createInertiaApp({
 // Vite
 // frontend/entrypoints/inertia.js
 createInertiaApp({
-  resolve: name => {
-    const pages = import.meta.glob('../pages/**/*.jsx', {eager: true})
+  resolve: (name) => {
+    const pages = import.meta.glob('../pages/**/*.jsx', { eager: true })
     return pages[`../pages/${name}.jsx`]
   },
   //...
@@ -155,7 +156,7 @@ createInertiaApp({
 // Webpacker/Shakapacker
 // javascript/packs/inertia.js
 createInertiaApp({
-  resolve: name => require(`../pages/${name}`),
+  resolve: (name) => require(`../pages/${name}`),
   //...
 })
 ```
@@ -166,8 +167,8 @@ createInertiaApp({
 // Vite
 // frontend/entrypoints/inertia.js
 createInertiaApp({
-  resolve: name => {
-    const pages = import.meta.glob('../pages/**/*.svelte', {eager: true})
+  resolve: (name) => {
+    const pages = import.meta.glob('../pages/**/*.svelte', { eager: true })
     return pages[`../pages/${name}.svelte`]
   },
   //...
@@ -176,7 +177,7 @@ createInertiaApp({
 // Webpacker/Shakapacker
 // javascript/packs/inertia.js
 createInertiaApp({
-  resolve: name => require(`../pages/${name}.svelte`),
+  resolve: (name) => require(`../pages/${name}.svelte`),
   //...
 })
 ```

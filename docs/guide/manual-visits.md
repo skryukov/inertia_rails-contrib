@@ -406,7 +406,6 @@ By default, page visits to the same page create a fresh page component instance.
 
 However, in some situations, it's necessary to preserve the page component state. For example, when submitting a form, you need to preserve your form data in the event that form validation fails on the server.
 
-
 For this reason, the `post`, `put`, `patch`, `delete`, and `reload` methods all set the `preserveState` option to `true` by default.
 
 You can instruct Inertia to preserve the component's state when using the `get` method by setting the `preserveState` option to `true`.

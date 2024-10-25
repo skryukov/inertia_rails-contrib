@@ -82,6 +82,7 @@ export default function Welcome({ user }) {
   <p>Hello {user.name}, welcome to your first Inertia app!</p>
 </Layout>
 ```
+
 :::
 
 Given the page above, you can render the page by returning an Inertia response from a controller or route. In this example, let's assume this page is stored at `app/frontend/pages/User/Show.(jsx|vue|svelte)` within a Rails application.
@@ -96,7 +97,7 @@ class UsersController < ApplicationController
 end
 ```
 
-See [the responses documentation](/guide/responses) for more information on how to return Inertia responses from your controllers. 
+See [the responses documentation](/guide/responses) for more information on how to return Inertia responses from your controllers.
 
 ## Creating layouts
 
@@ -250,6 +251,7 @@ export default Home
 </script>
 
 <h1>Welcome</h1>
+
 <p>Hello {user.name}, welcome to your first Inertia app!</p>
 ```
 
@@ -265,6 +267,7 @@ export default Home
 </script>
 
 <h1>Welcome</h1>
+
 <p>Hello {user.name}, welcome to your first Inertia app!</p>
 ```
 
@@ -357,6 +360,7 @@ export default Home
 </script>
 
 <h1>Welcome</h1>
+
 <p>Hello {user.name}, welcome to your first Inertia app!</p>
 ```
 
@@ -379,6 +383,7 @@ export default Home
 </script>
 
 <h1>Welcome</h1>
+
 <p>Hello {user.name}, welcome to your first Inertia app!</p>
 ```
 

@@ -16,7 +16,7 @@ Vite enables code splitting (or lazy-loading as they call it) by default when us
 ```js
 // frontend/entrypoints/inertia.js
 createInertiaApp({
-  resolve: name => {
+  resolve: (name) => {
     const pages = import.meta.glob('../pages/**/*.vue', { eager: true }) // [!code --]
     return pages[`../pages/${name}.vue`] // [!code --]
     const pages = import.meta.glob('../pages/**/*.vue') // [!code ++]
@@ -31,7 +31,7 @@ createInertiaApp({
 ```js
 // frontend/entrypoints/inertia.js
 createInertiaApp({
-  resolve: name => {
+  resolve: (name) => {
     const pages = import.meta.glob('../pages/**/*.jsx', { eager: true }) // [!code --]
     return pages[`../pages/${name}.jsx`] // [!code --]
     const pages = import.meta.glob('../pages/**/*.jsx') // [!code ++]
@@ -46,7 +46,7 @@ createInertiaApp({
 ```js
 // frontend/entrypoints/inertia.js
 createInertiaApp({
-  resolve: name => {
+  resolve: (name) => {
     const pages = import.meta.glob('../pages/**/*.svelte', { eager: true }) // [!code --]
     return pages[`../pages/${name}.svelte`] // [!code --]
     const pages = import.meta.glob('../pages/**/*.svelte') // [!code ++]
@@ -85,8 +85,8 @@ Finally, update the `resolve` callback in your app's initialization code to use 
 ```js
 // javascript/packs/inertia.js
 createInertiaApp({
-  resolve: name => require(`../pages/${name}`), // [!code ii]
-  resolve: name => import(`../pages/${name}`), // [!code ++]
+  resolve: (name) => require(`../pages/${name}`), // [!code ii]
+  resolve: (name) => import(`../pages/${name}`), // [!code ++]
   //...
 })
 ```
@@ -96,8 +96,8 @@ createInertiaApp({
 ```js
 // javascript/packs/inertia.js
 createInertiaApp({
-  resolve: name => require(`../pages/${name}`), // [!code ii]
-  resolve: name => import(`../pages/${name}`), // [!code ++]
+  resolve: (name) => require(`../pages/${name}`), // [!code ii]
+  resolve: (name) => import(`../pages/${name}`), // [!code ++]
   //...
 })
 ```
@@ -107,8 +107,8 @@ createInertiaApp({
 ```js
 // javascript/packs/inertia.js
 createInertiaApp({
-  resolve: name => require(`../pages/${name}.svelte`), // [!code ii]
-  resolve: name => import(`../pages/${name}.svelte`), // [!code ++]
+  resolve: (name) => require(`../pages/${name}.svelte`), // [!code ii]
+  resolve: (name) => import(`../pages/${name}.svelte`), // [!code ++]
   //...
 })
 ```

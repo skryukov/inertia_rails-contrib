@@ -25,6 +25,7 @@ bin/rails generate inertia:install
 ```
 
 This command will:
+
 - Check for Vite Rails and install it if not present
 - Ask if you want to use TypeScript
 - Ask you to choose your preferred frontend framework (React, Vue, or Svelte)
@@ -37,7 +38,7 @@ This command will:
 > To use TypeScript with Svelte, you need to install `@inertiajs/svelte` version `1.3.0-beta.1` or higher. You can use the `--inertia-version` option to specify the version.
 
 > [!NOTE]
-> `inertia_rails-contrib` doesn't include [Rails scaffold generators](/guide/responses#rails-generators) for TypeScript yet.
+> The `inertia_rails-contrib` gem doesn't include [Rails scaffold generators](/guide/responses#rails-generators) for TypeScript yet.
 
 Example output:
 

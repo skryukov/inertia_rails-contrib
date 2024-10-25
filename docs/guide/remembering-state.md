@@ -10,7 +10,6 @@ To mitigate this issue, you can tell Inertia which local component state to save
 
 To save local component state to the history state, use the "useRemember" hook to tell Inertia which data it should remember.
 
-
 :::tabs key:frameworks
 == Vue
 

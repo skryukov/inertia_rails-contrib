@@ -106,13 +106,13 @@ export default function Edit() {
 
 <form on:submit|preventDefault={submit}>
   <label for="first_name">First name:</label>
-  <input id="first_name" bind:value={values.first_name}>
+  <input id="first_name" bind:value={values.first_name} />
 
   <label for="last_name">Last name:</label>
-  <input id="last_name" bind:value={values.last_name}>
+  <input id="last_name" bind:value={values.last_name} />
 
   <label for="email">Email:</label>
-  <input id="email" bind:value={values.email}>
+  <input id="email" bind:value={values.email} />
 
   <button type="submit">Submit</button>
 </form>
@@ -138,13 +138,13 @@ export default function Edit() {
 
 <form onsubmit={submit}>
   <label for="first_name">First name:</label>
-  <input id="first_name" bind:value={values.first_name}>
+  <input id="first_name" bind:value={values.first_name} />
 
   <label for="last_name">Last name:</label>
-  <input id="last_name" bind:value={values.last_name}>
+  <input id="last_name" bind:value={values.last_name} />
 
   <label for="email">Email:</label>
-  <input id="email" bind:value={values.email}>
+  <input id="email" bind:value={values.email} />
 
   <button type="submit">Submit</button>
 </form>
@@ -765,7 +765,7 @@ To instruct Inertia to store a form's data and errors in [history state](/guide/
 :::tabs key:frameworks
 == Vue
 
-```vue
+```js
 import { useForm } from '@inertiajs/vue3'
 
 const form = useForm('CreateUser', data)
@@ -774,7 +774,7 @@ const form = useForm(`EditUser:${user.id}`, data)
 
 == React
 
-```jsx
+```js
 import { useForm } from '@inertiajs/react'
 
 const form = useForm('CreateUser', data)
@@ -783,7 +783,7 @@ const form = useForm(`EditUser:${user.id}`, data)
 
 == Svelte 4|Svelte 5
 
-```svelte
+```js
 import { useForm } from '@inertiajs/svelte'
 
 const form = useForm('CreateUser', data)

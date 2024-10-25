@@ -1,8 +1,8 @@
 import type MarkdownIt from 'markdown-it'
 import container from 'markdown-it-container'
+import type Renderer from 'markdown-it/lib/renderer'
 import type Token from 'markdown-it/lib/token'
 import { ruleBlockTab } from './ruleBlockTab'
-import type Renderer from 'markdown-it/lib/renderer'
 
 type Params = {
   shareStateKey: string | undefined
@@ -11,7 +11,7 @@ type Params = {
 const parseTabsParams = (input: string): Params => {
   const match = input.match(/key:(\S+)/)
   return {
-    shareStateKey: match?.[1]
+    shareStateKey: match?.[1],
   }
 }
 
@@ -28,7 +28,7 @@ export const tabsMarkdownPlugin = (md: MarkdownIt) => {
       } else {
         return `</PluginTabs>\n`
       }
-    }
+    },
   })
 
   md.block.ruler.after('container_tabs', 'tab', ruleBlockTab)

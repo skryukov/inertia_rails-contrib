@@ -16,12 +16,16 @@ To add `<head>` elements to your page, use the `<Head>` component. Within this c
 == Vue
 
 ```vue
+<script setup>
 import { Head } from '@inertiajs/vue3'
+</script>
 
-<Head>
-  <title>Your page title</title>
-  <meta name="description" content="Your page description" />
-</Head>
+<template>
+  <Head>
+    <title>Your page title</title>
+    <meta name="description" content="Your page description" />
+  </Head>
+</template>
 ```
 
 == React
@@ -29,10 +33,12 @@ import { Head } from '@inertiajs/vue3'
 ```jsx
 import { Head } from '@inertiajs/react'
 
-<Head>
-  <title>Your page title</title>
-  <meta name="description" content="Your page description" />
-</Head>
+export default () => (
+  <Head>
+    <title>Your page title</title>
+    <meta name="description" content="Your page description" />
+  </Head>
+)
 ```
 
 == Svelte 4|Svelte 5
@@ -57,9 +63,13 @@ If you only need to add a `<title>` to the document `<head>`, you may simply pas
 == Vue
 
 ```vue
+<script setup>
 import { Head } from '@inertiajs/vue3'
+</script>
 
-<Head title="Your page title" />
+<template>
+  <Head title="Your page title" />
+</template>
 ```
 
 == React
@@ -67,12 +77,12 @@ import { Head } from '@inertiajs/vue3'
 ```jsx
 import { Head } from '@inertiajs/react'
 
-<Head title="Your page title" />
+export default () => <Head title="Your page title" />
 ```
 
 == Svelte 4|Svelte 5
 
-```svelte
+```js
 // Not supported
 ```
 
@@ -95,9 +105,13 @@ After defining the title callback, the callback will automatically be invoked wh
 == Vue
 
 ```vue
+<script setup>
 import { Head } from '@inertiajs/vue3'
+</script>
 
-<Head title="Home" />
+<template>
+  <Head title="Home" />
+</template>
 ```
 
 == React
@@ -105,12 +119,12 @@ import { Head } from '@inertiajs/vue3'
 ```jsx
 import { Head } from '@inertiajs/react'
 
-<Head title="Home" />
+export default () => <Head title="Home" />
 ```
 
 == Svelte 4|Svelte 5
 
-```svelte
+```js
 // Not supported
 ```
 
@@ -118,7 +132,7 @@ import { Head } from '@inertiajs/react'
 
 Which, in this example, will result in the following `<title>` tag.
 
-```js
+```html
 <title>Home - My App</title>
 ```
 
@@ -128,11 +142,15 @@ The `title` callback will also be invoked when you set the title using a `<title
 == Vue
 
 ```vue
+<script setup>
 import { Head } from '@inertiajs/vue3'
+</script>
 
-<Head>
-  <title>Home</title>
-</Head>
+<template>
+  <Head>
+    <title>Home</title>
+  </Head>
+</template>
 ```
 
 == React
@@ -140,14 +158,16 @@ import { Head } from '@inertiajs/vue3'
 ```jsx
 import { Head } from '@inertiajs/react'
 
-<Head>
-  <title>Home</title>
-</Head>
+export default () => (
+  <Head>
+    <title>Home</title>
+  </Head>
+)
 ```
 
 == Svelte 4|Svelte 5
 
-```svelte
+```js
 // Not supported
 ```
 
@@ -161,56 +181,76 @@ It's possible to have multiple instances of the `<Head>` component throughout yo
 == Vue
 
 ```vue
-// Layout.vue import { Head } from '@inertiajs/vue3'
+<!-- Layout.vue -->
+<script setup>
+import { Head } from '@inertiajs/vue3'
+</script>
 
-<Head>
-  <title>My app</title>
-  <meta head-key="description" name="description" content="This is the default description" />
-  <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-</Head>
+<template>
+  <Head>
+    <title>My app</title>
+    <meta
+      head-key="description"
+      name="description"
+      content="This is the default description"
+    />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+  </Head>
+</template>
 
-// About.vue import { Head } from '@inertiajs/vue3'
+<!-- About.vue -->
+<script setup>
+import { Head } from '@inertiajs/vue3'
+</script>
 
-<Head>
-  <title>About - My app</title>
-  <meta head-key="description" name="description" content="This is a page specific description" />
-</Head>
+<template>
+  <Head>
+    <title>About - My app</title>
+    <meta
+      head-key="description"
+      name="description"
+      content="This is a page specific description"
+    />
+  </Head>
+</template>
 ```
 
 == React
 
 ```jsx
 // Layout.jsx
-
 import { Head } from '@inertiajs/react'
 
-<Head>
-  <title>My app</title>
-  <meta
-    head-key="description"
-    name="description"
-    content="This is the default description"
-  />
-  <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-</Head>
+export default () => (
+  <Head>
+    <title>My app</title>
+    <meta
+      head-key="description"
+      name="description"
+      content="This is the default description"
+    />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+  </Head>
+)
 
 // About.jsx
-
 import { Head } from '@inertiajs/react'
 
-<Head>
-  <title>About - My app</title>
-  <meta
-    head-key="description"
-    name="description"
-    content="This is a page specific description"
-  />
-</Head>
+export default () => (
+  <Head>
+    <title>About - My app</title>
+    <meta
+      head-key="description"
+      name="description"
+      content="This is a page specific description"
+    />
+  </Head>
+)
 ```
 
 == Svelte 4|Svelte 5
 
-```svelte
+```js
 // Not supported
 ```
 
@@ -237,7 +277,6 @@ When building a real application, it can sometimes be helpful to create a custom
 
 ```vue
 <!-- AppHead.vue -->
-
 <script setup>
 import { Head } from '@inertiajs/vue3'
 
@@ -255,10 +294,9 @@ defineProps({ title: String })
 
 ```jsx
 // AppHead.jsx
-
 import { Head } from '@inertiajs/react'
 
-const AppHead = ({ title, children }) => {
+export default ({ title, children }) => {
   return (
     <Head>
       <title>{title ? `${title} - My App` : 'My App'}</title>
@@ -266,13 +304,11 @@ const AppHead = ({ title, children }) => {
     </Head>
   )
 }
-
-export default AppHead
 ```
 
 == Svelte 4|Svelte 5
 
-```svelte
+```js
 // Not supported
 ```
 
@@ -284,9 +320,13 @@ Once you have created the custom component, you may simply start using the custo
 == Vue
 
 ```vue
+<script setup>
 import AppHead from './AppHead'
+</script>
 
-<AppHead title="About" />
+<template>
+  <AppHead title="About" />
+</template>
 ```
 
 == React
@@ -294,12 +334,12 @@ import AppHead from './AppHead'
 ```jsx
 import AppHead from './AppHead'
 
-<AppHead title="About" />
+export default () => <AppHead title="About" />
 ```
 
 == Svelte 4|Svelte 5
 
-```svelte
+```js
 // Not supported
 ```
 

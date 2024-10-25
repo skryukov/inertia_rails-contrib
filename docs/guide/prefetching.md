@@ -11,7 +11,7 @@ To prefetch data for a page, you can use the `prefetch` method on the Inertia li
 
 ```vue
 <script setup>
-  import { Link } from '@inertiajs/vue3'
+import { Link } from '@inertiajs/vue3'
 </script>
 
 <template>
@@ -25,7 +25,9 @@ To prefetch data for a page, you can use the `prefetch` method on the Inertia li
 import { Link } from '@inertiajs/react'
 
 export default () => (
-  <Link href="/users" prefetch>Users</Link>
+  <Link href="/users" prefetch>
+    Users
+  </Link>
 )
 ```
 
@@ -38,6 +40,7 @@ export default () => (
 
 <a href="/users" use:inertia={{ prefetch: true }}>Users</a>
 ```
+
 :::
 
 By default, data is cached for 30 seconds before being evicted. You can customize this behavior by passing a `cacheFor` prop to the `Link` component.
@@ -47,7 +50,7 @@ By default, data is cached for 30 seconds before being evicted. You can customiz
 
 ```vue
 <script setup>
-  import { Link } from '@inertiajs/vue3'
+import { Link } from '@inertiajs/vue3'
 </script>
 
 <template>
@@ -64,9 +67,15 @@ import { Link } from '@inertiajs/react'
 
 export default () => (
   <>
-    <Link href="/users" prefetch cacheFor="1m">Users</Link>
-    <Link href="/users" prefetch cacheFor="10s">Users</Link>
-    <Link href="/users" prefetch cacheFor={5000}>Users</Link>
+    <Link href="/users" prefetch cacheFor="1m">
+      Users
+    </Link>
+    <Link href="/users" prefetch cacheFor="10s">
+      Users
+    </Link>
+    <Link href="/users" prefetch cacheFor={5000}>
+      Users
+    </Link>
   </>
 )
 ```
@@ -82,6 +91,7 @@ export default () => (
 <a href="/users" use:inertia={{ prefetch: true, cacheFor: '10s' }}>Users</a>
 <a href="/users" use:inertia={{ prefetch: true, cacheFor: 5000 }}>Users</a>
 ```
+
 :::
 
 You can also start prefetching on `mousedown` by passing the `click` value to the `prefetch` prop.
@@ -91,7 +101,7 @@ You can also start prefetching on `mousedown` by passing the `click` value to th
 
 ```vue
 <script setup>
-  import { Link } from '@inertiajs/vue3'
+import { Link } from '@inertiajs/vue3'
 </script>
 
 <template>
@@ -105,7 +115,9 @@ You can also start prefetching on `mousedown` by passing the `click` value to th
 import { Link } from '@inertiajs/react'
 
 export default () => (
-  <Link href="/users" prefetch="click">Users</Link>
+  <Link href="/users" prefetch="click">
+    Users
+  </Link>
 )
 ```
 
@@ -118,17 +130,17 @@ export default () => (
 
 <a href="/users" use:inertia={{ prefetch: 'click' }}>Users</a>
 ```
+
 :::
 
 If you're confident that the user will visit a page next, you can prefetch the data on mount as well.
-
 
 :::tabs key:frameworks
 == Vue
 
 ```vue
 <script setup>
-  import { Link } from '@inertiajs/vue3'
+import { Link } from '@inertiajs/vue3'
 </script>
 
 <template>
@@ -142,7 +154,9 @@ If you're confident that the user will visit a page next, you can prefetch the d
 import { Link } from '@inertiajs/react'
 
 export default () => (
-  <Link href="/users" prefetch="mount">Users</Link>
+  <Link href="/users" prefetch="mount">
+    Users
+  </Link>
 )
 ```
 
@@ -155,6 +169,7 @@ export default () => (
 
 <a href="/users" use:inertia={{ prefetch: 'mount' }}>Users</a>
 ```
+
 :::
 
 You can also combine strategies by passing an array of values to the `prefetch` prop.
@@ -164,7 +179,7 @@ You can also combine strategies by passing an array of values to the `prefetch` 
 
 ```vue
 <script setup>
-  import { Link } from '@inertiajs/vue3'
+import { Link } from '@inertiajs/vue3'
 </script>
 
 <template>
@@ -178,7 +193,9 @@ You can also combine strategies by passing an array of values to the `prefetch` 
 import { Link } from '@inertiajs/react'
 
 export default () => (
-  <Link href="/users" prefetch={['mount', 'hover']}>Users</Link>
+  <Link href="/users" prefetch={['mount', 'hover']}>
+    Users
+  </Link>
 )
 ```
 
@@ -191,6 +208,7 @@ export default () => (
 
 <a href="/users" use:inertia={{ prefetch: ['mount', 'hover'] }}>Users</a>
 ```
+
 :::
 
 ## Programmatic prefetching
@@ -200,16 +218,15 @@ You can also prefetch data programmatically using `router.prefetch`. The signatu
 When the `cacheFor` option is not specified, it defaults to 30 seconds.
 
 ```js
-router.prefetch(
-  '/users',
-  { method: 'get', data: { page: 2 } },
-)
+router.prefetch('/users', { method: 'get', data: { page: 2 } })
+
 router.prefetch(
   '/users',
   { method: 'get', data: { page: 2 } },
   { cacheFor: '1m' },
 )
 ```
+
 To make this even easier, Inertia offers a prefetch helper. This helper provides some additional insight into the request, such as the last updated timestamp and if the request is currently prefetching.
 
 :::tabs key:frameworks
@@ -248,6 +265,7 @@ const { lastUpdatedAt, isPrefetching, isPrefetched } = usePrefetch(
   { cacheFor: '1m' },
 )
 ```
+
 :::
 
 ## Flushing prefetch cache
@@ -261,16 +279,12 @@ Furthermore, if you are using the prefetch helper, it will return a `flush` meth
 ```js
 // Flush all prefetch cache
 router.flushAll()
+
 // Flush cache for a specific page
-router.flush(
-  '/users',
-  { method: 'get', data: { page: 2 } },
-)
-const { flush } = usePrefetch(
-  '/users',
-  { method: 'get', data: { page: 2 } },
-)
+router.flush('/users', { method: 'get', data: { page: 2 } })
+
 // Flush cache for a specific page
+const { flush } = usePrefetch('/users', { method: 'get', data: { page: 2 } })
 flush()
 ```
 
@@ -299,7 +313,9 @@ import { Link } from '@inertiajs/vue3'
 import { Link } from '@inertiajs/react'
 
 export default () => (
-  <Link href="/users" prefetch cacheFor={['30s', '1m']}>Users</Link>
+  <Link href="/users" prefetch cacheFor={['30s', '1m']}>
+    Users
+  </Link>
 )
 ```
 
@@ -310,8 +326,11 @@ export default () => (
   import { inertia } from '@inertiajs/svelte'
 </script>
 
-<a href="/users" use:inertia={{ prefetch: true, cacheFor: ['30s', '1m'] }}>Users</a>
+<a href="/users" use:inertia={{ prefetch: true, cacheFor: ['30s', '1m'] }}>
+  Users
+</a>
 ```
+
 :::
 
 ### How it works

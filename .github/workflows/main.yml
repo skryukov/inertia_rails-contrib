@@ -4,8 +4,15 @@ on:
   push:
     branches:
       - main
-
+    paths-ignore:
+      - 'docs/**'
+      - '.github/workflows/docs.yml'
+      - '**.md'
   pull_request:
+    paths-ignore:
+      - 'docs/**'
+      - '.github/workflows/docs.yml'
+      - '**.md'
 
 jobs:
   lint:
@@ -15,7 +22,7 @@ jobs:
       BUNDLE_JOBS: 4
       BUNDLE_RETRY: 3
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
       - name: Set up Ruby
         uses: ruby/setup-ruby@v1
         with:

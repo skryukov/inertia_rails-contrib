@@ -1,8 +1,8 @@
 # Upgrade guide for v2.0
 
 > [!NOTE]
-> Inertia.js v2.0 is still in beta and these docs are a work-in-progress. Please report bugs on 
-https://github.com/inertiajs/inertia https://github.com/inertiajs/inertia-rails and https://github.com/skryukov/inertia-rails_contrib
+> Inertia.js v2.0 is still in beta and these docs are a work-in-progress. Please report bugs on
+> https://github.com/inertiajs/inertia https://github.com/inertiajs/inertia-rails and https://github.com/skryukov/inertia-rails_contrib
 
 ## What's new
 
@@ -17,6 +17,7 @@ Inertia.js v2.0 is a huge step forward for Inertia! The core library has been co
 Additionally, for security sensitive projects, Inertia now offers a [history encryption API](/guide/history-encryption), allowing you to clear page data from history state when logging out of an application.
 
 ## Upgrade dependencies
+
 To upgrade to the Inertia.js v2.0 beta, first use npm to install the client-side adapter of your choice:
 
 :::tabs key:frameworks
@@ -37,6 +38,7 @@ npm install @inertiajs/react@next
 ```svelte
 npm install @inertiajs/svelte@next
 ```
+
 :::
 
 Next, upgrade the `inertia-rails` gem to use the unreleased version of the gem from [the PR branch](https://github.com/inertiajs/inertia-rails/pull/132):

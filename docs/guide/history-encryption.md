@@ -40,7 +40,7 @@ You can also enable history encryption for all actions in a controller by settin
 ```ruby
 class DashboardController < ApplicationController
   inertia_config(encrypt_history: true)
-  
+
   # ...
 end
 ```

@@ -15,7 +15,7 @@ class UsersController < ApplicationController
 
     render inertia: 'Users/Index', props: {
       results: InertiaRails.merge(records),
- 
+
       # Also works with block:
       # results: InertiaRails.merge { records },
 
@@ -51,7 +51,7 @@ The `reset` request option accepts an array of the props keys you would like to 
 :::tabs key:frameworks
 == Vue
 
-```vue
+```js
 import { router } from '@inertiajs/vue3'
 
 router.reload({ reset: ['results'] })
@@ -59,7 +59,7 @@ router.reload({ reset: ['results'] })
 
 == React
 
-```jsx
+```js
 import { router } from '@inertiajs/react'
 
 router.reload({ reset: ['results'] })
@@ -67,7 +67,7 @@ router.reload({ reset: ['results'] })
 
 == Svelte 4|Svelte 5
 
-```svelte
+```js
 import { router } from '@inertiajs/svelte'
 
 router.reload({ reset: ['results'] })

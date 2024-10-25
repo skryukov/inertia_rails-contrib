@@ -99,10 +99,7 @@ return (
       value={data.name}
       onChange={(e) => setData('name', e.target.value)}
     />
-    <input
-      type="file"
-      onChange={(e) => setData('avatar', e.target.files[0])}
-    />
+    <input type="file" onChange={(e) => setData('avatar', e.target.files[0])} />
     {progress && (
       <progress value={progress.percentage} max="100">
         {progress.percentage}%
@@ -131,7 +128,7 @@ return (
 
 <form on:submit|preventDefault={submit}>
   <input type="text" bind:value={$form.name} />
-  <input type="file" on:input={e => $form.avatar = e.target.files[0]} />
+  <input type="file" on:input={(e) => ($form.avatar = e.target.files[0])} />
   {#if $form.progress}
     <progress value={$form.progress.percentage} max="100">
       {$form.progress.percentage}%
@@ -160,7 +157,7 @@ return (
 
 <form onsubmit={submit}>
   <input type="text" bind:value={$form.name} />
-  <input type="file" oninput={e => $form.avatar = e.target.files[0]} />
+  <input type="file" oninput={(e) => ($form.avatar = e.target.files[0])} />
   {#if $form.progress}
     <progress value={$form.progress.percentage} max="100">
       {$form.progress.percentage}%

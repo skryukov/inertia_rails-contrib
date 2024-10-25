@@ -153,11 +153,11 @@
   padding: 0 !important;
 }
 
-.plugin-tabs--content div[class*="language-"] {
+.plugin-tabs--content div[class*='language-'] {
   background-color: var(--vp-code-block-bg) !important;
 }
 
-.plugin-tabs--content div[class*="language-"]:first-child {
+.plugin-tabs--content div[class*='language-']:first-child {
   border-top-left-radius: 0 !important;
   border-top-right-radius: 0 !important;
 }

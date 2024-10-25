@@ -201,15 +201,16 @@ createInertiaApp({
     const pages = import.meta.glob('../pages/**/*.svelte', { eager: true })
     return pages[`../pages/${name}.svelte`]
   },
-  setup({ el, App }) {
-    new App({ target: el }) // [!code --]
-    new App({ target: el, hydrate: true }) // [!code ++]
+  setup({ el, App, props }) {
+    new App({ target: el, props }) // [!code --]
+    new App({ target: el, props, hydrate: true }) // [!code ++]
   },
 })
 ```
 
 You will also need to set the `hydratable` compiler option to `true` in your `vite.config.js` file:
 
+<!-- prettier-ignore -->
 ```js
 // vite.config.js
 import { svelte } from '@sveltejs/vite-plugin-svelte'
@@ -237,6 +238,7 @@ export default defineConfig({
 
 == Svelte 5
 
+<!-- prettier-ignore -->
 ```js
 // frontend/entrypoints/inertia.js
 import { createInertiaApp } from '@inertiajs/svelte'
@@ -244,18 +246,18 @@ import { mount } from 'svelte' // [!code --]
 import { hydrate, mount } from 'svelte' // [!code ++]
 
 createInertiaApp({
-   resolve: name => {
-     const pages = import.meta.glob('./Pages/**/*.svelte', { eager: true })
-     return pages[`./Pages/${name}.svelte`]
-   },
-   setup({ el, App }) {
-     mount(App, { target: el }) // [!code --]
-     if (el.dataset.serverRendered === 'true') { // [!code ++]
-       hydrate(App, { target: el }) // [!code ++]
-     } else { // [!code ++]
-       mount(App, { target: el }) // [!code ++]
-     } // [!code ++]
-   },
+  resolve: (name) => {
+    const pages = import.meta.glob('./Pages/**/*.svelte', { eager: true })
+    return pages[`./Pages/${name}.svelte`]
+  },
+  setup({ el, App, props }) {
+    mount(App, { target: el, props }) // [!code --]
+    if (el.dataset.serverRendered === 'true') { // [!code ++]
+      hydrate(App, { target: el, props }) // [!code ++]
+    } else { // [!code ++]
+      mount(App, { target: el, props }) // [!code ++]
+    } // [!code ++]
+  },
 })
 ```
 
