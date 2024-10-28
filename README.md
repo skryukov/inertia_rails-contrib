@@ -30,6 +30,7 @@ bin/rails generate inertia:install
 ```
 
 This command will:
+
 - Check for Vite Rails and install it if not present
 - Ask if you want to use TypeScript
 - Ask you to choose your preferred frontend framework (React, Vue, Svelte 4, or Svelte 5)
@@ -148,6 +149,37 @@ $ bin/rails generate inertia:scaffold Post title:string body:text
 
 - `inertia_templates` - default
 - `inertia_tw_templates` - Tailwind CSS
+
+## InertiaUI Modal Support
+
+`InertiaRailsContrib` provides support for [InertiaUI Modal](https://github.com/inertiaui/modal) in the Rails application.
+
+With InertiaUI Modal, you can easily open any route in a Modal or Slideover without having to change anything about your existing routes or controllers.
+
+By default, InertiaUI Modal doesn't require anything from the Inertia Server Adapters, since it just opens modals without changing the URL.
+However, InertiaUI Modal also supports updating the URL when opening a modal (see the docs on why you might want that: https://inertiaui.com/inertia-modal/docs/base-route-url).
+
+### Setup
+
+1. Follow the NPM installation instructions from the [InertiaUI Modal documentation](https://inertiaui.com/inertia-modal/docs/installation).
+
+2. Enable InertiaUI Modal, turn on the `enable_inertia_ui_modal` option in the `inertia_rails_contrib.rb` initializer:
+
+```ruby
+InertiaRailsContrib.configure do |config|
+  config.enable_inertia_ui_modal = true
+end
+```
+
+This will add a new render method `inertia_modal` that can be used in the controller actions:
+
+```ruby
+class PostsController < ApplicationController
+  def new
+    render inertia_modal: 'Post/New', props: { post: Post.new }, base_url: posts_path
+  end
+end
+```
 
 ## Development
 
