@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning].
 
 ## [Unreleased]
 
+Added:
+
+- [InertiaUI Modal](https://github.com/inertiaui/modal) support ([@skryukov])
+
 ## [0.3.0] - 2024-10-25
 
 Added:
