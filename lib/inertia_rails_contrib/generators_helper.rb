@@ -1,7 +1,7 @@
 module InertiaRailsContrib
   module GeneratorsHelper
-    def self.guess_the_default_framework
-      package = Rails.root.join("package.json").read
+    def self.guess_the_default_framework(package_json_path = Rails.root.join("package.json"))
+      package = File.read(package_json_path)
       case package
       when /@inertiajs\/react/
         "react"
