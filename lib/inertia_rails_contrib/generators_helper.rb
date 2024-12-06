@@ -1,13 +1,15 @@
 module InertiaRailsContrib
   module GeneratorsHelper
     def self.guess_the_default_framework(package_json_path = Rails.root.join("package.json"))
-      package = File.read(package_json_path)
-      case package
-      when /@inertiajs\/react/
+      package_json = JSON.parse(package_json_path.read)
+      dependencies = package_json["dependencies"] || {}
+
+      if dependencies["@inertiajs/react"]
         "react"
-      when /@inertiajs\/svelte/
-        package.match?(/"svelte": "\^5/) ? "svelte" : "svelte4"
-      when /@inertiajs\/vue3/
+      elsif dependencies["@inertiajs/svelte"]
+        version = dependencies["svelte"]&.gsub(/[\^~]/, '') # Remove ^ or ~ from version
+        version&.start_with?('5') ? "svelte" : "svelte4"
+      elsif dependencies["@inertiajs/vue3"]
         "vue"
       else
         Thor::Shell::Basic.new.say_error "Could not determine the Inertia.js framework you are using."

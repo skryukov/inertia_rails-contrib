@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 require 'thor'
+require 'json'
 require_relative '../../../lib/inertia_rails_contrib/generators_helper'
 
 RSpec.describe InertiaRailsContrib::GeneratorsHelper, type: :helper do
