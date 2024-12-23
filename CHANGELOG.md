@@ -7,6 +7,8 @@ and this project adheres to [Semantic Versioning].
 
 ## [Unreleased]
 
+## [0.4.0] - 2024-12-23
+
 Changed:
 
 - Generators are upstreamed to the `inertia_rails` gem ([@skryukov])
