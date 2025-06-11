@@ -7,6 +7,8 @@ and this project adheres to [Semantic Versioning].
 
 ## [Unreleased]
 
+## [0.5.0] - 2025-06-11
+
 Added:
 
 - [InertiaUI Modal](https://github.com/inertiaui/modal) support ([@skryukov])
@@ -82,7 +84,9 @@ Added:
 [@Shaglock]: https://github.com/Shaglock
 [@skryukov]: https://github.com/skryukov
 
-[Unreleased]: https://github.com/skryukov/inertia_rails-contrib/compare/v0.3.0...HEAD
+[Unreleased]: https://github.com/skryukov/inertia_rails-contrib/compare/v0.5.0...HEAD
+[0.5.0]: https://github.com/skryukov/inertia_rails-contrib/compare/v0.4.0...v0.5.0
+[0.4.0]: https://github.com/skryukov/inertia_rails-contrib/compare/v0.3.0...v0.4.0
 [0.3.0]: https://github.com/skryukov/inertia_rails-contrib/compare/v0.2.2...v0.3.0
 [0.2.2]: https://github.com/skryukov/inertia_rails-contrib/compare/v0.2.1...v0.2.2
 [0.2.1]: https://github.com/skryukov/inertia_rails-contrib/compare/v0.2.0...v0.2.1
