@@ -3,11 +3,13 @@
 module InertiaRailsContrib
   module InertiaUIModal
     class Renderer
+      KNOWN_KEYWORDS = %i[props view_data deep_merge encrypt_history clear_history].freeze
+
       def initialize(component, controller, request, response, render_method, base_url: nil, **options)
         @request = request
         @response = response
         @base_url = base_url
-        @inertia_renderer = InertiaRails::Renderer.new(component, controller, request, response, render_method, **options)
+        @inertia_renderer = InertiaRails::Renderer.new(component, controller, request, response, render_method, **options.slice(*KNOWN_KEYWORDS))
       end
 
       def render
