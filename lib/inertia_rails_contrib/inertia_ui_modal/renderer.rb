@@ -15,7 +15,14 @@ module InertiaRailsContrib
           return @inertia_renderer.render
         end
 
-        @request.env[:_inertiaui_modal] = @inertia_renderer.page.merge(baseUrl: base_url)
+        page = @inertia_renderer.page
+        page[:baseUrl] = base_url
+        page[:meta] = {
+          deferredProps: page.delete(:deferredProps),
+          mergeProps: page.delete(:mergeProps)
+        }
+
+        @request.env[:_inertiaui_modal] = page
 
         render_base_url
       end
