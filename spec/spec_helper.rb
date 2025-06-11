@@ -1,15 +1,22 @@
 # frozen_string_literal: true
 
+require "bundler/setup"
+require "combustion"
+
+Combustion.initialize! :action_controller do
+  config.hosts.clear
+  config.secret_key_base = "test_secret"
+  config.cache_classes = true
+  config.eager_load = false
+end
+
 require "inertia_rails-contrib"
+require "rspec/rails"
 
 RSpec.configure do |config|
-  # Enable flags like --only-failures and --next-failure
-  config.example_status_persistence_file_path = ".rspec_status"
+  config.use_transactional_fixtures = true
 
-  # Disable RSpec exposing methods globally on `Module` and `main`
-  config.disable_monkey_patching!
-
-  config.expect_with :rspec do |c|
-    c.syntax = :expect
+  def app
+    Rails.application
   end
 end
