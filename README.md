@@ -38,7 +38,7 @@ However, InertiaUI Modal also supports updating the URL when opening a modal (se
 
 ### Setup
 
-1. Follow the NPM installation instructions from the [InertiaUI Modal documentation](https://inertiaui.com/inertia-modal/docs/installation).
+1. Follow the NPM installation instructions from the [InertiaUI Modal documentation](https://inertiaui.com/inertia-modal/docs/installation#npm-installation).
 
 2. Enable InertiaUI Modal, turn on the `enable_inertia_ui_modal` option in the `inertia_rails_contrib.rb` initializer:
 
