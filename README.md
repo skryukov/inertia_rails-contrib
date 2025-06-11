@@ -27,6 +27,37 @@ If bundler is not being used to manage dependencies, install the gem by executin
 
     $ gem install inertia_rails-contrib
 
+## InertiaUI Modal Support
+
+`InertiaRailsContrib` provides support for [InertiaUI Modal](https://github.com/inertiaui/modal) in the Rails application.
+
+With InertiaUI Modal, you can easily open any route in a Modal or Slideover without having to change anything about your existing routes or controllers.
+
+By default, InertiaUI Modal doesn't require anything from the Inertia Server Adapters, since it just opens modals without changing the URL.
+However, InertiaUI Modal also supports updating the URL when opening a modal (see the docs on why you might want that: https://inertiaui.com/inertia-modal/docs/base-route-url).
+
+### Setup
+
+1. Follow the NPM installation instructions from the [InertiaUI Modal documentation](https://inertiaui.com/inertia-modal/docs/installation#npm-installation).
+
+2. Enable InertiaUI Modal, turn on the `enable_inertia_ui_modal` option in the `inertia_rails_contrib.rb` initializer:
+
+```ruby
+InertiaRailsContrib.configure do |config|
+  config.enable_inertia_ui_modal = true
+end
+```
+
+This will add a new render method `inertia_modal` that can be used in the controller actions:
+
+```ruby
+class PostsController < ApplicationController
+  def new
+    render inertia_modal: 'Post/New', props: { post: Post.new }, base_url: posts_path
+  end
+end
+```
+
 ## Development
 
 After checking out the repo, run `bin/setup` to install dependencies. Then, run `rake spec` to run the tests. You can also run `bin/console` for an interactive prompt that will allow you to experiment.
