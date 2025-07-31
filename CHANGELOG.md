@@ -7,6 +7,13 @@ and this project adheres to [Semantic Versioning].
 
 ## [Unreleased]
 
+## [0.5.1] - 2025-07-31
+
+Fixed:
+
+- Fix params mismatch error when base URL uses other param names ([@skryukov])
+
+
 ## [0.5.0] - 2025-06-11
 
 Added:
@@ -84,7 +91,8 @@ Added:
 [@Shaglock]: https://github.com/Shaglock
 [@skryukov]: https://github.com/skryukov
 
-[Unreleased]: https://github.com/skryukov/inertia_rails-contrib/compare/v0.5.0...HEAD
+[Unreleased]: https://github.com/skryukov/inertia_rails-contrib/compare/v0.5.1...HEAD
+[0.5.1]: https://github.com/skryukov/inertia_rails-contrib/compare/v0.5.0...v0.5.1
 [0.5.0]: https://github.com/skryukov/inertia_rails-contrib/compare/v0.4.0...v0.5.0
 [0.4.0]: https://github.com/skryukov/inertia_rails-contrib/compare/v0.3.0...v0.4.0
 [0.3.0]: https://github.com/skryukov/inertia_rails-contrib/compare/v0.2.2...v0.3.0
