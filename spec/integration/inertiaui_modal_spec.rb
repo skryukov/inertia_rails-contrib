@@ -41,7 +41,6 @@ RSpec.describe "InertiaUI Modal Integration", type: :request do
       {
         component: "modal",
         props: {deferred_param: "deferred"},
-        mergeProps: ["merge_param"],
         url: "/modal",
         version: "1",
         encryptHistory: false,
@@ -85,6 +84,14 @@ RSpec.describe "InertiaUI Modal Integration", type: :request do
       return nil unless data_page
 
       JSON.parse(CGI.unescapeHTML(data_page))
+    end
+  end
+
+  describe "when base URL uses other param names" do
+    it "receives correct parameters from base URL" do
+      get "/projects/789/tasks/456"
+
+      expect(response.status).to eq(200)
     end
   end
 end

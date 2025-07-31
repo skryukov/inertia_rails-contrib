@@ -34,23 +34,19 @@ module InertiaRailsContrib
       end
 
       def render_base_url
-        original_env = Rack::MockRequest.env_for(
-          base_url,
-          method: @request.method,
-          params: @request.params
-        )
+        original_env = Rack::MockRequest.env_for(base_url)
         @request.each_header do |k, v|
           original_env[k] ||= v
         end
 
-        original_request = ActionDispatch::Request.new(original_env)
+        request_to_base = ActionDispatch::Request.new(original_env)
 
-        path = ActionDispatch::Journey::Router::Utils.normalize_path(original_request.path_info)
-        Rails.application.routes.recognize_path_with_request(original_request, path, {})
-        controller = original_request.controller_class.new
-        controller.request = @request
+        path = ActionDispatch::Journey::Router::Utils.normalize_path(request_to_base.path_info)
+        Rails.application.routes.recognize_path_with_request(request_to_base, path, {})
+        controller = request_to_base.controller_class.new
+        controller.request = request_to_base
         controller.response = @response
-        controller.process(original_request.path_parameters[:action])
+        controller.process(request_to_base.path_parameters[:action])
       end
     end
   end
