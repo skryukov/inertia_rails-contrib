@@ -9,26 +9,25 @@ and this project adheres to [Semantic Versioning].
 
 ## [0.5.1] - 2025-07-31
 
-Fixed:
+### Fixed:
 
 - Fix params mismatch error when base URL uses other param names ([@skryukov])
 
-
 ## [0.5.0] - 2025-06-11
 
-Added:
+### Added:
 
 - [InertiaUI Modal](https://github.com/inertiaui/modal) support ([@skryukov])
 
 ## [0.4.0] - 2024-12-23
 
-Changed:
+### Changed:
 
 - Generators are upstreamed to the `inertia_rails` gem ([@skryukov])
 
 ## [0.3.0] - 2024-10-25
 
-Added:
+### Added:
 
 - [BREAKING] Svelte 5 support ([@skryukov])
   - The `--framework=svelte` option now installs Svelte 5
@@ -38,7 +37,7 @@ Added:
 
 ## [0.2.2] - 2024-10-09
 
-Added:
+### Added:
 
 - TypeScript support for the installation generator ([@skryukov])
   Note that it doesn't include scaffold templates yet.
@@ -48,7 +47,7 @@ Added:
 
 - Support `tailwind.config.ts` for Tailwind CSS template guessing ([@Shaglock])
 
-Fixed:
+### Fixed:
 
 - Correct examples for default layouts in inertia entrypoints ([@skryukov])
 - Inertia attribute added to the head tag in the layout for vue ([@skryukov])
@@ -56,18 +55,18 @@ Fixed:
 
 ## [0.2.1] - 2024-08-11
 
-Added:
+### Added:
 
 - Support `pnpm` package manager ([@skryukov])
 - New `--verbose` option for the installation generator ([@skryukov])
 
-Fixed:
+### Fixed:
 
 - Support installation alongside Webpacker ([@skryukov])
 
 ## [0.2.0] - 2024-08-10
 
-Added:
+### Added:
 
 - Improve installation generator ([@skryukov])
   - option to install Vite Rails gem (`--install-vite`)
@@ -84,6 +83,8 @@ Added:
 - Add a missing bracket to the `React/Edit` template. ([@skryukov]) 
 
 ## [0.1.0] - 2024-06-11
+
+### Added:
 
 - Initial release ([@iurev], [@skryukov])
 
