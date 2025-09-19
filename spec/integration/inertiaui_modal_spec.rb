@@ -65,6 +65,18 @@ RSpec.describe "InertiaUI Modal Integration", type: :request do
       expect(response.parsed_body).to eq(expected_page.as_json)
     end
 
+    it "returns modal ID prop when provided" do
+      get "/modal", headers: {
+        "X-Inertia" => "true",
+        "X-Inertia-Version" => "1",
+        "X-InertiaUI-Modal" => "inertiaui_modal_198a8978-df9e-41c5-97ea-cd100651e80e"
+      }
+
+      expected_modal[:id] = "inertiaui_modal_198a8978-df9e-41c5-97ea-cd100651e80e"
+      expect(response.status).to eq(200)
+      expect(response.parsed_body).to eq(expected_page.as_json)
+    end
+
     it "returns only deferred props when requested" do
       get "/modal", headers: {
         "X-Inertia" => "true",
