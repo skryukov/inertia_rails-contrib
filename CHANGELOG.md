@@ -7,6 +7,12 @@ and this project adheres to [Semantic Versioning].
 
 ## [Unreleased]
 
+## [0.5.2] - 2026-01-05
+
+### Fixed:
+
+- Return the modal ID in InertiaUI Modal responses ([@nicklozon])
+
 ## [0.5.1] - 2025-07-31
 
 ### Fixed:
@@ -89,10 +95,12 @@ and this project adheres to [Semantic Versioning].
 - Initial release ([@iurev], [@skryukov])
 
 [@iurev]: https://github.com/iurev
+[@nicklozon]: https://github.com/nicklozon
 [@Shaglock]: https://github.com/Shaglock
 [@skryukov]: https://github.com/skryukov
 
-[Unreleased]: https://github.com/skryukov/inertia_rails-contrib/compare/v0.5.1...HEAD
+[Unreleased]: https://github.com/skryukov/inertia_rails-contrib/compare/v0.5.2...HEAD
+[0.5.2]: https://github.com/skryukov/inertia_rails-contrib/compare/v0.5.1...v0.5.2
 [0.5.1]: https://github.com/skryukov/inertia_rails-contrib/compare/v0.5.0...v0.5.1
 [0.5.0]: https://github.com/skryukov/inertia_rails-contrib/compare/v0.4.0...v0.5.0
 [0.4.0]: https://github.com/skryukov/inertia_rails-contrib/compare/v0.3.0...v0.4.0
