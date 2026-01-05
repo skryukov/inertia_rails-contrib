@@ -18,6 +18,7 @@ module InertiaRailsContrib
         end
 
         page = @inertia_renderer.page
+        page[:id] = modal_id if modal_id.present?
         page[:baseUrl] = base_url
         page[:meta] = {
           deferredProps: page.delete(:deferredProps),
@@ -31,6 +32,10 @@ module InertiaRailsContrib
 
       def base_url
         @request.headers[HEADER_BASE_URL] || @base_url
+      end
+
+      def modal_id
+        @modal_id ||= @request.headers[HEADER_MODAL]
       end
 
       def render_base_url
