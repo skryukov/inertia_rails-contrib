@@ -64,11 +64,11 @@ RSpec.describe "InertiaUI Modal Integration", type: :request do
       }
     end
 
-    it "returns modal page data for full-page requests" do
+    it "returns page data with base & modal merged together for full-page requests" do
       get "/modal"
 
       expect(response.status).to eq(200)
-      expect(page_data).to eq(expected_modal.as_json)
+      expect(page_data).to eq(expected_page.as_json)
     end
 
     it "returns modal page data when requested with X-Inertia: true header" do

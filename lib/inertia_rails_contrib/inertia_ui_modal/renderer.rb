@@ -13,7 +13,7 @@ module InertiaRailsContrib
       end
 
       def render
-        if !use_router? || base_url.blank?
+        if !render_on_base_url?
           return @inertia_renderer.render
         end
 
@@ -34,8 +34,18 @@ module InertiaRailsContrib
         @request.headers[HEADER_BASE_URL] || @base_url
       end
 
-      def use_router?
-        @request.headers[HEADER_USE_ROUTER] == "1"
+      def render_on_base_url?
+        return false if base_url.blank?
+        return true if @request.headers[HEADER_USE_ROUTER] == "1"
+        return false if @request.headers[HEADER_USE_ROUTER] == "0"
+
+        # Full-page requests should still render the base page and attach the modal
+        # so modal components are mounted within ModalRoot's managed stack.
+        !inertia_request?
+      end
+
+      def inertia_request?
+        @request.headers["X-Inertia"].to_s.casecmp("true").zero?
       end
 
       def modal_id
