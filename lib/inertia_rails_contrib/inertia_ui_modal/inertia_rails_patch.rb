@@ -7,6 +7,11 @@ module InertiaRailsContrib
     module RendererPatch
       def page
         super.tap do |modal|
+          modal_id = @request.headers[InertiaRailsContrib::InertiaUIModal::HEADER_MODAL]
+          if modal_id.present? && @request.env[:_inertiaui_modal].blank?
+            modal[:id] = modal_id
+          end
+
           if @request.env[:_inertiaui_modal]
             modal[:props][:_inertiaui_modal] = @request.env[:_inertiaui_modal]
             modal[:url] = modal[:props][:_inertiaui_modal][:url]

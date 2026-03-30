@@ -13,7 +13,7 @@ module InertiaRailsContrib
       end
 
       def render
-        if @request.headers[HEADER_USE_ROUTER] == "0" || base_url.blank?
+        if !use_router? || base_url.blank?
           return @inertia_renderer.render
         end
 
@@ -32,6 +32,10 @@ module InertiaRailsContrib
 
       def base_url
         @request.headers[HEADER_BASE_URL] || @base_url
+      end
+
+      def use_router?
+        @request.headers[HEADER_USE_ROUTER] == "1"
       end
 
       def modal_id
