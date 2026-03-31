@@ -15,7 +15,9 @@ module InertiaRailsContrib
       META_KEYS = %i[mergeProps deferredProps].freeze
 
       def render
-        if modal_request? || base_url.blank?
+        # If the base URL route returns a modal, render it as a plain Inertia
+        # response to prevent infinite recursion (upstream #115)
+        if @request.env[:_inertiaui_modal_base_dispatch] || modal_request? || base_url.blank?
           return @inertia_renderer.render
         end
 
@@ -58,6 +60,7 @@ module InertiaRailsContrib
         end
 
         request_to_base = ActionDispatch::Request.new(original_env)
+        request_to_base.env[:_inertiaui_modal_base_dispatch] = true
 
         path = ActionDispatch::Journey::Router::Utils.normalize_path(request_to_base.path_info)
         Rails.application.routes.recognize_path_with_request(request_to_base, path, {})

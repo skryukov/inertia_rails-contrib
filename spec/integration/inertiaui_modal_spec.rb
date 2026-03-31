@@ -137,6 +137,26 @@ RSpec.describe "InertiaUI Modal Integration", type: :request do
     end
   end
 
+  describe "when base URL returns another modal" do
+    it "renders without infinite recursion" do
+      get "/nested_modal"
+
+      expect(response.status).to eq(200)
+      page = page_data
+      expect(page["component"]).to eq("base_modal")
+      expect(page["props"]).to have_key("_inertiaui_modal")
+      expect(page["props"]["_inertiaui_modal"]["component"]).to eq("nested_modal")
+    end
+
+    def page_data
+      doc = Nokogiri::HTML(response.body)
+      data_page = doc.at_css("#app")&.[]("data-page")
+      return nil unless data_page
+
+      JSON.parse(CGI.unescapeHTML(data_page))
+    end
+  end
+
   describe "when base URL uses other param names" do
     it "receives correct parameters from base URL" do
       get "/projects/789/tasks/456"

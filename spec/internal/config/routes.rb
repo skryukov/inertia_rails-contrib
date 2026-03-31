@@ -3,6 +3,8 @@
 Rails.application.routes.draw do
   get "/base", to: "test#base"
   get "/modal", to: "test#modal"
+  get "/modal_base", to: "test#modal_base"
+  get "/nested_modal", to: "test#nested_modal"
 
   # Routes for testing implicit rendering on base URL
   get "/implicit_base", to: "implicit#base"
