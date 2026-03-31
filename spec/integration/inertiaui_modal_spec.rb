@@ -12,11 +12,13 @@ RSpec.describe "InertiaUI Modal Integration", type: :request do
         version: "1",
         encryptHistory: false,
         clearHistory: false,
-        deferredProps: {
-          default: ["deferred_param"],
-          custom: ["merge_param"]
-        },
-        mergeProps: ["merge_param"]
+        meta: {
+          deferredProps: {
+            default: ["deferred_param"],
+            custom: ["merge_param"]
+          },
+          mergeProps: ["merge_param"]
+        }
       }
     end
 
@@ -71,14 +73,14 @@ RSpec.describe "InertiaUI Modal Integration", type: :request do
       expect(page_data).to eq(expected_page.as_json)
     end
 
-    it "returns modal page data when requested with X-Inertia: true header" do
+    it "returns base & modal merged together when requested with X-Inertia: true header only" do
       get "/modal", headers: {
         "X-Inertia" => "true",
         "X-Inertia-Version" => "1"
       }
 
       expect(response.status).to eq(200)
-      expect(response.parsed_body).to eq(expected_modal.as_json)
+      expect(response.parsed_body).to eq(expected_page.as_json)
     end
 
     it "returns base & modal merged together when explicitly requested with X-InertiaUI-Modal-Use-Router: 1" do
