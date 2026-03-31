@@ -12,6 +12,24 @@ RSpec.describe "InertiaUI Modal Integration", type: :request do
         version: "1",
         encryptHistory: false,
         clearHistory: false,
+        meta: {
+          deferredProps: {
+            default: ["deferred_param"],
+            custom: ["merge_param"]
+          },
+          mergeProps: ["merge_param"]
+        }
+      }
+    end
+
+    let(:expected_modal_on_base) do
+      {
+        component: "modal",
+        props: {hello: "modal"},
+        url: "/modal",
+        version: "1",
+        encryptHistory: false,
+        clearHistory: false,
         baseUrl: "/base",
         meta: {
           deferredProps: {
@@ -28,7 +46,7 @@ RSpec.describe "InertiaUI Modal Integration", type: :request do
         component: "base",
         props: {
           base: "prop",
-          _inertiaui_modal: expected_modal
+          _inertiaui_modal: expected_modal_on_base
         },
         url: "/modal",
         version: "1",
@@ -48,17 +66,28 @@ RSpec.describe "InertiaUI Modal Integration", type: :request do
       }
     end
 
-    it "returns page data with base & modal merged together" do
+    it "returns page data with base & modal merged together for full-page requests" do
       get "/modal"
 
       expect(response.status).to eq(200)
       expect(page_data).to eq(expected_page.as_json)
     end
 
-    it "returns base & modal merged together when requested with X-Inertia: true header" do
+    it "returns base & modal merged together when requested with X-Inertia: true header only" do
       get "/modal", headers: {
         "X-Inertia" => "true",
         "X-Inertia-Version" => "1"
+      }
+
+      expect(response.status).to eq(200)
+      expect(response.parsed_body).to eq(expected_page.as_json)
+    end
+
+    it "returns base & modal merged together when explicitly requested with X-InertiaUI-Modal-Use-Router: 1" do
+      get "/modal", headers: {
+        "X-Inertia" => "true",
+        "X-Inertia-Version" => "1",
+        "X-InertiaUI-Modal-Use-Router" => "1"
       }
 
       expect(response.status).to eq(200)
@@ -72,9 +101,10 @@ RSpec.describe "InertiaUI Modal Integration", type: :request do
         "X-InertiaUI-Modal" => "inertiaui_modal_198a8978-df9e-41c5-97ea-cd100651e80e"
       }
 
-      expected_modal[:id] = "inertiaui_modal_198a8978-df9e-41c5-97ea-cd100651e80e"
       expect(response.status).to eq(200)
-      expect(response.parsed_body).to eq(expected_page.as_json)
+      expect(response.parsed_body).to eq(
+        expected_modal.merge(id: "inertiaui_modal_198a8978-df9e-41c5-97ea-cd100651e80e").as_json
+      )
     end
 
     it "returns only deferred props when requested" do
