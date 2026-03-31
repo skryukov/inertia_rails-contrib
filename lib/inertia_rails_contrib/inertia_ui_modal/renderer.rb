@@ -12,18 +12,17 @@ module InertiaRailsContrib
         @inertia_renderer = InertiaRails::Renderer.new(component, controller, request, response, render_method, **options.slice(*KNOWN_KEYWORDS))
       end
 
+      META_KEYS = %i[mergeProps deferredProps].freeze
+
       def render
-        if !render_on_base_url?
+        if modal_request? || base_url.blank?
           return @inertia_renderer.render
         end
 
         page = @inertia_renderer.page
         page[:id] = modal_id if modal_id.present?
         page[:baseUrl] = base_url
-        page[:meta] = {
-          deferredProps: page.delete(:deferredProps),
-          mergeProps: page.delete(:mergeProps)
-        }
+        page[:meta] = extract_meta(page)
 
         @request.env[:_inertiaui_modal] = page
 
@@ -34,16 +33,22 @@ module InertiaRailsContrib
         @request.headers[HEADER_BASE_URL] || @base_url
       end
 
-      def render_on_base_url?
-        return false if base_url.blank?
-        return true if @request.headers[HEADER_USE_ROUTER] == "1"
-        return false if @request.headers[HEADER_USE_ROUTER] == "0"
-
-        modal_id.blank?
+      def modal_request?
+        modal_id.present?
       end
 
       def modal_id
         @modal_id ||= @request.headers[HEADER_MODAL]
+      end
+
+      private
+
+      def extract_meta(page)
+        meta = {}
+        META_KEYS.each do |key|
+          meta[key] = page.delete(key) if page.key?(key)
+        end
+        meta
       end
 
       def render_base_url

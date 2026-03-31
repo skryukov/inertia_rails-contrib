@@ -24,12 +24,9 @@ module InertiaRailsContrib
 
       def extract_meta!(modal)
         meta = {}
-        %i[mergeProps deferredProps cache].each do |key|
-          next unless modal.key?(key)
-
-          meta[key] = modal.delete(key)
+        InertiaRailsContrib::InertiaUIModal::Renderer::META_KEYS.each do |key|
+          meta[key] = modal.delete(key) if modal.key?(key)
         end
-
         modal[:meta] = meta
       end
     end

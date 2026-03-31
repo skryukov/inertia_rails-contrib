@@ -7,7 +7,6 @@ require_relative "inertia_ui_modal/inertia_rails_patch"
 module InertiaRailsContrib
   module InertiaUIModal
     HEADER_BASE_URL = "X-InertiaUI-Modal-Base-Url"
-    HEADER_USE_ROUTER = "X-InertiaUI-Modal-Use-Router"
     HEADER_MODAL = "X-InertiaUI-Modal"
   end
 end

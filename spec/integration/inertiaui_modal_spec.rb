@@ -62,7 +62,9 @@ RSpec.describe "InertiaUI Modal Integration", type: :request do
         url: "/modal",
         version: "1",
         encryptHistory: false,
-        clearHistory: false
+        clearHistory: false,
+        id: "inertiaui_modal_1234",
+        meta: {}
       }
     end
 
@@ -83,18 +85,7 @@ RSpec.describe "InertiaUI Modal Integration", type: :request do
       expect(response.parsed_body).to eq(expected_page.as_json)
     end
 
-    it "returns base & modal merged together when explicitly requested with X-InertiaUI-Modal-Use-Router: 1" do
-      get "/modal", headers: {
-        "X-Inertia" => "true",
-        "X-Inertia-Version" => "1",
-        "X-InertiaUI-Modal-Use-Router" => "1"
-      }
-
-      expect(response.status).to eq(200)
-      expect(response.parsed_body).to eq(expected_page.as_json)
-    end
-
-    it "returns modal ID prop when provided" do
+    it "returns modal response when X-InertiaUI-Modal header is present" do
       get "/modal", headers: {
         "X-Inertia" => "true",
         "X-Inertia-Version" => "1",
@@ -107,11 +98,11 @@ RSpec.describe "InertiaUI Modal Integration", type: :request do
       )
     end
 
-    it "returns only deferred props when requested" do
+    it "returns only deferred props when requested with X-InertiaUI-Modal header" do
       get "/modal", headers: {
         "X-Inertia" => "true",
         "X-Inertia-Version" => "1",
-        "X-InertiaUI-Modal-Use-Router" => "0",
+        "X-InertiaUI-Modal" => "inertiaui_modal_1234",
         "X-Inertia-Partial-Component" => "modal",
         "X-Inertia-Partial-Data" => "deferred_param"
       }
