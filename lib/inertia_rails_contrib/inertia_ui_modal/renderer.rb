@@ -52,6 +52,7 @@ module InertiaRailsContrib
         controller.request = request_to_base
         controller.response = @response
         controller.process(request_to_base.path_parameters[:action])
+        controller.response.body
       end
     end
   end

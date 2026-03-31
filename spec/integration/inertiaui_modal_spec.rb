@@ -99,6 +99,23 @@ RSpec.describe "InertiaUI Modal Integration", type: :request do
     end
   end
 
+  describe "when base URL controller uses implicit rendering" do
+    it "returns the rendered response body" do
+      get "/implicit_modal"
+
+      expect(response.status).to eq(200)
+      expect(page_data).to include("component" => "base")
+    end
+
+    def page_data
+      doc = Nokogiri::HTML(response.body)
+      data_page = doc.at_css("#app")&.[]("data-page")
+      return nil unless data_page
+
+      JSON.parse(CGI.unescapeHTML(data_page))
+    end
+  end
+
   describe "when base URL uses other param names" do
     it "receives correct parameters from base URL" do
       get "/projects/789/tasks/456"
