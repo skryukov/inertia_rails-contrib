@@ -7,6 +7,21 @@ and this project adheres to [Semantic Versioning].
 
 ## [Unreleased]
 
+## [0.6.0] - 2026-04-01
+
+### Changed:
+
+- Align InertiaUI Modal with upstream v2/v3 ([@erickreutz], [@skryukov]):
+  - Use `X-InertiaUI-Modal` header as the discriminator for modal XHR requests
+  - Wrap `deferredProps`/`mergeProps` into `meta` key on direct modal responses
+  - Add `resolveBaseUrl` with referer fallback and same-path loop prevention
+  - Add recursion guard when base URL route returns another modal
+  - Remove deprecated `X-InertiaUI-Modal-Use-Router` header support
+
+### Fixed:
+
+- Fix `render_base_url` return value overwriting response body with implicit rendering ([@pastpatryk])
+
 ## [0.5.2] - 2026-01-05
 
 ### Fixed:
@@ -94,12 +109,15 @@ and this project adheres to [Semantic Versioning].
 
 - Initial release ([@iurev], [@skryukov])
 
+[@erickreutz]: https://github.com/erickreutz
 [@iurev]: https://github.com/iurev
 [@nicklozon]: https://github.com/nicklozon
+[@pastpatryk]: https://github.com/pastpatryk
 [@Shaglock]: https://github.com/Shaglock
 [@skryukov]: https://github.com/skryukov
 
-[Unreleased]: https://github.com/skryukov/inertia_rails-contrib/compare/v0.5.2...HEAD
+[Unreleased]: https://github.com/skryukov/inertia_rails-contrib/compare/v0.6.0...HEAD
+[0.6.0]: https://github.com/skryukov/inertia_rails-contrib/compare/v0.5.2...v0.6.0
 [0.5.2]: https://github.com/skryukov/inertia_rails-contrib/compare/v0.5.1...v0.5.2
 [0.5.1]: https://github.com/skryukov/inertia_rails-contrib/compare/v0.5.0...v0.5.1
 [0.5.0]: https://github.com/skryukov/inertia_rails-contrib/compare/v0.4.0...v0.5.0
