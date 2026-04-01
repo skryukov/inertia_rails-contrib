@@ -15,8 +15,6 @@ module InertiaRailsContrib
       META_KEYS = %i[mergeProps deferredProps].freeze
 
       def render
-        # If the base URL route returns a modal, render it as a plain Inertia
-        # response to prevent infinite recursion (upstream #115)
         if @request.env[:_inertiaui_modal_base_dispatch] || modal_request? || base_url.blank?
           return @inertia_renderer.render
         end
@@ -32,7 +30,9 @@ module InertiaRailsContrib
       end
 
       def base_url
-        @request.headers[HEADER_BASE_URL] || @base_url
+        return @resolved_base_url if defined?(@resolved_base_url)
+
+        @resolved_base_url = resolve_base_url
       end
 
       def modal_request?
@@ -44,6 +44,29 @@ module InertiaRailsContrib
       end
 
       private
+
+      def resolve_base_url
+        candidates = [
+          @request.headers[HEADER_BASE_URL],
+          @request.referer,
+          @base_url
+        ]
+
+        current = normalize_path(@request.path)
+
+        candidates.each do |candidate|
+          next if candidate.nil?
+          next if normalize_path(URI.parse(candidate).path) == current
+
+          return candidate
+        end
+
+        nil
+      end
+
+      def normalize_path(path)
+        CGI.unescape(path.to_s.delete_prefix("/").delete_suffix("/"))
+      end
 
       def extract_meta(page)
         meta = {}

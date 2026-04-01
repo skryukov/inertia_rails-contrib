@@ -25,4 +25,16 @@ class TestController < ActionController::Base
   def nested_modal
     render inertia_modal: "nested_modal", props: {nested: "prop"}, base_url: "/modal_base"
   end
+
+  def modal_with_base
+    render inertia_modal: "modal_with_base", props: {hello: "modal"}, base_url: "/base"
+  end
+
+  def modal_no_base
+    render inertia_modal: "modal_no_base", props: {hello: "modal"}
+  end
+
+  def modal_self_base
+    render inertia_modal: "modal_self_base", props: {hello: "modal"}, base_url: "/modal_self_base"
+  end
 end
