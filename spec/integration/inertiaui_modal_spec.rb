@@ -3,6 +3,14 @@
 require "spec_helper"
 
 RSpec.describe "InertiaUI Modal Integration", type: :request do
+  def page_data
+    doc = Nokogiri::HTML(response.body)
+    data_page = doc.at_css("#app")&.[]("data-page")
+    return nil unless data_page
+
+    JSON.parse(CGI.unescapeHTML(data_page))
+  end
+
   describe "GET /modal" do
     let(:expected_modal) do
       {
@@ -62,7 +70,9 @@ RSpec.describe "InertiaUI Modal Integration", type: :request do
         url: "/modal",
         version: "1",
         encryptHistory: false,
-        clearHistory: false
+        clearHistory: false,
+        id: "inertiaui_modal_1234",
+        meta: {}
       }
     end
 
@@ -83,18 +93,7 @@ RSpec.describe "InertiaUI Modal Integration", type: :request do
       expect(response.parsed_body).to eq(expected_page.as_json)
     end
 
-    it "returns base & modal merged together when explicitly requested with X-InertiaUI-Modal-Use-Router: 1" do
-      get "/modal", headers: {
-        "X-Inertia" => "true",
-        "X-Inertia-Version" => "1",
-        "X-InertiaUI-Modal-Use-Router" => "1"
-      }
-
-      expect(response.status).to eq(200)
-      expect(response.parsed_body).to eq(expected_page.as_json)
-    end
-
-    it "returns modal ID prop when provided" do
+    it "returns modal response when X-InertiaUI-Modal header is present" do
       get "/modal", headers: {
         "X-Inertia" => "true",
         "X-Inertia-Version" => "1",
@@ -107,25 +106,17 @@ RSpec.describe "InertiaUI Modal Integration", type: :request do
       )
     end
 
-    it "returns only deferred props when requested" do
+    it "returns only deferred props when requested with X-InertiaUI-Modal header" do
       get "/modal", headers: {
         "X-Inertia" => "true",
         "X-Inertia-Version" => "1",
-        "X-InertiaUI-Modal-Use-Router" => "0",
+        "X-InertiaUI-Modal" => "inertiaui_modal_1234",
         "X-Inertia-Partial-Component" => "modal",
         "X-Inertia-Partial-Data" => "deferred_param"
       }
 
       expect(response.status).to eq(200)
       expect(response.parsed_body).to eq(expected_defer_modal.as_json)
-    end
-
-    def page_data
-      doc = Nokogiri::HTML(response.body)
-      data_page = doc.at_css("#app")&.[]("data-page")
-      return nil unless data_page
-
-      JSON.parse(CGI.unescapeHTML(data_page))
     end
   end
 
@@ -136,13 +127,87 @@ RSpec.describe "InertiaUI Modal Integration", type: :request do
       expect(response.status).to eq(200)
       expect(page_data).to include("component" => "base")
     end
+  end
 
-    def page_data
-      doc = Nokogiri::HTML(response.body)
-      data_page = doc.at_css("#app")&.[]("data-page")
-      return nil unless data_page
+  describe "when base URL returns another modal" do
+    it "renders without infinite recursion" do
+      get "/nested_modal"
 
-      JSON.parse(CGI.unescapeHTML(data_page))
+      expect(response.status).to eq(200)
+      page = page_data
+      expect(page["component"]).to eq("base_modal")
+      expect(page["props"]).to have_key("_inertiaui_modal")
+      expect(page["props"]["_inertiaui_modal"]["component"]).to eq("nested_modal")
+    end
+  end
+
+  describe "resolving base URL" do
+    it "prioritizes header over referer and configured base_url" do
+      get "/modal_with_base", headers: {
+        "X-InertiaUI-Modal-Base-Url" => "/base",
+        "Referer" => "http://www.example.com/somewhere_else"
+      }
+
+      expect(response.status).to eq(200)
+      modal_data = page_data["props"]["_inertiaui_modal"]
+      expect(modal_data["baseUrl"]).to eq("/base")
+    end
+
+    it "falls back to referer when no header and no configured base_url" do
+      get "/modal_no_base", headers: {
+        "Referer" => "http://www.example.com/base"
+      }
+
+      expect(response.status).to eq(200)
+      modal_data = page_data["props"]["_inertiaui_modal"]
+      expect(modal_data["baseUrl"]).to eq("http://www.example.com/base")
+    end
+
+    it "skips header when it matches current path" do
+      get "/modal_with_base", headers: {
+        "X-InertiaUI-Modal-Base-Url" => "/modal_with_base",
+        "Referer" => "http://www.example.com/base"
+      }
+
+      expect(response.status).to eq(200)
+      modal_data = page_data["props"]["_inertiaui_modal"]
+      expect(modal_data["baseUrl"]).to eq("http://www.example.com/base")
+    end
+
+    it "skips referer when it matches current path" do
+      get "/modal_with_base", headers: {
+        "Referer" => "http://www.example.com/modal_with_base"
+      }
+
+      expect(response.status).to eq(200)
+      modal_data = page_data["props"]["_inertiaui_modal"]
+      expect(modal_data["baseUrl"]).to eq("/base")
+    end
+
+    it "returns direct modal when no base URL can be resolved" do
+      get "/modal_no_base"
+
+      expect(response.status).to eq(200)
+      expect(page_data["component"]).to eq("modal_no_base")
+      expect(page_data["props"]).not_to have_key("_inertiaui_modal")
+    end
+
+    it "returns direct modal when referer matches current path and no configured base_url" do
+      get "/modal_no_base", headers: {
+        "Referer" => "http://www.example.com/modal_no_base"
+      }
+
+      expect(response.status).to eq(200)
+      expect(page_data["component"]).to eq("modal_no_base")
+      expect(page_data["props"]).not_to have_key("_inertiaui_modal")
+    end
+
+    it "skips configured base_url when it matches current path" do
+      get "/modal_self_base"
+
+      expect(response.status).to eq(200)
+      expect(page_data["component"]).to eq("modal_self_base")
+      expect(page_data["props"]).not_to have_key("_inertiaui_modal")
     end
   end
 

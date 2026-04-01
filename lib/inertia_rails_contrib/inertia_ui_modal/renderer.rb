@@ -12,18 +12,17 @@ module InertiaRailsContrib
         @inertia_renderer = InertiaRails::Renderer.new(component, controller, request, response, render_method, **options.slice(*KNOWN_KEYWORDS))
       end
 
+      META_KEYS = %i[mergeProps deferredProps].freeze
+
       def render
-        if !render_on_base_url?
+        if @request.env[:_inertiaui_modal_base_dispatch] || modal_request? || base_url.blank?
           return @inertia_renderer.render
         end
 
         page = @inertia_renderer.page
         page[:id] = modal_id if modal_id.present?
         page[:baseUrl] = base_url
-        page[:meta] = {
-          deferredProps: page.delete(:deferredProps),
-          mergeProps: page.delete(:mergeProps)
-        }
+        page[:meta] = extract_meta(page)
 
         @request.env[:_inertiaui_modal] = page
 
@@ -31,19 +30,50 @@ module InertiaRailsContrib
       end
 
       def base_url
-        @request.headers[HEADER_BASE_URL] || @base_url
+        return @resolved_base_url if defined?(@resolved_base_url)
+
+        @resolved_base_url = resolve_base_url
       end
 
-      def render_on_base_url?
-        return false if base_url.blank?
-        return true if @request.headers[HEADER_USE_ROUTER] == "1"
-        return false if @request.headers[HEADER_USE_ROUTER] == "0"
-
-        modal_id.blank?
+      def modal_request?
+        modal_id.present?
       end
 
       def modal_id
         @modal_id ||= @request.headers[HEADER_MODAL]
+      end
+
+      private
+
+      def resolve_base_url
+        candidates = [
+          @request.headers[HEADER_BASE_URL],
+          @request.referer,
+          @base_url
+        ]
+
+        current = normalize_path(@request.path)
+
+        candidates.each do |candidate|
+          next if candidate.nil?
+          next if normalize_path(URI.parse(candidate).path) == current
+
+          return candidate
+        end
+
+        nil
+      end
+
+      def normalize_path(path)
+        CGI.unescape(path.to_s.delete_prefix("/").delete_suffix("/"))
+      end
+
+      def extract_meta(page)
+        meta = {}
+        META_KEYS.each do |key|
+          meta[key] = page.delete(key) if page.key?(key)
+        end
+        meta
       end
 
       def render_base_url
@@ -53,6 +83,7 @@ module InertiaRailsContrib
         end
 
         request_to_base = ActionDispatch::Request.new(original_env)
+        request_to_base.env[:_inertiaui_modal_base_dispatch] = true
 
         path = ActionDispatch::Journey::Router::Utils.normalize_path(request_to_base.path_info)
         Rails.application.routes.recognize_path_with_request(request_to_base, path, {})
